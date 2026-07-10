@@ -25,3 +25,15 @@
 
 数据仅供参考，使用时请辩证看待。
 作者一人很难完成 4000+ 条数据的实际验证，如果你发现错误信息，欢迎提供反馈！
+
+### 数据来源
+
+| 来源 | 说明 |
+|------|------|
+| **Civ VI Modding Companion 2.0.xlsx** | 社区整理的 Civ6 Lua API + Events 数据集 |
+| **夏凉凉凉's civ6-modding skill files** | 夏凉凉凉分享的 skill 文档 |
+
+### 数据文件
+
+- `data/api_enhanced.json` — 85 个对象 / 命名空间，5078 个函数条目
+- `data/events_enhanced.json` — 1045 个事件，按 Events / GameEvents / LuaEvents 分类
