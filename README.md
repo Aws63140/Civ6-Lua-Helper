@@ -1,6 +1,6 @@
 # 文明6 Lua 辅助工具
 
-查询 Civilization VI 的 Lua API 以及 Events 的辅助工具，免去模组作者频繁翻阅文档的麻烦。
+查询 Civilization VI 的 Lua 函数和事件的辅助工具，免去模组作者频繁翻阅文档的麻烦。
 
 ## 下载
 
@@ -10,16 +10,15 @@
 
 | 功能 | 说明 |
 |------|------|
-| 双窗口切换 | 窗口菜单切换 **API 查询** 和 **事件查询** 两个独立工作区 |
-| API 搜索 | 支持模糊搜索函数名和备注，多个关键词用空格分隔 |
-| API 筛选 | 按根对象、环境（UI/GamePlay）层级筛选 |
-| API 详情 | 显示函数签名、参数、返回值、备注、示例代码（Lua 语法高亮） |
-| 事件搜索 | 支持模糊搜索事件名和备注，可按事件系统（Events/GameEvents/LuaEvents）和环境筛选 |
-| 事件详情 | 显示回调签名、回调参数、分类、示例代码（Lua 语法高亮） |
+| 双窗口切换 | 窗口菜单切换 **函数查询** 和 **事件查询** 两个独立工作区 |
+| 函数搜索 | 支持模糊搜索函数名和备注，多个关键词用空格分隔 |
+| 函数筛选 | 按根对象、环境（UI/GamePlay）层级筛选 |
+| 事件搜索 | 支持模糊搜索事件名和备注，多个关键词用空格分隔 |
+| 事件筛选 | 按事件系统（Events/GameEvents/LuaEvents）和环境筛选 |
 
 ## 更新
 
-工具启动后点击 **帮助 → 检查更新**，自动从 GitHub Releases 检测新版本并下载。
+工具启动后点击 **帮助 → 检查更新**。
 
 ## 数据说明
 
@@ -30,10 +29,10 @@
 
 | 来源 | 说明 |
 |------|------|
-| **Civ VI Modding Companion 2.0.xlsx** | 社区整理的 Civ6 Lua API + Events 数据集 |
+| **Civ VI Modding Companion 2.0.xlsx** | 社区整理的 Civ6 Lua 函数+事件数据集 |
 | **夏凉凉凉's civ6-modding skill files** | 夏凉凉凉分享的 skill 文档 |
 
 ### 数据文件
 
-- `data/api_enhanced.json` — 85 个对象 / 命名空间，5078 个函数条目
+- `data/api_enhanced.json` — 85 个对象 / 命名空间，3270 个函数条目
 - `data/events_enhanced.json` — 1045 个事件，按 Events / GameEvents / LuaEvents 分类

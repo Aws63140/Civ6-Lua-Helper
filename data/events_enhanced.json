@@ -12916,19 +12916,19 @@
         {
           "name": "yield",
           "type": ":number",
-          "description": "黄金产出量（GPT），即该玩家的每回合黄金收入"
+          "description": "金币产出量（GPT），即该玩家的每回合金币收入"
         },
         {
           "name": "balance",
           "type": ":number",
-          "description": "变化后的国库余额（当前持有的黄金总量）"
+          "description": "变化后的国库余额（当前持有的金币总量）"
         }
       ],
       "callbackSignature": "OnTreasuryChanged(playerID: number, yield: number, balance: number)",
       "exampleCode": "function OnTreasuryChanged(playerID, yieldAmount, balance)\n    if playerID == Game.GetLocalPlayer() then\n        if balance <= 0 then\n            -- 玩家破产\n            print(\"Player is bankrupt!\");\n        elseif balance >= 500 and yieldAmount > 0 then\n            -- 玩家有大量盈余\n            print(\"Player has a gold surplus!\");\n        end\n    end\nend\nEvents.TreasuryChanged.Add(OnTreasuryChanged);",
       "notes": [
-        "[作用] 当任何玩家的国库（黄金）余额发生变化时触发，通常在黄金产出变化或国库余额变动时调用",
-        "yield 参数是该玩家的黄金产出量（每回合黄金收入），balance 是国库总余额（并非变化量）",
+        "[作用] 当任何玩家的国库（金币）余额发生变化时触发，通常在金币产出变化或国库余额变动时调用",
+        "yield 参数是该玩家的金币产出量（每回合金币收入），balance 是国库总余额（并非变化量）",
         "许多 UI 组件使用此事件仅作为刷新信号，忽略所有参数（如 TopPanel、LaunchBar、PiratesScenario 相关回调均不取参）",
         "TutorialUIRoot 中使用 GameCapabilities.HasCapability(\"CAPABILITY_GOLD\") 条件判断后才注册此事件，表明该事件仅在启用黄金机制时可用"
       ],
