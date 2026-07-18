@@ -4701,7 +4701,7 @@
       "category": "City",
       "callbackParams": [
         {
-          "name": "owner",
+          "name": "playerID",
           "type": ":number",
           "description": "城市所属玩家的 ID"
         },
@@ -4711,11 +4711,11 @@
           "description": "单元格所属权变更的城市 ID"
         }
       ],
-      "callbackSignature": "OnCityTileOwnershipChanged(owner: number, cityID: number)",
-      "exampleCode": "function OnCityTileOwnershipChanged(owner, cityID)\n    if owner == Game.GetLocalPlayer() then\n        RefreshPurchasePlots()\n        RefreshCitizenManagement()\n    end\nend\n\nEvents.CityTileOwnershipChanged.Add(OnCityTileOwnershipChanged)",
+      "callbackSignature": "OnCityTileOwnershipChanged(playerID: number, cityID: number)",
+      "exampleCode": "function OnCityTileOwnershipChanged(playerID, cityID)\n    if playerID == Game.GetLocalPlayer() then\n        RefreshPurchasePlots()\n        RefreshCitizenManagement()\n    end\nend\n\nEvents.CityTileOwnershipChanged.Add(OnCityTileOwnershipChanged)",
       "notes": [
         "[作用] 城市单元格所属权变化时触发（如购买单元格、文化扩张、城市转换单元格），用于刷新购买单元格和市民管理界面",
-        "回调函数只接收 owner 和 cityID 两个参数，不含单元格坐标信息；坐标需从城市对象获取"
+        "回调函数只接收 playerID 和 cityID 两个参数，不含单元格坐标信息；坐标需从城市对象获取"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -7377,10 +7377,11 @@
       "callbackSignature": "OnGameCoreEventPlaybackComplete()",
       "exampleCode": "function OnGameCoreEventPlaybackComplete()\n    -- 刷新UI组件以反映更新后的游戏状态\n    RestartRefreshRequest();\nend\nEvents.GameCoreEventPlaybackComplete.Add(OnGameCoreEventPlaybackComplete);",
       "notes": [
-        "[作用] 游戏核心引擎完成事件批处理后通知UI层刷新显示状态",
-        "该事件在回合开始时可能多次触发，也在玩家执行操作后触发",
-        "用于更新城市横幅统计、单位标志状态、地图标签等UI元素",
-        "非本地玩家（旁观者模式）时部分处理会被跳过（m_activeLocalPlayer == -1）"
+        "[作用] 游戏核心引擎完成事件批处理后通知 UI 层刷新显示状态",
+        "[触发条件] 此事件不是每帧触发的事件。官方注释原文：'may fire multiple times as a turn begins, as well as after player actions'——在回合开始时可能多次触发，也在玩家执行操作后触发。如果没有任何游戏事件发生，此事件不会触发。",
+        "与 GameCoreEventPublishComplete 的区别：PlaybackComplete 是事件回放阶段的完成信号，仅在需要回放事件时触发（回合切换、操作执行）；PublishComplete 是事件发布阶段的完成信号，每帧固定触发。",
+        "用于更新城市横幅统计、单位标志状态、地图标签等 UI 元素。CityBannerManager 和 UnitFlagManager 使用此事件处理脏标记的视觉更新。",
+        "非本地玩家（旁观者模式）时部分处理会被跳过（m_activeLocalPlayer == -1）。"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -7395,15 +7396,19 @@
       "category": "",
       "callbackParams": [],
       "callbackSignature": "OnGameCoreEventPublishComplete()",
-      "exampleCode": "function OnGameCoreEventPublishComplete()\n    if m_needsRefresh then\n        Refresh();\n        m_needsRefresh = false;\n    end\nend\nEvents.GameCoreEventPublishComplete.Add(OnGameCoreEventPublishComplete)",
+      "exampleCode": "-- 用法1：脏标记批量刷新（官方标准用法）\nfunction OnGameCoreEventPublishComplete()\n    if m_needsRefresh then\n        Refresh();\n        m_needsRefresh = false;\n    end\nend\nEvents.GameCoreEventPublishComplete.Add(OnGameCoreEventPublishComplete)\n\n-- 用法2：帧定时器（社区验证用法）\n-- 实测每秒约触发 60 次，可与 Automation.GetTime() 配合实现精确计时\nlocal g_Timer = Automation.GetTime()\nlocal g_Pause = 10\nfunction CheckTimer()\n    if Automation.GetTime() >= g_Timer + g_Pause then\n        -- 10 秒后执行\n        Events.GameCoreEventPublishComplete.Remove(CheckTimer)\n    end\nend\nEvents.GameCoreEventPublishComplete.Add(CheckTimer)",
       "notes": [
-        "[作用] 在一批 GameCore 事件（如 UnitAddedToMap、CityBuilt 等）全部发布完成后触发，用于延迟刷新 UI 避免多次重绘",
-        "通常配合 dirty flag 模式使用：在各个具体事件的回调中先标记 m_needsRefresh = true，在此事件的回调中统一执行 Refresh()，将多次更新合并为一次",
-        "删除注册时必须使用 Remove()，因其是 SerialEvent（非一次性事件）"
+        "[作用] 可用作帧计时器。此事件每帧触发，在 GameCore 事件发布阶段完成后、渲染前执行。",
+        "引擎每一帧都经历：游戏逻辑处理 → GameCore 事件收集与发布 → 此事件触发 → 渲染。即使该帧没有具体的 GameCore 事件，发布阶段仍然会完成，此事件仍会触发。实测每秒约触发 60 次（与帧率同步）。",
+        "官方注释原文：'This event is raised directly after a series of gamecore events.'",
+        "与 GameCoreEventPlaybackComplete 的区别：PublishComplete 是发布阶段完成信号（每帧触发），PlaybackComplete 是回放阶段完成信号（仅在回合切换/操作执行时触发）。",
+        "社区验证的 4 种用法模式：(1) 脏标记批量刷新——在各事件回调中标记 m_needsRefresh = true，在此事件中统一刷新；(2) 帧定时器——通过帧计数实现延迟/循环定时（约 60 FPS）；(3) 协程调度器——每 N 帧恢复一次协程，实现分帧处理；(4) 一次性初始化——条件满足前每帧检查，满足后自我卸载或跳过。",
+        "如需基于真实时间的精确计时（不受帧率波动影响），应配合 Automation.GetTime() 使用，而非仅依赖帧计数。",
+        "注册后持续触发（SerialEvent），必须使用 Remove() 取消注册。回调函数必须轻量。"
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 7
+      "enrichAnalysisCount": 11
     },
     {
       "id": "E-GameCoreProcessingComplete",
@@ -12633,6 +12638,7 @@
       "notes": [
         "[作用] 系统级 UI 更新通知，用于响应屏幕尺寸变化、触摸设置变化、UI 恢复等场景",
         "type 参数应使用 SystemUpdateUI 枚举值（如 SystemUpdateUI.ScreenResize）进行比较，不要直接比较数字",
+        "此事件在系统级 UI 状态变更时触发，包括以下 4 种枚举值：SystemUpdateUI.ScreenResize（屏幕尺寸变化）、SystemUpdateUI.TouchInputChanged（触摸输入启用/禁用）、SystemUpdateUI.TouchTipBehaviorChanged（触摸提示行为变化）、SystemUpdateUI.RestoreUI（UI 上下文恢复）",
         "此事件会频繁触发（特别是 ScreenResize），回调函数中应避免耗时操作，仅做必要的 UI 调整"
       ],
       "enriched": true,
