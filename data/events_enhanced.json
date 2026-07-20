@@ -235,7 +235,7 @@
       "notes": [
         "[作用] 为 AI 的 Civ Royale Operation 提供安全区（缩圈）的坐标和距离信息",
         "function 会返回 true，调用者通过 targetInfo 表的 PlotX/PlotY/Extra 字段获取安全区坐标信息",
-        "如果中心格位是水域，会自动查找并调整为最近的陆地格位坐标",
+        "如果中心格位是水域，会自动查找并调整为最近的陆地单元格坐标",
         "此事件在 CivRoyaleScenario_AI.xml 中被配置为 AI 行为树操作（Civ Royale Operation）的 TargetLuaScript，由游戏 AI 系统在运行时调用"
       ],
       "enriched": true,
@@ -746,7 +746,7 @@
         {
           "name": "improvementType",
           "type": ":number",
-          "description": "被掠夺的地格改良类型索引，未掠夺改良时为 NO_IMPROVEMENT"
+          "description": "被掠夺的单元格改良设施类型索引，未掠夺改良设施时为 NO_IMPROVEMENT"
         },
         {
           "name": "buildingType",
@@ -767,7 +767,7 @@
       "callbackSignature": "OnPillage(playerID: number, unitID: number, improvementType: number, buildingType: number, districtType: number, plotIndex: number)",
       "exampleCode": "function OnPillage(playerID, unitID, improvementType, buildingType, districtType, plotIndex)\n    local pUnit = UnitManager.GetUnit(playerID, unitID);\n    if (pUnit ~= nil) then\n        print(\"Unit pillaged at plot \" .. tostring(plotIndex));\n    end\nend\nGameEvents.OnPillage.Add(OnPillage);",
       "notes": [
-        "[作用] 当任意单位对地格改良、建筑或区域执行掠夺操作时触发",
+        "[作用] 当任意单位对单元格改良设施、建筑或区域执行掠夺操作时触发",
         "参数中未被掠夺的类型对应的索引值为 NO_IMPROVEMENT / NO_BUILDING / NO_DISTRICT（通常为 -1），通过判断不等于 sentinel 值来区分掠夺了哪种目标",
         "此事件为 GamePlay 环境专属，UI 侧不可用"
       ],
@@ -1678,7 +1678,7 @@
       "callbackSignature": "OnScenarioCommand_ShoreParty(eOwner: number, iUnitID: number, parameters: table)",
       "exampleCode": "function OnScenarioCommand_ShoreParty(eOwner, iUnitID, parameters)\n    local pPlayer = Players[eOwner];\n    if (pPlayer == nil) then return false; end\n    local pUnit = pPlayer:GetUnits():FindID(iUnitID);\n    if (pUnit == nil) then return false; end\n    local targetPlot = Map.GetPlot(parameters[UnitCommandTypes.PARAM_X], parameters[UnitCommandTypes.PARAM_Y]);\n    if (targetPlot == nil) then return false; end\n    -- 在目标格创建新的海盗单位\n    local shorePartyUnitData = GameInfo.Units[\"UNIT_PIRATES\"];\n    if (shorePartyUnitData ~= nil) then\n        local newUnit = pPlayer:GetUnits():Create(shorePartyUnitData.Index, targetPlot:GetX(), targetPlot:GetY());\n    end\nend\nGameEvents.ScenarioCommand_ShoreParty.Add(OnScenarioCommand_ShoreParty);",
       "notes": [
-        "[作用] 从舰船在目标陆地格部署登陆队（Shore Party），在目标格创建一个海盗单位并消耗舰船1点船员和移动力",
+        "[作用] 从舰船在目标陆地单元格部署登陆队（Shore Party），在目标格创建一个海盗单位并消耗舰船1点船员和移动力",
         "由 UI 侧通过 UnitManager.RequestCommand 以 UnitCommandTypes.EXECUTE_SCRIPT 触发",
         "只有船员数 >= 1 且目标格通过 GetShorePartyStatusForUnit 校验的舰船才能执行此命令",
         "该事件仅在 DLC 海盗场景中有效"
@@ -2016,7 +2016,7 @@
       "notes": [
         "[作用] 玩家获得新单位（建造、训练或生成）时触发，提供玩家ID和单位ID",
         "回调内通常调用 UnitManager.GetUnit(playerID, unitID) 获取单位对象进行操作",
-        "同一单位可能多次触发该事件（如单位升级或转换所有者时），需在回调中自行判断是否已处理",
+        "同一单位可能多次触发该事件（如单位进化或转换所有者时），需在回调中自行判断是否已处理",
         "GamePlay 环境仅可用，UI 环境无法直接监听"
       ],
       "enriched": true,
@@ -2064,23 +2064,23 @@
         {
           "name": "iPlayerID",
           "type": ":number",
-          "description": "触发蘑菇小屋的玩家 ID"
+          "description": "触发部落村庄的玩家 ID"
         },
         {
           "name": "iUnitID",
           "type": ":number",
-          "description": "触发蘑菇小屋的单位 ID"
+          "description": "触发部落村庄的单位 ID"
         },
         {
           "name": "goodyHutType",
           "type": ":number",
-          "description": "蘑菇小屋子类型索引（对应 GameInfo.GoodyHutSubTypes 表中的 Index 字段，如 TRAP_DAMAGE、GIFT_DAMAGE 等）"
+          "description": "部落村庄类型索引（对应 GameInfo.GoodyHutSubTypes 表中的 Index 字段，如 TRAP_DAMAGE、GIFT_DAMAGE 等）"
         }
       ],
       "callbackSignature": "OnUnitTriggerGoodyHut(iPlayerID: number, iUnitID: number, goodyHutType: number)",
       "exampleCode": "function OnUnitTriggerGoodyHut(iPlayerID, iUnitID, goodyHutType)\n    local pUnit = UnitManager.GetUnit(iPlayerID, iUnitID);\n    if (pUnit ~= nil) then\n        print(\"Unit \" .. tostring(iUnitID) .. \" triggered goody hut type \" .. tostring(goodyHutType));\n    end\nend\nGameEvents.UnitTriggerGoodyHut.Add(OnUnitTriggerGoodyHut)",
       "notes": [
-        "[作用] 单位触发蘑菇小屋（部落村庄/好礼物）时触发，可用于处理自定义奖励、陷阱或得分逻辑",
+        "[作用] 单位触发部落村庄时触发，可用于处理自定义奖励、陷阱或得分逻辑",
         "goodyHutType 编号对应 GameInfo.GoodyHutSubTypes 数据库表的 Index 字段，同一类型可能有多种子类型（如普通奖励、陷阱伤害、礼物伤害）"
       ],
       "enriched": true,
@@ -4623,17 +4623,17 @@
         {
           "name": "i",
           "type": ":number",
-          "description": "城市所在地格的六边形网格 I 坐标"
+          "description": "城市所在单元格的六边形网格 I 坐标"
         },
         {
           "name": "j",
           "type": ":number",
-          "description": "城市所在地格的六边形网格 J 坐标"
+          "description": "城市所在单元格的六边形网格 J 坐标"
         },
         {
           "name": "k",
           "type": ":number",
-          "description": "城市所在地格的六边形网格 K 坐标"
+          "description": "城市所在单元格的六边形网格 K 坐标"
         },
         {
           "name": "isSelected",
@@ -4650,7 +4650,7 @@
       "exampleCode": "function OnCitySelectionChanged(owner, cityID, i, j, k, isSelected, isEditable)\n    if owner ~= Game.GetLocalPlayer() then\n        return;\n    end\n    if isSelected then\n        print(\"City selected:\", cityID);\n    else\n        print(\"City deselected:\", cityID);\n    end\nend\nEvents.CitySelectionChanged.Add(OnCitySelectionChanged);",
       "notes": [
         "[作用] 城市选择状态变化时触发（选中或取消选中某个城市）",
-        "参数 i/j/k 是城市所在地格的六边形网格坐标（对应 Map.GetPlot(i, j)），其中 k 通常为 0",
+        "参数 i/j/k 是城市所在单元格的六边形网格坐标（对应 Map.GetPlot(i, j)），其中 k 通常为 0",
         "isEditable 为 false 时表示该城市当前不可操作（如正在被其他玩家查看或正处于动画过渡中）"
       ],
       "enriched": true,
@@ -7631,12 +7631,12 @@
         {
           "name": "playerID",
           "type": ":number",
-          "description": "获得蘑菇奖励的玩家"
+          "description": "获得部落村庄奖励的玩家"
         },
         {
           "name": "unitID",
           "type": ":number",
-          "description": "打开蘑菇小屋的单位"
+          "description": "打开部落村庄的单位"
         },
         {
           "name": "eRewardType",
@@ -7652,7 +7652,7 @@
       "callbackSignature": "OnGoodyHutReward(playerID: number, unitID: number, eRewardType: number, eRewardSubType: number)",
       "exampleCode": "function OnGoodyHutReward(ePlayer, unitID, eRewardType, eRewardSubType)\n    local pUnit = UnitManager.GetUnit(ePlayer, unitID);\n    if (pUnit == nil) then\n        return;\n    end\n    local eTrapHash = DB.MakeHash(\"IMPROVISED_TRAP_GOODIES\");\n    if (eTrapHash == eRewardType) then\n        WorldView.PlayEffectAtXY(\"CR_TrapExplosion\", pUnit:GetX(), pUnit:GetY());\n    end\nend\nEvents.GoodyHutReward.Add(OnGoodyHutReward);",
       "notes": [
-        "[作用] 当玩家单位从蘑菇小屋（部落村庄）获得奖励时触发",
+        "[作用] 当玩家单位从部落村庄获得奖励时触发",
         "eRewardType 是字符串经过 DB.MakeHash 后的哈希值，可通过 DB.MakeHash(\"名称\") 与之比较，名称对应数据库中的 GoodyHut 奖励表",
         "该事件为 GameCoreEvent，在 GamePlay 侧触发，UI 侧通过 Events 系统监听"
       ],
@@ -8247,12 +8247,12 @@
         {
           "name": "improvementType",
           "type": ":string",
-          "description": "被激活的改良类型"
+          "description": "被激活的改良设施类型"
         },
         {
           "name": "improvementOwner",
           "type": ":number",
-          "description": "改良所有者玩家ID"
+          "description": "改良设施所有者玩家ID"
         },
         {
           "name": "activationType",
@@ -8268,7 +8268,7 @@
       "callbackSignature": "OnImprovementActivated(locationX: number, locationY: number, unitOwner: number, unitID: number, improvementType: string, improvementOwner: number, activationType: number, activationValue: number)",
       "exampleCode": "function OnImprovementActivated(locationX, locationY, unitOwner, unitID, improvementType, improvementOwner, activationType, activationValue)\n    if improvementType == \"IMPROVEMENT_BARBARIAN_CAMP\" then\n        print(\"Barbarian camp cleared at (\" .. locationX .. \", \" .. locationY .. \")\")\n    end\nend\nEvents.ImprovementActivated.Add(OnImprovementActivated)",
       "notes": [
-        "[作用] 当单元格上的改良被激活（如清除蛮族营地、修复被掠夺的改良等）时触发",
+        "[作用] 当单元格上的改良设施被激活（如清除蛮族营地、修复被掠夺的改良设施等）时触发",
         "activationType 和 activationValue 的具体含义需参考引擎定义"
       ],
       "enriched": true,
@@ -8296,18 +8296,18 @@
         {
           "name": "improvementIndex",
           "type": ":number",
-          "description": "设施类型索引 (对应 GameInfo.Improvements)"
+          "description": "改良设施类型索引 (对应 GameInfo.Improvements)"
         },
         {
           "name": "playerID",
           "type": ":number",
-          "description": "设施所属玩家 ID"
+          "description": "改良设施所属玩家 ID"
         }
       ],
       "callbackSignature": "OnImprovementAddedToMap(x: number, y: number, improvementIndex: number, playerID: number)",
       "exampleCode": "function OnImprovementAddedToMap(locX, locY, eImprovementType, eOwner)\n    local pImprovement = GameInfo.Improvements[eImprovementType];\n    if pImprovement then\n        print(\"Improvement \" .. pImprovement.Name .. \" added at (\" .. locX .. \", \" .. locY .. \")\");\n    end\nend\nEvents.ImprovementAddedToMap.Add(OnImprovementAddedToMap);",
       "notes": [
-        "[作用] 当设施被放置到地图上时触发",
+        "[作用] 当改良设施被放置到地图上时触发",
         "参数来自 CityBannerManager、MinimapPanel 等 6 个回调函数的实际使用分析，一致使用 4 参数",
         "该事件与 Events.ImprovementRemovedFromMap 配对使用，常用于刷新 UI 或更新小地图叠加层"
       ],
@@ -8364,7 +8364,7 @@
       "notes": [
         "[作用] 单元格上的改良设施状态发生变化时触发（如被掠夺、完成建造、被拆除等）",
         "此事件由引擎在改良设施状态变更时自动触发，不需要手动调用 Events.ImprovementChanged.Call()",
-        "isPillaged 在改良被掠夺时变为 true，修复后变为 false"
+        "isPillaged 在改良设施被掠夺时变为 true，修复后变为 false"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -8416,7 +8416,7 @@
         "[作用] 当单元格上的改良设施（如矿山、农场、营地、采石场等）被移除时触发",
         "参数 locX/locY 是单元格坐标，可通过 Map.GetPlotIndex(locX, locY) 获取单元格对象",
         "eOwner 是改良设施被移除时的所属玩家，可用于过滤与本地玩家无关的更新以优化性能",
-        "常用于 UI 更新场景：CityBannerManager 用于销毁对应的改良横幅，TopPanel 刷新资源显示，MinimapPanel 标记重绘",
+        "常用于 UI 更新场景：CityBannerManager 用于销毁对应的改良设施横幅，TopPanel 刷新资源显示，MinimapPanel 标记重绘",
         "DiplomacyRibbon 中仅用于触发统计数据更新，不关心具体参数值"
       ],
       "enriched": true,
@@ -8444,7 +8444,7 @@
         {
           "name": "eImprovementType",
           "type": ":number",
-          "description": "改良设施类型索引（-1 表示无改良）"
+          "description": "改良设施类型索引（-1 表示无改良设施）"
         },
         {
           "name": "eVisibility",
@@ -10648,13 +10648,13 @@
         {
           "name": "playerID",
           "type": ":number",
-          "description": "年龄发生变化的玩家 ID"
+          "description": "时代类型发生变化的玩家 ID"
         }
       ],
       "callbackSignature": "OnPlayerAgeChanged(playerID: number)",
       "exampleCode": "function OnPlayerAgeChanged(playerID)\n    local pPlayer = Players[playerID];\n    if (pPlayer ~= nil and pPlayer:IsHuman()) then\n        -- 刷新该玩家的 UI 元素\n    end\nend\nEvents.PlayerAgeChanged.Add(OnPlayerAgeChanged);",
       "notes": [
-        "[作用] 当玩家的时代年龄发生变化时触发（如进入黄金时代、黑暗时代或普通时代）",
+        "[作用] 当玩家的时代类型发生变化时触发（如进入黄金时代、黑暗时代或普通时代）",
         "参数 playerID 可用于判断是否为本地的当前玩家，以便选择性更新界面"
       ],
       "enriched": true,
@@ -11137,7 +11137,7 @@
       "callbackSignature": "OnPlotMarkerChanged(x: number, y: number)",
       "exampleCode": "function OnPlotMarkerChanged(x, y)\n    -- 检查单元格标记变化后重新绘制可见性\n    local pLocalPlayerVis = PlayerVisibilityManager.GetPlayerVisibility(Game.GetLocalObserver())\n    if pLocalPlayerVis ~= nil then\n        local visibilityType = pLocalPlayerVis:GetState(x, y)\n        if visibilityType == RevealedState.REVEALED then\n            -- 标记已揭示\n        elseif visibilityType == RevealedState.VISIBLE then\n            -- 标记可见\n        end\n    end\nend\nEvents.PlotMarkerChanged.Add(OnPlotMarkerChanged)",
       "notes": [
-        "[作用] 当单元格的标记（如资源、改良、奇观标记）发生变化时触发",
+        "[作用] 当单元格的标记（如资源、改良设施、奇观标记）发生变化时触发",
         "引擎级事件，固定接收 (x, y) 单元格坐标参数",
         "WorldViewIconsManager 通过此事件更新世界视图上对应单元格的迷雾/可见状态"
       ],
@@ -11314,12 +11314,12 @@
         {
           "name": "unitX",
           "type": ":number",
-          "description": "音乐会所在地格X坐标"
+          "description": "音乐会所在单元格X坐标"
         },
         {
           "name": "unitY",
           "type": ":number",
-          "description": "音乐会所在地格Y坐标"
+          "description": "音乐会所在单元格Y坐标"
         },
         {
           "name": "result",
@@ -12712,20 +12712,24 @@
       "eventName": "TechBoostTriggered",
       "eventType": "GameCoreEvent",
       "availability": "Both",
-      "category": "Research / Culture / Policies",
+      "category": "Research",
       "callbackParams": [
         {
-          "name": "player",
+          "name": "playerID",
           "type": ":number",
-          "description": "触发科技 boost 的玩家 ID"
+          "description": "触发科技尤里卡的玩家 ID"
+        },
+        {
+          "name": "techIndex",
+          "type": ":number",
+          "description": "触发尤里卡的科技索引"
         }
       ],
-      "callbackSignature": "OnTechBoostTriggered(player: number)",
-      "exampleCode": "function OnTechBoostTriggered(player)\n    if player == Game.GetLocalPlayer() then\n        UI.PlaySound(\"Receive_Tech_Boost\");\n        -- 刷新科技 boost 面板\n    end\nend\nEvents.TechBoostTriggered.Add(OnTechBoostTriggered);",
+      "callbackSignature": "OnTechBoostTriggered(playerID: number, techIndex: number)",
+      "exampleCode": "function OnTechBoostTriggered(playerID, techIndex)\n    if playerID == Game.GetLocalPlayer() then\n        UI.PlaySound(\"Receive_Tech_Boost\")\n        -- 输入你的代码\n    end\nend\nEvents.TechBoostTriggered.Add(OnTechBoostTriggered)",
       "notes": [
-        "[作用] 当玩家触发某个科技的 eureka/inspiration boost 时触发",
-        "GameCoreEvent，由游戏引擎（C++）触发，所有可用环境中均可监听",
-        "示例中 player 作为唯一已确认参数，回调中通常用于判断是否为本地玩家以更新 UI"
+        "[作用] 当玩家触发某个科技的尤里卡时触发",
+        "GameCoreEvent，由游戏引擎（C++）触发，所有可用环境中均可监听"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -13228,7 +13232,7 @@
       "callbackSignature": "OnUnitAddedToMap(playerID: number, unitID: number, plotX: number, plotY: number)",
       "exampleCode": "function OnUnitAddedToMap(playerID, unitID, plotX, plotY)\n    if playerID == Game.GetLocalPlayer() then\n        local unitType = GameInfo.Units[GetUnitType(playerID, unitID)].UnitType\n        AWLog(\"Local player unit \" .. unitType .. \" added at (\" .. plotX .. \", \" .. plotY .. \")\")\n    end\nend\nEvents.UnitAddedToMap.Add(OnUnitAddedToMap)",
       "notes": [
-        "[作用] 当一个单位被添加到地图时触发（包括新训练、购买、升级或通过其他方式生成）",
+        "[作用] 当一个单位被添加到地图时触发（包括新训练、购买、进化或通过其他方式生成）",
         "plotX/plotY 是单位在地图上出现的单元格坐标，可用于定位单位位置",
         "除玩家ID和单位ID外，事件额外传递坐标参数，但部分处理器省略了后两个参数",
         "TopPanel 使用该事件仅刷新 UI 面板（通过 OnRefreshYields），不关心具体参数"
@@ -13443,7 +13447,7 @@
       "notes": [
         "[作用] 监听新单位被创建的事件，返回单位的所属玩家 ID 和单位 ID",
         "通过 UnitManager.GetUnit(playerID, unitID) 获取单位对象后进行操作",
-        "同一单位可能多次触发该事件（如单位升级或转化时）"
+        "同一单位可能多次触发该事件（如单位进化或转化时）"
       ],
       "enrichUnused": true,
       "usageSummary": "事件未在 Lua 源码中找到 .Add( 注册"
@@ -13733,9 +13737,9 @@
       "callbackSignature": "OnUnitFortificationChanged(playerID: number, unitID: number)",
       "exampleCode": "function OnUnitFortificationChanged(playerID, unitID)\n    local pPlayer = Players[playerID];\n    if (pPlayer ~= nil) then\n        local pUnit = pPlayer:GetUnits():FindID(unitID);\n        if (pUnit ~= nil) then\n            local flag = GetUnitFlag(playerID, pUnit:GetID());\n            if (flag ~= nil) then\n                flag:UpdateStats();\n            end\n        end\n    end\nend\nEvents.UnitFortificationChanged.Add(OnUnitFortificationChanged);",
       "notes": [
-        "[作用] 当一个单位的要塞化状态改变时触发，包括开始要塞化、要塞化等级提升（持续要塞化多回合后变为 fortified 状态）、或要塞化中断/取消。",
-        "回调中通过 pUnit:GetFortifyTurns() 获取当前要塞化回合数，>0 时表示正在要塞化中。",
-        "两个使用文件（Base/UI/UnitFlagManager.lua 和 PolandScenario/UI/UnitFlagManager.lua）代码完全相同，仅用于刷新单位旗标的要塞化纹理显示。"
+        "[作用] 当一个单位的驻扎状态改变时触发，包括开始驻扎、驻扎等级提升（持续驻扎多回合后变为 fortified 状态）、或驻扎中断/取消。",
+        "回调中通过 pUnit:GetFortifyTurns() 获取当前驻扎回合数，>0 时表示正在驻扎中。",
+        "两个使用文件（Base/UI/UnitFlagManager.lua 和 PolandScenario/UI/UnitFlagManager.lua）代码完全相同，仅用于刷新单位旗标的驻扎纹理显示。"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -14306,7 +14310,7 @@
       "callbackSignature": "OnUnitOperationStarted(ownerID: number, unitID: number, operationID: number)",
       "exampleCode": "function OnUnitOperationStarted(ownerID, unitID, operationID)\n    if ownerID == Game.GetLocalPlayer() then\n        if operationID == UnitOperationTypes.FORTIFY then\n            print(\"Unit \" .. tostring(unitID) .. \" fortified\");\n        end\n    end\nend\nEvents.UnitOperationStarted.Add(OnUnitOperationStarted)",
       "notes": [
-        "[作用] 单位开始执行操作时触发，可用于监听单位进入警戒、驻防、创建商路等行为",
+        "[作用] 单位开始执行操作时触发，可用于监听单位进入警戒、驻扎、创建商路等行为",
         "operationID 取值参考 UnitOperationTypes 枚举（如 FORTIFY、ALERT、MAKE_TRADE_ROUTE），不同操作类型通过该参数区分",
         "常用于过滤本地玩家单位的特定操作类型后刷新 UI"
       ],
@@ -14362,14 +14366,13 @@
         {
           "name": "unitID",
           "type": ":number",
-          "description": "被升级的单位ID"
+          "description": "被强化的单位ID"
         }
       ],
       "callbackSignature": "OnUnitPromotionChanged(playerID: number, unitID: number)",
-      "exampleCode": "function OnUnitPromotionChanged(playerID, unitID)\n    local pPlayer = Players[playerID];\n    if (pPlayer ~= nil) then\n        local pUnit = pPlayer:GetUnits():FindID(unitID);\n        if (pUnit ~= nil) then\n            -- 单位已升级，更新相关UI\n        end\n    end\nend\nEvents.UnitPromoted.Add(OnUnitPromotionChanged);",
+      "exampleCode": "function OnUnitPromotionChanged(playerID, unitID)\n    local pPlayer = Players[playerID];\n    if (pPlayer ~= nil) then\n        local pUnit = pPlayer:GetUnits():FindID(unitID);\n        if (pUnit ~= nil) then\n            -- 单位已强化，更新相关UI\n        end\n    end\nend\nEvents.UnitPromoted.Add(OnUnitPromotionChanged);",
       "notes": [
-        "[作用] 单位升级时触发，用于更新与该单位相关的UI元素（如面板、旗帜晋升标记、移动力半径）",
-        "回调函数习惯命名为 OnUnitPromotionChanged，与事件名 UnitPromoted 无关，由 .Add() 左侧决定事件归属",
+        "[作用] 单位强化时触发",
         "该事件为 GameCoreEvent，可在 UI 侧监听，常用于刷新已选单位的显示状态"
       ],
       "enriched": true,
@@ -14690,26 +14693,24 @@
         {
           "name": "playerID",
           "type": ":number",
-          "description": "升级单位的玩家 ID"
+          "description": "进化单位的玩家 ID"
         },
         {
           "name": "unitID",
           "type": ":number",
-          "description": "被升级单位的 ID"
+          "description": "被进化单位的 ID"
         },
         {
-          "name": "eUpgradeUnitType",
+          "name": "eUpgradeUnitTypeIndex",
           "type": ":number",
-          "description": "升级后单位类型索引 (UnitType)"
+          "description": "进化后单位类型索引 (UnitTypeIndex)"
         }
       ],
-      "callbackSignature": "OnUnitUpgraded(playerID: number, unitID: number, eUpgradeUnitType: number)",
-      "exampleCode": "function OnUnitUpgraded(playerID, unitID, eUpgradeUnitType)\n    local pPlayer = Players[playerID];\n    if (pPlayer ~= nil) then\n        local pUnit = pPlayer:GetUnits():FindID(unitID);\n        if (pUnit ~= nil) then\n            -- 更新单位名称和晋升显示\n            pUnit:UpdateName();\n            pUnit:UpdatePromotions();\n        end\n    end\nend\nEvents.UnitUpgraded.Add(OnUnitUpgraded)",
+      "callbackSignature": "OnUnitUpgraded(playerID: number, unitID: number, eUpgradeUnitTypeIndex: number)",
+      "exampleCode": "function OnUnitUpgraded(playerID, unitID, eUpgradeUnitTypeIndex)\n    -- 输入你的代码\nend\nEvents.UnitUpgraded.Add(OnUnitUpgraded)",
       "notes": [
-        "[作用] 当单位完成升级时触发，用于更新 UI 中的单位标识和城市旗帜信息",
-        "第三个参数 eUpgradeUnitType 可选，部分回调（如 CityBannerManager）未接收此参数",
-        "UnitFlagManager 使用此事件更新单位的标志显示（名称和晋升标记）",
-        "CityBannerManager 使用此事件刷新城市旗帜上的单位关联信息"
+        "[作用] 当单位完成进化时触发",
+        "UnitFlagManager 使用此事件更新单位的标志显示（名称和晋升标记）"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -20495,7 +20496,7 @@
       "notes": [
         "[作用] 当玩家在通知面板中点击英雄发现通知时触发，用于展示英雄发现弹窗",
         "通知对象可通过 GetPlayerID() 获取玩家ID，通过 GetValue(\"HERO_CLASS\") 获取英雄类别、GetValue(\"PARAM_SUB_TYPE\") 获取发现来源、GetValue(\"PARAM_TARGET0\") 获取来源ID",
-        "发现来源包括：DISCOVERY_SOURCE_PROJECT（项目）、DISCOVERY_SOURCE_GOODY_HUT（蘑菇）、DISCOVERY_SOURCE_CITY_STATE_INFLUENCE（城邦使者）、DISCOVERY_SOURCE_NEW_CONTINENT（新大陆）、DISCOVERY_SOURCE_NATURAL_WONDER（自然奇观）、DISCOVERY_SOURCE_ENCOUNTER（遭遇）"
+        "发现来源包括：DISCOVERY_SOURCE_PROJECT（项目）、DISCOVERY_SOURCE_GOODY_HUT（部落村庄）、DISCOVERY_SOURCE_CITY_STATE_INFLUENCE（城邦使者）、DISCOVERY_SOURCE_NEW_CONTINENT（新大陆）、DISCOVERY_SOURCE_NATURAL_WONDER（自然奇观）、DISCOVERY_SOURCE_ENCOUNTER（遭遇）"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -22429,7 +22430,7 @@
       "callbackSignature": "Open(ownerID: number, unitID: number, resultID: number, totalTourism: number)",
       "exampleCode": "function Open(ownerID, unitID, resultID, totalTourism)\n    local kResultData = GameInfo.Unit_RockbandResults_XP2[resultID];\n    if kResultData ~= nil then\n        print(\"Rock band result: \" .. kResultData.Name);\n    end\nend\nLuaEvents.RockBandMoviePopup_OpenRockBandPopup.Add(Open);",
       "notes": [
-        "[作用] 当 RockBandMoviePopup 的动画播放完毕且关闭时触发，打开 RockBandPopup 显示摇滚乐队表演结果详情（星级评分、旅游业绩、专辑销量、是否可晋升/升级等）",
+        "[作用] 当 RockBandMoviePopup 的动画播放完毕且关闭时触发，打开 RockBandPopup 显示摇滚乐队表演结果详情（星级评分、旅游业绩、专辑销量、是否可强化等）",
         "仅在单人游戏中触发，多人游戏不播放 RockBandMoviePopup 动画，而是由 Events.PostTourismBomb 直接打开结果弹窗",
         "RockBandMoviePopup 可能积累多个表演的队列，逐个播放后触发此事件",
         "resultID 需要存在对应的 Unit_RockbandResults_XP2 数据行，否则会触发 UI.DataError"
@@ -23758,13 +23759,13 @@
         {
           "name": "kPlotIds",
           "type": ":table",
-          "description": "要移除限制的地格 ID 数组（number 元素）"
+          "description": "要移除限制的单元格 ID 数组（number 元素）"
         }
       ],
       "callbackSignature": "OnTutorial_RemoveUnitHexRestriction(unitType: string, kPlotIds: table)",
       "exampleCode": "function OnTutorial_RemoveUnitHexRestriction(unitType, kPlotIds)\n    if m_kTutorialUnitHexRestrictions == nil then return end\n    if m_kTutorialUnitHexRestrictions[unitType] == nil then return end\n    for _, plotId in ipairs(kPlotIds) do\n        for i = #m_kTutorialUnitHexRestrictions[unitType], 1, -1 do\n            if m_kTutorialUnitHexRestrictions[unitType][i] == plotId then\n                table.remove(m_kTutorialUnitHexRestrictions[unitType], i)\n                break\n            end\n        end\n    end\nend\nLuaEvents.Tutorial_RemoveUnitHexRestriction.Add(OnTutorial_RemoveUnitHexRestriction)",
       "notes": [
-        "[作用] 移除指定单位类型在特定地格上的 hex 移动限制",
+        "[作用] 移除指定单位类型在特定单元格上的 hex 移动限制",
         "未设置限制或限制不存在时会触发 UI.DataError"
       ],
       "enriched": true,
@@ -24995,10 +24996,10 @@
         }
       ],
       "callbackSignature": "OnPlayerEdited(index: number)",
-      "exampleCode": "function OnPlayerEdited(index)\n    local playerEntry = m_PlayerIndexToEntry[index];\n    if playerEntry ~= nil then\n        -- 清除该玩家单元格上的单位、改良和城市\n        for plotIndex = 0, Map.GetPlotCount()-1, 1 do\n            local plot = Map.GetPlotByIndex(plotIndex);\n            WorldBuilder.UnitManager():RemoveAt(plot);\n            if plot:GetOwner() == playerEntry.Index then\n                WorldBuilder.MapManager():SetImprovementType(plot, -1);\n                WorldBuilder.CityManager():RemoveAt(plot);\n            end\n        end\n        UI.RefreshColorSet();\n        UI.RebuildColorDB();\n    end\nend\nLuaEvents.WorldBuilder_PlayerEdited.Add(OnPlayerEdited)",
+      "exampleCode": "function OnPlayerEdited(index)\n    local playerEntry = m_PlayerIndexToEntry[index];\n    if playerEntry ~= nil then\n        -- 清除该玩家单元格上的单位、改良设施和城市\n        for plotIndex = 0, Map.GetPlotCount()-1, 1 do\n            local plot = Map.GetPlotByIndex(plotIndex);\n            WorldBuilder.UnitManager():RemoveAt(plot);\n            if plot:GetOwner() == playerEntry.Index then\n                WorldBuilder.MapManager():SetImprovementType(plot, -1);\n                WorldBuilder.CityManager():RemoveAt(plot);\n            end\n        end\n        UI.RefreshColorSet();\n        UI.RebuildColorDB();\n    end\nend\nLuaEvents.WorldBuilder_PlayerEdited.Add(OnPlayerEdited)",
       "notes": [
         "[作用] 当 World Builder 中玩家配置被编辑后触发，用于同步更新界面和数据",
-        "回调 OnPlayerEdited(index) 会清除被编辑玩家所有单元格上的单位、改良和城市，然后刷新 UI 配色",
+        "回调 OnPlayerEdited(index) 会清除被编辑玩家所有单元格上的单位、改良设施和城市，然后刷新 UI 配色",
         "回调 UpdatePlayerEntries() 忽略 index 参数，直接重建玩家下拉列表（在 WorldBuilderPlotEditor 和 WorldBuilderPlacement 中均有注册）"
       ],
       "enriched": true,
@@ -25133,7 +25134,7 @@
       "notes": [
         "[作用] 更新世界编辑器底部状态栏文本，反馈当前放置/删除/撤销等操作的结果",
         "参数通常是经过 Locale.Lookup() 本地化后的文本字符串",
-        "涉及的操作类型包括：单位/建筑/区域/资源/地形/河流/悬崖/改进设施/道路/起点的放置与移除，以及撤销/重做状态"
+        "涉及的操作类型包括：单位/建筑/区域/资源/地形/河流/悬崖/改良设施/道路/起点的放置与移除，以及撤销/重做状态"
       ],
       "enriched": true,
       "enrichComplete": true,
