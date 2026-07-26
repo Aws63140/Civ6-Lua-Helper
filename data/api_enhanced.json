@@ -1474,15 +1474,16 @@
           {
             "name": "amount",
             "type": ":number",
-            "description": "要增加的生产力值"
+            "description": "要增加的基础生产力值"
           }
         ],
         "returns": [],
         "displayName": "City:GetBuildQueue():AddProgress()",
         "exampleCode": "local buildQueue = pCity:GetBuildQueue()\nif buildQueue ~= nil then\n    buildQueue:AddProgress(amount)\nend",
         "notes": [
-          "[作用] 为城市当前生产项增加指定数量的生产力进度",
-          "GetBuildQueue() 可能返回 nil，调用前需要判空"
+          "[作用] 为城市当前生产项增加一定数量的生产力进度",
+          "GetBuildQueue() 可能返回 nil，调用前需要判空",
+          "[注意] 如果生产项有增产/减产效果，amount 的值也会被相应增加/减少。例如，如果生产开拓者时 +50% 生产力，AddProgress(100) 会增加 150 点生产进度；如果生产开拓者时 -50% 生产力，AddProgress(100) 只会增加 50 点生产进度"
         ],
         "signature": "AddProgress(amount: number)",
         "enriched": true,
@@ -1744,15 +1745,15 @@
           {
             "name": "productionType",
             "type": ":string",
-            "description": "当前建造内容的类型 ID（如 BUILDING_MONUMENT、DISTRICT_CAMPUS），无生产任务时返回 nil"
+            "description": "当前建造内容的类型 ID（如 BUILDING_MONUMENT、DISTRICT_CAMPUS），无生产任务时返回 \"NONE\""
           }
         ],
         "displayName": "City:GetBuildQueue():CurrentlyBuilding()",
-        "exampleCode": "local pBuildQueue = pCity:GetBuildQueue()\nlocal current = pBuildQueue:CurrentlyBuilding()\nif current ~= nil then\n    -- 输入你的代码\nend",
+        "exampleCode": "local pBuildQueue = pCity:GetBuildQueue()\nlocal current = pBuildQueue:CurrentlyBuilding()\nif current ~= \"NONE\" then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取城市当前正在建造的内容的类型 ID",
           "返回值可用于索引 GameInfo.Buildings、GameInfo.Districts、GameInfo.Units、GameInfo.Projects 等配置表",
-          "城市没有生产任务时返回 nil"
+          "城市没有生产任务时返回 \"NONE\""
         ],
         "signature": "CurrentlyBuilding() -> productionType: string",
         "enriched": true,
@@ -1776,8 +1777,8 @@
         "displayName": "City:GetBuildQueue():FinishProgress()",
         "exampleCode": "local buildQueue = pCity:GetBuildQueue()\nbuildQueue:FinishProgress()",
         "notes": [
-          "[作用] 强制完成城市当前正在建造的项目",
-          "FinishProgress 是 BuildQueue 对象的方法，无参数，调用后当前生产项立即完成"
+          "[作用] 试图完成城市当前正在建造的项目",
+          "[注意] FinishProgress 有时无法真正完成生产。如果生产项有减产效果，FinishProgress 只会推进生产项的部分生产进度。例如，如果生产开拓者时 -50% 生产力，且开拓者剩余成本是 100，FinishProgress 最终只会增加 50 点生产进度，不会完成生产。详情可查看 AddProgress 函数"
         ],
         "signature": "FinishProgress()",
         "enriched": true,
