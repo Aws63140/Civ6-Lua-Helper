@@ -54209,16 +54209,17 @@
           {
             "name": "added",
             "type": ":boolean",
-            "description": "地貌是否为后来添加的（非原始地貌）"
+            "description": "单元格是否为人造地貌（例如建造者建造的人造林）"
           }
         ],
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "查询并返回值",
         "displayName": "Plot:HasFeatureBeenAdded()",
-        "exampleCode": "local bAdded = Plot:HasFeatureBeenAdded()\nif bAdded then\n    -- 地貌是后来添加的（如人造林）\nelse\n    -- 地貌是原始的（如原始森林）\nend",
+        "exampleCode": "local bAdded = Plot:HasFeatureBeenAdded()\nif bAdded then\n    -- 单元格是人造地貌（如人造林）\nelse\n    -- 单元格是原始地貌（如原始森林）\nend",
         "notes": [
-          "[作用] 判断单元格的地貌是否为后来添加的（区别于原始地貌）",
-          "用于区分原始森林和人造林等场景"
+          "[作用] 判断单元格是否为人造地貌（例如建造者建造的人造林）",
+          "用于区分原始森林和人造林等场景",
+          "一旦单元格的地貌变为人造的（例如建造者建造过人造林），此单元格的 HasFeatureBeenAdded 永久为 true（即便当前已无地貌）。之后不管此单元格是何种地貌，都会被视作人造地貌（例如人造雨林）"
         ],
         "signature": "HasFeatureBeenAdded() -> added: boolean",
         "enriched": true,
