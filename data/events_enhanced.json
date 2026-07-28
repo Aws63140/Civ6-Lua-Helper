@@ -3401,7 +3401,7 @@
           "description": "建筑所在格 Y 坐标"
         },
         {
-          "name": "buildingType",
+          "name": "buildingIndex",
           "type": ":number",
           "description": "建筑类型索引（GameInfo.Buildings 中的 Index）"
         },
@@ -3413,7 +3413,7 @@
         {
           "name": "cityID",
           "type": ":number",
-          "description": "建筑所在城市 ID（部分回调未声明此参数但引擎始终传递）"
+          "description": "建筑所在城市 ID"
         },
         {
           "name": "percentComplete",
@@ -3426,13 +3426,12 @@
           "description": "是否被掠夺"
         }
       ],
-      "callbackSignature": "OnBuildingAddedToMap(plotX: number, plotY: number, buildingType: number, playerID: number, cityID: number, percentComplete: number, isPillaged: boolean)",
+      "callbackSignature": "OnBuildingAddedToMap(plotX: number, plotY: number, buildingIndex: number, playerID: number, cityID: number, percentComplete: number, isPillaged: boolean)",
       "exampleCode": "function OnBuildingAddedToMap(plotX, plotY, buildingType, playerID, cityID, percentComplete, isPillaged)\n    if (WorldView.HasAssetForWonder(buildingType)) then\n        WorldView.PlayEffectAtXY(\"WONDER_CREATED\", plotX, plotY);\n    else\n        WorldView.PlayEffectAtXY(\"BUILDING_CREATED\", plotX, plotY);\n    end\nend\nEvents.BuildingAddedToMap.Add(OnBuildingAddedToMap);",
       "notes": [
-        "[作用] 当建筑（含奇观）被放置到地图上时触发，可用于播放创建视觉特效或触发教程检查",
-        "奇观和普通建筑可通过 WorldView.HasAssetForWonder(buildingType) 区分",
-        "GenVFX.lua 利用此事件在建筑落地位置播放 WONDER_CREATED 或 BUILDING_CREATED 特效",
-        "回调函数通常只声明 6 个参数（省略 cityID），但引擎实际传递 7 个参数"
+        "[作用] 当建筑（含奇观）被放置到地图上时触发，",
+        "放置奇观的区域地基时也会触发",
+        "城市易主时，已建成奇观也会触发"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -3554,8 +3553,8 @@
       "exampleCode": "function OnBuildingRemovedFromMap(x, y, buildingID, playerID)\n    if playerID == Game.GetLocalPlayer() then\n        print(\"A building was removed at (\" .. x .. \", \" .. y .. \")\")\n    end\nend\nEvents.BuildingRemovedFromMap.Add(OnBuildingRemovedFromMap)",
       "notes": [
         "[作用] 当建筑从地图上被移除（如被摧毁、掠夺移除等）时触发，提供坐标、建筑实例和所属玩家",
-        "回调参数中的 buildingID 是建筑实例 ID，并非建筑类型索引（BuildingType 索引）",
-        "Mod 开发者标注该事件可能在预期之外的场景触发（--called in weird places），建议在回调中对 playerID 做合法性检查"
+        "城市易主时已建成和未建成的奇观都会触发此事件",
+        "UI 环境只能获取到坐标（暂未测试 Gameplay 环境）"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -4611,7 +4610,7 @@
       "category": "",
       "callbackParams": [
         {
-          "name": "owner",
+          "name": "playerID",
           "type": ":number",
           "description": "城市所属玩家 ID"
         },
@@ -4621,19 +4620,19 @@
           "description": "城市唯一 ID"
         },
         {
-          "name": "i",
+          "name": "x",
           "type": ":number",
-          "description": "城市所在单元格的六边形网格 I 坐标"
+          "description": "城市所在单元格的 X 坐标"
         },
         {
-          "name": "j",
+          "name": "y",
           "type": ":number",
-          "description": "城市所在单元格的六边形网格 J 坐标"
+          "description": "城市所在单元格的 Y 坐标"
         },
         {
-          "name": "k",
+          "name": "z",
           "type": ":number",
-          "description": "城市所在单元格的六边形网格 K 坐标"
+          "description": "城市所在单元格的 Z 坐标"
         },
         {
           "name": "isSelected",
@@ -4646,12 +4645,12 @@
           "description": "城市是否可编辑（可管理单元格/公民）"
         }
       ],
-      "callbackSignature": "OnCitySelectionChanged(owner: number, cityID: number, i: number, j: number, k: number, isSelected: boolean, isEditable: boolean)",
-      "exampleCode": "function OnCitySelectionChanged(owner, cityID, i, j, k, isSelected, isEditable)\n    if owner ~= Game.GetLocalPlayer() then\n        return;\n    end\n    if isSelected then\n        print(\"City selected:\", cityID);\n    else\n        print(\"City deselected:\", cityID);\n    end\nend\nEvents.CitySelectionChanged.Add(OnCitySelectionChanged);",
+      "callbackSignature": "OnCitySelectionChanged(playerID: number, cityID: number, x: number, y: number, z: number, isSelected: boolean, isEditable: boolean)",
+      "exampleCode": "function OnCitySelectionChanged(playerID, cityID, x, y, z, isSelected, isEditable)\n    if playerID ~= Game.GetLocalPlayer() then\n        return\n    end\n    if isSelected then\n        print(\"City selected:\", cityID)\n    else\n        print(\"City deselected:\", cityID)\n    end\nend\nEvents.CitySelectionChanged.Add(OnCitySelectionChanged)",
       "notes": [
         "[作用] 城市选择状态变化时触发（选中或取消选中某个城市）",
-        "参数 i/j/k 是城市所在单元格的六边形网格坐标（对应 Map.GetPlot(i, j)），其中 k 通常为 0",
-        "isEditable 为 false 时表示该城市当前不可操作（如正在被其他玩家查看或正处于动画过渡中）"
+        "参数 x/y/z 是城市所在单元格的坐标（对应 Map.GetPlot(x, y)），其中 z 通常为 0",
+        "isEditable 为 false 时表示该城市当前不可操作"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -15213,12 +15212,12 @@
         {
           "name": "buildingIndex",
           "type": ":number",
-          "description": "奇观的 Building 索引，用于查询 GameInfo.Buildings"
+          "description": "奇观在 GameInfo.Buildings 中的 Building 索引"
         },
         {
-          "name": "playerIndex",
+          "name": "playerID",
           "type": ":number",
-          "description": "建造该奇观的玩家索引"
+          "description": "建造该奇观的玩家 ID"
         },
         {
           "name": "cityId",
@@ -15236,13 +15235,11 @@
           "description": "是否已被掠夺（1=已掠夺，0=未掠夺）"
         }
       ],
-      "callbackSignature": "OnWonderCompleted(locX: number, locY: number, buildingIndex: number, playerIndex: number, cityId: number, iPercentComplete: number, pillaged: number)",
-      "exampleCode": "function OnWonderCompleted(locX, locY, buildingIndex, playerIndex, cityId, iPercentComplete, pillaged)\n    if iPercentComplete == 100 then\n        local buildingInfo = GameInfo.Buildings[buildingIndex];\n        print(\"奇迹建成: \" .. buildingInfo.Name .. \" by Player \" .. playerIndex);\n    end\nend\nEvents.WonderCompleted.Add(OnWonderCompleted);",
+      "callbackSignature": "OnWonderCompleted(locX: number, locY: number, buildingIndex: number, playerID: number, cityId: number, iPercentComplete: number, pillaged: number)",
+      "exampleCode": "function OnWonderCompleted(locX, locY, buildingIndex, playerIndex, cityId, iPercentComplete, pillaged)\n    if iPercentComplete == 100 then\n        local buildingInfo = GameInfo.Buildings[buildingIndex];\n        print(\"奇观建成: \" .. buildingInfo.Name .. \" by Player \" .. playerIndex);\n    end\nend\nEvents.WonderCompleted.Add(OnWonderCompleted);",
       "notes": [
-        "[作用] 当玩家完成或正在建造奇观时触发，提供建造进度信息和位置坐标",
-        "虽然事件名为 WonderCompleted，但 iPercentComplete 参数表明它可能在建造过程中多次触发，并非仅在完工时触发",
-        "通常在回调中检查 iPercentComplete == 100 来过滤出真正完工的事件",
-        "WonderBuiltPopup 使用 RequiresPlacement 属性判断是否需要玩家手动放置奇观位置（如罗马斗兽场）"
+        "[作用] 当玩家完成奇观的建造时触发",
+        "占领拥有已建成奇观的城市时不会触发此事件"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -16346,7 +16343,7 @@
       "exampleCode": "function OnLiveCityDataChanged(data, isSelected)\n    if not isSelected then\n        Close();\n        return;\n    end\n    m_kData = data;\n    Refresh();\nend\nLuaEvents.CityPanel_LiveCityDataChanged.Add(OnLiveCityDataChanged);",
       "notes": [
         "[作用] 当选中城市的数据变化时触发，将 CityPanel 中已计算好的完整城市数据表通过 LuaEvent 跨上下文传递给其他面板（如 CityPanelOverview），避免重复计算大量产量数据",
-        "data 参数包含 50+ 个字段：产量（食物/生产力/金币/科技/文化/信仰）、宜居度详情、住房详情、建筑列表、区域信息、宗教信徒、奇迹、生产队列、围城状态、城墙耐久度等",
+        "data 参数包含 50+ 个字段：产量（食物/生产力/金币/科技/文化/信仰）、宜居度详情、住房详情、建筑列表、区域信息、宗教信徒、奇观、生产队列、围城状态、城墙耐久度等",
         "data 为 nil 且 isSelected 为 false 时表示城市被取消选中，接收方应关闭面板",
         "这是性能优化设计：传递已计算好的大表比在多个面板中各自重新计算所有产量要高效得多"
       ],
@@ -24803,7 +24800,7 @@
       "callbackSignature": "OnWonderBuiltPopup_Shown()",
       "exampleCode": "function OnWonderBuiltPopup_Shown()\n    BulkHide(true, \"Wonder\");\nend\nLuaEvents.WonderBuiltPopup_Shown.Add(OnWonderBuiltPopup_Shown);",
       "notes": [
-        "[作用] 当奇迹建成弹窗即将显示时触发，通知其他系统隐藏/关闭会被遮挡的UI元素",
+        "[作用] 当奇观建成弹窗即将显示时触发，通知其他系统隐藏/关闭会被遮挡的UI元素",
         "在 WonderBuiltPopup.lua 的 OnWonderCompleted() 中，锁定弹窗管理器并调用 ShowPopup() 后立即发出，无参数",
         "与 LuaEvents.WonderBuiltPopup_Closed 配对使用，_Shown 隐藏批量UI，_Closed 恢复显示",
         "InGame.lua 的监听器调用 BulkHide(true, 'Wonder') 批量隐藏奇观UI元素",

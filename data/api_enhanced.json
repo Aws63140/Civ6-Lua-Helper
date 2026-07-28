@@ -2262,7 +2262,7 @@
         "table": "City",
         "functionA": "GetBuildQueue",
         "invoke": "Colon (Instance)",
-        "availability": "Both",
+        "availability": "UI",
         "argsA": [
           {
             "name": "productionType",
@@ -4493,21 +4493,15 @@
         "functionA": "GetDistricts",
         "invoke": "Colon (Instance)",
         "availability": "Both",
-        "argsA": [
-          {
-            "name": "districtType",
-            "type": ":number",
-            "description": "区域类型的 hash 值"
-          }
-        ],
+        "argsA": [],
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "查询并返回值",
         "functionB": "GetDistrict",
         "argsB": [
           {
-            "name": "districtType",
+            "name": "districtIndex",
             "type": ":number",
-            "description": "区域类型的 hash 值"
+            "description": "区域类型索引（GameInfo.Districts 中的 Index 值）"
           }
         ],
         "returns": [
@@ -4518,13 +4512,14 @@
           }
         ],
         "displayName": "City:GetDistricts():GetDistrict()",
-        "exampleCode": "local pDistricts = pCity:GetDistricts()\nif pDistricts ~= nil then\n    local pDistrict = pDistricts:GetDistrict(districtTypeHash)\n    if pDistrict ~= nil then\n        -- 输入你的代码\n    end\nend",
+        "exampleCode": "local pDistricts = pCity:GetDistricts()\nif pDistricts ~= nil then\n    local pDistrict = pDistricts:GetDistrict(districtIndex)\n    if pDistrict ~= nil then\n        -- 输入你的代码\n    end\nend",
         "notes": [
           "[作用] 根据区域类型获取城市中的指定区域对象",
           "需要先调用 GetDistricts() 获取区域管理器",
-          "返回值可能为 nil，需要判空"
+          "返回值可能为 nil，需要判空",
+          "能够获取到尚未建造完成的区域地基"
         ],
-        "signature": "GetDistrict(districtType: number) -> District: object",
+        "signature": "GetDistrict(districtIndex: number) -> District: object",
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
@@ -5390,7 +5385,7 @@
           {
             "name": "districtIndex",
             "type": ":number",
-            "description": "区域类型索引（如 GameInfo.Districts 中的 Index 值）"
+            "description": "区域类型索引（GameInfo.Districts 中的 Index 值）"
           }
         ],
         "functionC": "GetLocation",
@@ -5403,10 +5398,10 @@
           }
         ],
         "displayName": "City:GetDistricts():GetDistrict():GetLocation()",
-        "exampleCode": "local pDistricts = pCity:GetDistricts()\nlocal pDistrict = pDistricts:GetDistrict(districtIndex)\nif pDistrict ~= nil then\n    local location = pDistrict:GetLocation()\n    if location ~= nil then\n        -- 输入你的代码\n    end\nend",
+        "exampleCode": "local pDistricts = pCity:GetDistricts()\nlocal pDistrict = pDistricts:GetDistrict(districtIndex)\nif pDistrict ~= nil then\n    local location = pDistrict:GetLocation()\n    if location ~= nil then\n        local districtX = location.x    -- 区域所在单元格的 X 坐标\n        local districtY = location.y    -- 区域所在单元格的 Y 坐标\n    end\nend",
         "notes": [
           "[作用] 获取城市指定区域的所在位置坐标",
-          "GetDistrict 的参数为区域类型索引（如 DISTRICT_COTHON_INDEX），而非迭代索引",
+          "GetDistrict 的参数为区域类型索引（GameInfo.Districts 中的 Index 值）",
           "GetDistrict 可能返回 nil（城市未建造该区域时）",
           "返回的 location 对象包含 .x 和 .y 字段"
         ],
@@ -54830,17 +54825,17 @@
           {
             "name": "isNaturalWonder",
             "type": ":boolean",
-            "description": "单元格是否为自然奇迹"
+            "description": "单元格是否为自然奇观"
           }
         ],
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "查询并返回值",
         "displayName": "Plot:IsNaturalWonder()",
-        "exampleCode": "local Plot = Map.GetPlotByIndex(iPlotIndex)\nif (Plot ~= nil and Plot:IsNaturalWonder()) then\n    -- 处理自然奇迹单元格\nend",
+        "exampleCode": "local Plot = Map.GetPlotByIndex(iPlotIndex)\nif (Plot ~= nil and Plot:IsNaturalWonder()) then\n    -- 处理自然奇观单元格\nend",
         "notes": [
-          "[作用] 判断单元格是否为自然奇迹（Natural Wonder）",
+          "[作用] 判断单元格是否为自然奇观（Natural Wonder）",
           "通常先判空再调用：if (Plot ~= nil and Plot:IsNaturalWonder())",
-          "自然奇迹单元格可能占据多个单元格（多单元格 feature）"
+          "自然奇观单元格可能占据多个单元格（多单元格 feature）"
         ],
         "signature": "IsNaturalWonder() -> isNaturalWonder: boolean",
         "enriched": true,
@@ -107839,5 +107834,120 @@
         }
       }
     }
+  },
+  "Q-UIGetTextButton": {
+    "id": "Q-UIGetTextButton",
+    "type": "QUERY",
+    "table": "Control",
+    "functionA": "GetTextButton",
+    "invoke": "Dot (Global)",
+    "availability": "UI",
+    "argsA": [],
+    "returns": [
+      {
+        "name": "textButton",
+        "type": ":object",
+        "description": "获取 CheckBox/RadioButton/Button 控件内部的文本按钮控件对象，可调用 SetText/SetColor/GetSizeX/GetSizeY 等方法"
+      }
+    ],
+    "invokeNote": "通过命名空间调用：Object.Method()",
+    "typeNote": "CheckBox/RadioButton/Button 控件的内置方法，返回其内部的文本按钮控件引用。区别于 GetTextControl() 泛型方法，此方法专用于 CheckBox/RadioButton 等含文本的交互控件。",
+    "displayName": "UI.GetTextButton()",
+    "exampleCode": "local pTextBtn = checkBoxControl:GetTextButton()\nif pTextBtn ~= nil then\n    pTextBtn:SetText(Locale.Lookup(\"LOC_KEY\"))\n    pTextBtn:SetColor(packedColor)\nend",
+    "notes": [
+      "[作用] 获取 CheckBox/RadioButton/Button 控件内部的文本按钮控件，用于设置文本、颜色或计算文本尺寸",
+      "官方 MinimapPanel.lua 使用 GetTextButton() 而非 GetTextControl()",
+      "获取到的 textButton 可调用 SetText/SetColor/GetSizeX/GetSizeY 等方法"
+    ],
+    "signature": "GetTextButton() -> TextButton: object",
+    "functionB": "",
+    "functionC": "",
+    "enriched": true
+  },
+  "Q-UICheckBoxSetSelected": {
+    "id": "Q-UICheckBoxSetSelected",
+    "type": "ACTION",
+    "table": "CheckBox",
+    "functionA": "SetSelected",
+    "invoke": "Dot (Global)",
+    "availability": "UI",
+    "argsA": [
+      {
+        "name": "isSelected",
+        "type": "bool",
+        "description": "是否选中高亮状态"
+      }
+    ],
+    "returns": [],
+    "invokeNote": "通过命名空间调用：Object.Method()",
+    "typeNote": "设置 CheckBox/RadioButton 控件的选中高亮外观。与 SetCheck 功能相同但侧重按钮外观高亮效果。",
+    "displayName": "CheckBox:SetSelected()",
+    "exampleCode": "Controls.MapOptionsButton:SetSelected(true)\nControls.LensButton:SetSelected(false)",
+    "notes": [
+      "[作用] 设置 CheckBox/RadioButton 的选中高亮外观状态",
+      "官方 MinimapPanel.lua 使用 SetSelected 控制 MapOptionsButton/LensButton 的外观状态",
+      "SetCheck 设置勾选逻辑状态，SetSelected 设置选中高亮外观。大多数情况下可互换使用。"
+    ],
+    "signature": "SetSelected(isSelected: bool)",
+    "functionB": "",
+    "functionC": "",
+    "enriched": true
+  },
+  "Q-UICheckBoxIsSelected": {
+    "id": "Q-UICheckBoxIsSelected",
+    "type": "QUERY",
+    "table": "CheckBox",
+    "functionA": "IsSelected",
+    "invoke": "Dot (Global)",
+    "availability": "UI",
+    "argsA": [],
+    "returns": [
+      {
+        "name": "isSelected",
+        "type": "bool",
+        "description": "是否处于选中高亮状态"
+      }
+    ],
+    "invokeNote": "通过命名空间调用：Object.Method()",
+    "typeNote": "查询 CheckBox/RadioButton 控件是否处于选中高亮外观状态。",
+    "displayName": "CheckBox:IsSelected()",
+    "exampleCode": "if Controls.MapOptionsButton:IsSelected() then\n    -- panel is open\nend",
+    "notes": [
+      "[作用] 查询 CheckBox/RadioButton 是否处于选中高亮外观状态",
+      "官方 MinimapPanel.lua 使用 IsSelected 判断按钮是否处于按下/高亮状态"
+    ],
+    "signature": "IsSelected() -> isSelected: bool",
+    "functionB": "",
+    "functionC": "",
+    "enriched": true
+  },
+  "Q-UIGetTextControl": {
+    "id": "Q-UIGetTextControl",
+    "type": "QUERY",
+    "table": "Control",
+    "functionA": "GetTextControl",
+    "invoke": "Dot (Global)",
+    "availability": "UI",
+    "argsA": [],
+    "returns": [
+      {
+        "name": "textControl",
+        "type": ":object",
+        "description": "获取 Button 控件内部的文本控件对象，可调用 GetSizeX/GetSizeY/GetText/SetColor 等方法"
+      }
+    ],
+    "invokeNote": "通过命名空间调用：Object.Method()",
+    "typeNote": "Button/PopupButton 等控件的内置方法，返回其内部的文本控件引用。区别于 GetTextButton()（CheckBox/RadioButton 专有）。",
+    "displayName": "Control:GetTextControl()",
+    "exampleCode": "local pTextControl = buttonControl:GetTextControl()\nif pTextControl ~= nil then\n    local sizeX = pTextControl:GetSizeX()\n    local text = pTextControl:GetText()\nend",
+    "notes": [
+      "[作用] 获取按钮控件内部的文本控件对象，用于读取文本内容、计算文本尺寸或设置文本颜色",
+      "此方法是 Button/PopupButton 控件的方法，不是 UI 全局函数",
+      "获取到的 textControl 可调用 GetSizeX/GetSizeY 计算文本尺寸，用于自适应按钮大小"
+    ],
+    "signature": "GetTextControl() -> textControl: object",
+    "functionB": "",
+    "functionC": "",
+    "enriched": true
   }
 }
