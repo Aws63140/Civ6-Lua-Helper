@@ -6125,7 +6125,7 @@
           "description": "区域所在单元格 Y 坐标"
         },
         {
-          "name": "districtType",
+          "name": "districtIndex",
           "type": ":number",
           "description": "区域类型索引，对应 GameInfo.Districts 表的 Index"
         },
@@ -6135,7 +6135,7 @@
           "description": "当前时代索引"
         },
         {
-          "name": "iCivType",
+          "name": "iCivIndex",
           "type": ":number",
           "description": "文明类型索引"
         },
@@ -6155,14 +6155,13 @@
           "description": "是否处于被掠夺状态（0 或 1）"
         }
       ],
-      "callbackSignature": "OnDistrictAddedToMap(playerID: number, districtID: number, cityID: number, x: number, y: number, districtType: number, iEra: number, iCivType: number, percentComplete: number, iAppeal: number, bPillaged: number)",
-      "exampleCode": "function OnDistrictAddedToMap(playerID, districtID, cityID, x, y, districtType)\n    local pPlayer = Players[playerID]\n    if pPlayer ~= nil then\n        local pDistrict = pPlayer:GetDistricts():FindID(districtID)\n        if pDistrict ~= nil then\n            local districtTypeStr = pDistrict:GetType()\n            print(\"District placed: \" .. tostring(districtTypeStr) .. \" by player \" .. tostring(playerID))\n        end\n    end\nend\nEvents.DistrictAddedToMap.Add(OnDistrictAddedToMap)",
+      "callbackSignature": "OnDistrictAddedToMap(playerID: number, districtID: number, cityID: number, x: number, y: number, districtIndex: number, iEra: number, iCivIndex: number, percentComplete: number, iAppeal: number, bPillaged: number)",
+      "exampleCode": "function OnDistrictAddedToMap(playerID, districtID, cityID, x, y, districtIndex)\n    --输入你的代码\nend\nEvents.DistrictAddedToMap.Add(OnDistrictAddedToMap)",
       "notes": [
-        "[作用] 当区域被放置到地图上时触发，提供区域位置、类型归属、建造进度和状态信息",
-        "第 6 个参数为 districtType（区域类型索引），不是 districtID；通过 GameInfo.Districts[districtTypeStr].Index 比较",
-        "iEra、iCivType、iAppeal、bPillaged 是扩展参数（GenVFX.lua 中列出），大部分回调仅使用前 6 个参数",
-        "城市中心区域（CITY_CENTER_DISTRICT_INDEX）也会触发此事件，可根据 districtType 过滤",
-        "CityBannerManager 中同一回调函数也注册给 DistrictBuildProgressChanged 事件，该事件参数结构相同"
+        "[作用] 当区域地基被放置到地图上时触发",
+        "城市易主时会触发，区域地基被放置在本地玩家可见范围外时也会触发",
+        "参数 districtIndex 是区域类型索引，不是 districtID",
+        "城市中心区域（DISTRICT_CITY_CENTER）也会触发此事件"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -6220,7 +6219,7 @@
         {
           "name": "districtType",
           "type": ":number",
-          "description": "区域类型索引 (对应 GameInfo.Districts)"
+          "description": "区域类型索引，对应 GameInfo.Districts 表的 Index"
         },
         {
           "name": "era",
@@ -6436,18 +6435,18 @@
           "description": "区域所在格Y坐标"
         },
         {
-          "name": "districtType",
+          "name": "districtIndex",
           "type": ":number",
-          "description": "区域类型ID（用于区分区域类型，如市中心、军营等）"
+          "description": "区域类型索引，对应 GameInfo.Districts 表的 Index"
         }
       ],
-      "callbackSignature": "OnDistrictRemovedFromMap(playerID: number, districtID: number, cityID: number, x: number, y: number, districtType: number)",
-      "exampleCode": "function OnDistrictRemovedFromMap(playerID, districtID, cityID, x, y, districtType)\n    if districtType ~= CITY_CENTER_DISTRICT_INDEX then\n        OnPlotYieldChanged(x, y);\n        OnMapYieldsChanged();\n    end\nend\nEvents.DistrictRemovedFromMap.Add(OnDistrictRemovedFromMap)",
+      "callbackSignature": "OnDistrictRemovedFromMap(playerID: number, districtID: number, cityID: number, x: number, y: number, districtIndex: number)",
+      "exampleCode": "function OnDistrictRemovedFromMap(playerID, districtID, cityID, x, y, districtIndex)\n    --输入你的代码\nend\nEvents.DistrictRemovedFromMap.Add(OnDistrictRemovedFromMap)",
       "notes": [
-        "[作用] 当一个区域（District）从地图上被移除时触发",
-        "销毁对应区域的小型城市横幅（MiniBanner），避免残留UI",
-        "通过 districtType 区分是否为城市中心区域（CITY_CENTER_DISTRICT_INDEX），市中心移除不触发单元格产出更新——由城市移除事件统一处理",
-        "GameCoreEvent，UI和GamePlay环境均可监听"
+        "[作用] 当区域地基从地图上被移除时触发",
+        "城市易主时会触发，区域地基在本地玩家可见范围外被移除时也会触发",
+        "参数 districtIndex 是区域类型索引，不是 districtID",
+        "城市中心区域（DISTRICT_CITY_CENTER）也会触发此事件"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -8497,20 +8496,20 @@
         {
           "name": "citystateID",
           "type": ":number",
-          "description": "被派遣使者的城邦ID"
+          "description": "被派遣使者的城邦 ID"
         },
         {
           "name": "playerID",
           "type": ":number",
-          "description": "派遣使者的玩家ID"
+          "description": "派遣使者的玩家 ID"
         }
       ],
       "callbackSignature": "OnInfluenceGiven(citystateID: number, playerID: number)",
-      "exampleCode": "function OnInfluenceGiven()\n    if not ContextPtr:IsHidden() then\n        local localPlayerID = Game.GetLocalPlayer();\n        if (localPlayerID == -1) then\n            return;\n        end\n        Refresh();\n    end\nend\nEvents.InfluenceGiven.Add(OnInfluenceGiven)",
+      "exampleCode": "function OnInfluenceGiven(citystateID, playerID)\n    -- 输入你的代码\nend\nEvents.InfluenceGiven.Add(OnInfluenceGiven)",
       "notes": [
-        "[作用] 当玩家向城邦派遣使者（获得影响力）时触发，用于更新城邦面板UI",
-        "该事件为 GameCoreEvent，参数由游戏引擎定义，Lua 回调中可忽略参数仅刷新 UI",
-        "CityStates.lua 中的回调函数不接收参数，仅在面板可见时刷新城邦列表"
+        "[作用] 城邦被派遣使者时触发",
+        "[注意] UI 环境中 playerID 参数永远为本地玩家 ID。尚未测试 Gameplay 环境",
+        "即便本地玩家尚未遇见城邦或 AI 领袖，AI 领袖也可触发此事件"
       ],
       "enriched": true,
       "enrichComplete": true,

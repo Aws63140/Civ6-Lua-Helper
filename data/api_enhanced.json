@@ -503,7 +503,7 @@
           {
             "name": "plotID",
             "type": ":number",
-            "description": "单元格索引"
+            "description": "单元格 ID"
           }
         ],
         "invokeNote": "通过实例调用：instance:Method()",
@@ -513,22 +513,23 @@
           {
             "name": "plotID",
             "type": ":number",
-            "description": "单元格索引"
+            "description": "单元格 ID"
           }
         ],
         "returns": [
           {
             "name": "buildingTypes",
             "type": ":table",
-            "description": "建筑类型字符串列表，可用 ipairs 遍历，每个元素作为 GameInfo.Buildings 的键"
+            "description": "建筑类型索引列表，可用 ipairs 遍历，每个元素作为 GameInfo.Buildings 的键"
           }
         ],
         "displayName": "City:GetBuildings():GetBuildingsAtLocation()",
         "exampleCode": "local pCityBuildings = pCity:GetBuildings()\nif pCityBuildings ~= nil then\n    local kBuildingTypes = pCityBuildings:GetBuildingsAtLocation(plotID)\n    for _, buildingType in ipairs(kBuildingTypes) do\n        local building = GameInfo.Buildings[buildingType]\n    end\nend",
         "notes": [
-          "[作用] 返回指定单元格上属于该城市的所有建筑类型字符串列表",
+          "[作用] 返回指定单元格上属于该城市的所有建筑类型索引列表",
           "plotID 通常通过 Map.GetCityPlots():GetPurchasedPlots() 获取的已购买单元格列表，或通过 plot:GetIndex() 获取",
-          "返回的建筑类型字符串可用作 GameInfo.Buildings 的键，也可传递给 IsPillaged(type) 等建筑管理器方法"
+          "返回的建筑类型索引可用作 GameInfo.Buildings 的键",
+          "只能获取已建成的建筑，未建成的建筑可以使用 GetConstructionsAtLocation"
         ],
         "signature": "GetBuildingsAtLocation(plotID: number) -> buildingTypes: table",
         "functionC": "",
@@ -1483,7 +1484,8 @@
         "notes": [
           "[作用] 为城市当前生产项增加一定数量的生产力进度",
           "GetBuildQueue() 可能返回 nil，调用前需要判空",
-          "[注意] 如果生产项有增产/减产效果，amount 的值也会被相应增加/减少。例如，如果生产开拓者时 +50% 生产力，AddProgress(100) 会增加 150 点生产进度；如果生产开拓者时 -50% 生产力，AddProgress(100) 只会增加 50 点生产进度"
+          "[注意] 如果生产项有增产/减产效果，amount 的值也会被相应增加/减少。例如，如果生产开拓者时 +50% 生产力，AddProgress(100) 会增加 150 点生产进度；如果生产开拓者时 -50% 生产力，AddProgress(100) 只会增加 50 点生产进度",
+          "amount 的值可以为负数，此时会降低生产进度，甚至可以将生产进度降低至负数（此时需要更多生产力才能完成生产）"
         ],
         "signature": "AddProgress(amount: number)",
         "enriched": true,
@@ -1962,22 +1964,23 @@
           {
             "name": "plotID",
             "type": ":number",
-            "description": "单元格索引"
+            "description": "单元格 ID"
           }
         ],
         "returns": [
           {
             "name": "constructions",
             "type": ":table",
-            "description": "该单元格上的建筑类型哈希值数组，每个元素可用于 GameInfo.Buildings[] 查找"
+            "description": "该单元格上的建筑类型索引列表，每个元素可用于 GameInfo.Buildings[] 查找"
           }
         ],
         "displayName": "City:GetBuildQueue():GetConstructionsAtLocation()",
         "exampleCode": "local cityBuildQueue = pCity:GetBuildQueue()\nif cityBuildQueue ~= nil then\n    local constructionTypes = cityBuildQueue:GetConstructionsAtLocation(plotID)\n    for _, buildingHash in ipairs(constructionTypes) do\n        local building = GameInfo.Buildings[buildingHash]\n        -- 使用 building\n    end\nend",
         "notes": [
-          "[作用] 查询城市在指定单元格上的建造队列中的建筑类型列表",
+          "[作用] 查询城市在指定单元格上的建造队列中的建筑类型索引列表",
           "GetBuildQueue() 可能返回 nil，调用前需判空",
-          "返回值为 table，每个元素是建筑类型哈希值（string），可用于 GameInfo.Buildings[] 查找"
+          "返回值为 table，每个元素是建筑类型索引（number），可用于 GameInfo.Buildings[] 查找",
+          "只能获取尚未建成的建筑，获取已建成建筑可使用 GetBuildingsAtLocation"
         ],
         "signature": "GetConstructionsAtLocation(plotID: number) -> constructions: table",
         "functionC": "",
