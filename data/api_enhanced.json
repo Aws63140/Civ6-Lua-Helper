@@ -10358,7 +10358,7 @@
         ],
         "invokeNote": "通过命名空间调用：Object.Method()",
         "typeNote": "查询并返回值",
-        "displayName": "City.TypeName()",
+        "displayName": "City:TypeName()",
         "exampleCode": "local type = City.TypeName()",
         "notes": [
           "查询 TypeName，返回 string"
@@ -14708,7 +14708,7 @@
             "description": "新建部落的编号，可用于 CreateTribeUnits、StartOperationWithCityTarget 等后续操作"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():CreateTribeOfType()",
+        "displayName": "Game.GetBarbarianManager():CreateTribeOfType()",
         "exampleCode": "local pBarbManager = Game.GetBarbarianManager()\nlocal iPlotIndex = Map.GetPlot(26, 44):GetIndex()\nlocal eBarbarianTribeType = 0 -- NavalRaider\nlocal iTribeNumber = pBarbManager:CreateTribeOfType(eBarbarianTribeType, iPlotIndex)",
         "notes": [
           "在指定单元格创建指定类型的野蛮人部落",
@@ -14760,7 +14760,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetBarbarianManager():CreateTribeUnits()",
+        "displayName": "Game.GetBarbarianManager():CreateTribeUnits()",
         "exampleCode": "local pBarbManager = Game.GetBarbarianManager()\npBarbManager:CreateTribeUnits(iTribeNumber, \"CLASS_HEAVY_CAVALRY\", 5, iPlotIndex, iRange)",
         "notes": [
           "[作用] 为指定部落创建指定类型的单位",
@@ -14807,7 +14807,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetBarbarianManager():StartOperationWithCityTarget()",
+        "displayName": "Game.GetBarbarianManager():StartOperationWithCityTarget()",
         "exampleCode": "local pBarbManager = Game.GetBarbarianManager()\nlocal pTargetCity = FindNearestTargetCity(eTargetPlayer, iX, iY)\nif pTargetCity ~= nil then\n    pBarbManager:StartOperationWithCityTarget(iTribeNumber, \"Barbarian City Assault\", eTargetPlayer, pTargetCity:GetID())\nend",
         "notes": [
           "[作用] 指定部落对目标城市发起攻击操作",
@@ -14834,7 +14834,7 @@
         "functionB": "CreateSpecificTribe",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetBarbarianManager():CreateSpecificTribe()",
+        "displayName": "Game.GetBarbarianManager():CreateSpecificTribe()",
         "exampleCode": "local pBarbarianManager = pGame:GetBarbarianManager()\npBarbarianManager:Create()",
         "notes": [
           "获取BarbarianManager",
@@ -14885,7 +14885,7 @@
             "description": "煽动该部落所需的金币数"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeInciteCost()",
+        "displayName": "Game.GetBarbarianManager():GetTribeInciteCost()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nif pBarbarianManager ~= nil then\n    local iInciteCost = pBarbarianManager:GetTribeInciteCost(tribeIndex, iActivePlayer, otherPlayerID)\nend",
         "notes": [
           "[作用] 获取煽动指定部落所需的金币成本",
@@ -14928,7 +14928,7 @@
             "description": "可煽动目标玩家 ID 数组，可能为 nil"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeInciteTargets()",
+        "displayName": "Game.GetBarbarianManager():GetTribeInciteTargets()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nif pBarbarianManager ~= nil then\n    local tInciteTargets = pBarbarianManager:GetTribeInciteTargets(tribeIndex, iActivePlayer)\n    if tInciteTargets ~= nil then\n        for _, eTargetPlayer in ipairs(tInciteTargets) do\n            -- eTargetPlayer 是玩家 ID (number)\n        end\n    end\nend",
         "notes": [
           "获取指定部落可被煽动的其他玩家列表",
@@ -14966,7 +14966,7 @@
             "description": "部落转换点数，负值表示无法转换"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeConversionPoints()",
+        "displayName": "Game.GetBarbarianManager():GetTribeConversionPoints()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nlocal iCurrentPoints = pBarbarianManager:GetTribeConversionPoints(tribeIndex)",
         "notes": [
           "[作用] 获取指定部落的当前转换点数",
@@ -15009,7 +15009,7 @@
             "description": "贿赂剩余回合数，0 表示未被贿赂"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeBribeTurnsRemaining()",
+        "displayName": "Game.GetBarbarianManager():GetTribeBribeTurnsRemaining()",
         "exampleCode": "local pBarbarianTribeManager = Game.GetBarbarianManager()\nlocal bribedTurnsRemaining = pBarbarianTribeManager:GetTribeBribeTurnsRemaining(tribeIndex, localPlayerID)\nif bribedTurnsRemaining > 0 then\n    -- 玩家已贿赂该部落，剩余回合数为 bribedTurnsRemaining\nend",
         "notes": [
           "查询玩家对指定部落的贿赂剩余回合数",
@@ -15046,7 +15046,7 @@
             "description": "被煽动目标玩家 ID，无目标时返回 -1"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeInciteTargetPlayer()",
+        "displayName": "Game.GetBarbarianManager():GetTribeInciteTargetPlayer()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nif pBarbarianManager ~= nil then\n    local inciteTargetID = pBarbarianManager:GetTribeInciteTargetPlayer(tribeIndex)\n    if inciteTargetID >= 0 then\n        -- 有煽动目标\n    end\nend",
         "notes": [
           "[作用] 查询指定部落当前的煽动目标玩家",
@@ -15084,7 +15084,7 @@
             "description": "部落转换进度百分比（0-100）"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeConversionPercent()",
+        "displayName": "Game.GetBarbarianManager():GetTribeConversionPercent()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nlocal tribeIndex = pBarbarianManager:GetTribeIndexAtLocation(x, y)\nif tribeIndex ~= nil then\n    local conversionPercent = pBarbarianManager:GetTribeConversionPercent(tribeIndex)\nend",
         "notes": [
           "[作用] 获取野蛮人部落转换为城邦的进度百分比",
@@ -15127,7 +15127,7 @@
             "description": "部落索引，负数表示该位置无部落"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeIndexAtLocation()",
+        "displayName": "Game.GetBarbarianManager():GetTribeIndexAtLocation()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nlocal tribeIndex = pBarbarianManager:GetTribeIndexAtLocation(iPlotX, iPlotY)\nif tribeIndex >= 0 then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 根据地图坐标获取该位置的野蛮人部落索引",
@@ -15165,7 +15165,7 @@
             "description": "部落类型枚举值，可用于 GameInfo.BarbarianTribes 索引"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeType()",
+        "displayName": "Game.GetBarbarianManager():GetTribeType()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nlocal eTribeType = pBarbarianManager:GetTribeType(tribeIndex)",
         "notes": [
           "[作用] 获取指定部落的类型枚举值",
@@ -15202,7 +15202,7 @@
             "description": "部落名称类型索引，用作 GameInfo.BarbarianTribeNames 的下标，-1 表示无效"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeNameType()",
+        "displayName": "Game.GetBarbarianManager():GetTribeNameType()",
         "exampleCode": "local pBarbManager = Game.GetBarbarianManager()\nlocal tribeIndex = pBarbManager:GetTribeIndexAtLocation(x, y)\nif tribeIndex >= 0 then\n    local barbType = pBarbManager:GetTribeNameType(tribeIndex)\n    if barbType >= 0 then\n        local pBarbTribe = GameInfo.BarbarianTribeNames[barbType]\n    end\nend",
         "notes": [
           "[作用] 根据部落索引获取部落名称类型，用于查询 GameInfo.BarbarianTribeNames 获取部落显示名称",
@@ -15228,7 +15228,7 @@
         "functionB": "GetTribeRansomUnit",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetBarbarianManager():GetTribeRansomUnit()",
+        "displayName": "Game.GetBarbarianManager():GetTribeRansomUnit()",
         "exampleCode": "pGame:GetBarbarianManager()",
         "notes": [
           "获取BarbarianManager",
@@ -15268,7 +15268,7 @@
             "description": "部落转换为城邦所需的点数"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeConversionPointsRequired()",
+        "displayName": "Game.GetBarbarianManager():GetTribeConversionPointsRequired()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nif pBarbarianManager ~= nil then\n    local tribeIndex = pBarbarianManager:GetTribeIndexAtLocation(plotX, plotY)\n    local iPointsRequired = pBarbarianManager:GetTribeConversionPointsRequired(tribeIndex)\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取野蛮人部落转换为城邦所需的总点数",
@@ -15306,7 +15306,7 @@
             "description": "部落转换被禁用时的提示文本，可能为空字符串"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeConversionDisabledHelp()",
+        "displayName": "Game.GetBarbarianManager():GetTribeConversionDisabledHelp()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nif pBarbarianManager ~= nil then\n    local strDisabledTip = pBarbarianManager:GetTribeConversionDisabledHelp(tribeIndex)\n    if strDisabledTip ~= nil and strDisabledTip ~= \"\" then\n        -- 使用提示文本\n    end\nend",
         "notes": [
           "[作用] 获取部落转换被禁用时的提示文本",
@@ -15332,7 +15332,7 @@
         "functionB": "GetTribeCampLocation",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetBarbarianManager():GetTribeCampLocation()",
+        "displayName": "Game.GetBarbarianManager():GetTribeCampLocation()",
         "exampleCode": "pGame:GetBarbarianManager()",
         "notes": [
           "获取BarbarianManager",
@@ -15372,7 +15372,7 @@
             "description": "该单位类型是否被部落排除"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():IsClanExcludeUnitType()",
+        "displayName": "Game.GetBarbarianManager():IsClanExcludeUnitType()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nlocal bExcluded = pBarbarianManager:IsClanExcludeUnitType(pUnit:GetType())\nif (not bExcluded) then\n    -- 单位类型未被排除，显示部落状态图标\nend",
         "notes": [
           "[作用] 判断单位类型是否被部落排除",
@@ -15410,7 +15410,7 @@
             "description": "煽动该部落的玩家 ID，无玩家煽动时返回负值"
           }
         ],
-        "displayName": "Game:GetBarbarianManager():GetTribeInciteSourcePlayer()",
+        "displayName": "Game.GetBarbarianManager():GetTribeInciteSourcePlayer()",
         "exampleCode": "local pBarbarianManager = Game.GetBarbarianManager()\nlocal inciteSourceID = pBarbarianManager:GetTribeInciteSourcePlayer(tribeIndex)",
         "notes": [
           "[作用] 获取煽动指定野蛮人部落的源玩家 ID",
@@ -15506,7 +15506,7 @@
             "description": "当前时代索引（0-based）"
           }
         ],
-        "displayName": "Game:GetEras():GetCurrentEra()",
+        "displayName": "Game.GetEras():GetCurrentEra()",
         "exampleCode": "local pEras = Game.GetEras()\nif pEras ~= nil then\n    local eraIndex = pEras:GetCurrentEra()\nend",
         "notes": [
           "[作用] 返回当前游戏时代索引",
@@ -15538,7 +15538,7 @@
             "description": "当前时代最早结束的回合数（绝对回合号）"
           }
         ],
-        "displayName": "Game:GetEras():GetCurrentEraMinimumEndTurn()",
+        "displayName": "Game.GetEras():GetCurrentEraMinimumEndTurn()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal minimumEndTurn = pGameEras:GetCurrentEraMinimumEndTurn()\nlocal currentTurn = Game.GetCurrentGameTurn()\nlocal turnsRemaining = minimumEndTurn - currentTurn",
         "notes": [
           "[作用] 返回当前时代最早结束的绝对回合号",
@@ -15570,7 +15570,7 @@
             "description": "当前时代的最大结束回合数（绝对值）"
           }
         ],
-        "displayName": "Game:GetEras():GetCurrentEraMaximumEndTurn()",
+        "displayName": "Game.GetEras():GetCurrentEraMaximumEndTurn()",
         "exampleCode": "local pGameEras = Game.GetEras()\nif pGameEras ~= nil then\n    local maxEndTurn = pGameEras:GetCurrentEraMaximumEndTurn()\nend",
         "notes": [
           "[作用] 获取当前时代的最大结束回合数（绝对回合数）",
@@ -15602,7 +15602,7 @@
             "description": "当前时代开始的回合数"
           }
         ],
-        "displayName": "Game:GetEras():GetCurrentEraStartTurn()",
+        "displayName": "Game.GetEras():GetCurrentEraStartTurn()",
         "exampleCode": "local eraTable = Game.GetEras()\nlocal eraStartTurn = eraTable:GetCurrentEraStartTurn()\n-- 也可以链式调用：local eraStartTurn = Game.GetEras():GetCurrentEraStartTurn()\nif Game.GetCurrentGameTurn() == eraStartTurn then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取当前时代开始的回合数",
@@ -15634,7 +15634,7 @@
             "description": "最终时代的索引"
           }
         ],
-        "displayName": "Game:GetEras():GetFinalEra()",
+        "displayName": "Game.GetEras():GetFinalEra()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal isFinalEra = pGameEras:GetCurrentEra() == pGameEras:GetFinalEra()",
         "notes": [
           "获取游戏中最终时代的索引，可与 GetCurrentEra() 比较判断当前是否是最终时代",
@@ -15664,7 +15664,7 @@
             "description": "距离下一个时代的剩余回合数，0 表示当前是最后一回合，-1 表示倒计时未开始"
           }
         ],
-        "displayName": "Game:GetEras():GetNextEraCountdown()",
+        "displayName": "Game.GetEras():GetNextEraCountdown()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal countdown = pGameEras:GetNextEraCountdown() + 1 -- 0 表示最后一回合，+1 后更符合人类理解\nif countdown ~= nil and countdown ~= 0 then\n    -- 倒计时已开始，countdown 表示剩余回合数\nend",
         "notes": [
           "[作用] 获取距离下一个时代的剩余回合数",
@@ -15702,7 +15702,7 @@
             "description": "当前时代分数"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerCurrentScore()",
+        "displayName": "Game.GetEras():GetPlayerCurrentScore()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal score = pGameEras:GetPlayerCurrentScore(localPlayerID)",
         "notes": [
           "[作用] 获取玩家的当前时代分数",
@@ -15740,7 +15740,7 @@
             "description": "允许选择的纪念次数"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerNumAllowedCommemorations()",
+        "displayName": "Game.GetEras():GetPlayerNumAllowedCommemorations()",
         "exampleCode": "local pEras = Game.GetEras()\nlocal numAllowed = pEras:GetPlayerNumAllowedCommemorations(Game.GetLocalPlayer())\nif numAllowed > 0 then\n    -- 显示纪念选择弹窗\nend",
         "notes": [
           "[作用] 获取玩家在当前时代可选择的纪念（Commemoration）次数",
@@ -15778,7 +15778,7 @@
             "description": "指定玩家是否处于黑暗时代"
           }
         ],
-        "displayName": "Game:GetEras():HasDarkAge()",
+        "displayName": "Game.GetEras():HasDarkAge()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal isDark = pGameEras:HasDarkAge(playerID)\n-- 也可以不传参数，检查当前本地玩家：\n-- local isDark = pGameEras:HasDarkAge()",
         "notes": [
           "[作用] 检查玩家当前是否处于黑暗时代",
@@ -15816,7 +15816,7 @@
             "description": "该玩家当前是否处于黄金时代"
           }
         ],
-        "displayName": "Game:GetEras():HasGoldenAge()",
+        "displayName": "Game.GetEras():HasGoldenAge()",
         "exampleCode": "local gameEras = Game.GetEras()\nif gameEras:HasGoldenAge(localPlayerID) then\n    -- 处于黄金时代\nend",
         "notes": [
           "[作用] 检查指定玩家当前是否处于黄金时代",
@@ -15851,7 +15851,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetEras():ChangePlayerEraScore()",
+        "displayName": "Game.GetEras():ChangePlayerEraScore()",
         "exampleCode": "local pEras = pGame:GetEras()\npEras:ChangePlayerEraScore(playerID, amount)",
         "notes": [
           "获取时代管理器",
@@ -15888,7 +15888,7 @@
             "description": "玩家获得黄金时代所需的分数阈值"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerGoldenAgeThreshold()",
+        "displayName": "Game.GetEras():GetPlayerGoldenAgeThreshold()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal goldenAgeThreshold = pGameEras:GetPlayerGoldenAgeThreshold(playerID)\n-- 将当前时代分数与阈值比较\nlocal score = pGameEras:GetPlayerCurrentScore(playerID)\nif score >= goldenAgeThreshold then\n    -- 玩家达到了黄金时代\nend",
         "notes": [
           "[作用] 返回玩家获得黄金时代所需的分数阈值",
@@ -15926,7 +15926,7 @@
             "description": "黑暗时代阈值分解信息数组，每项包含 sourceString（来源描述）和 sourceValue（数值）"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerDarkAgeThresholdBreakdown()",
+        "displayName": "Game.GetEras():GetPlayerDarkAgeThresholdBreakdown()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal darkAgeThresholdBreakdown = pGameEras:GetPlayerDarkAgeThresholdBreakdown(playerID)\nfor _,source in ipairs(darkAgeThresholdBreakdown) do\n    for sourceString,sourceValue in pairs(source) do\n        -- sourceString: 来源描述字符串\n        -- sourceValue: 对应数值\n    end\nend",
         "notes": [
           "[作用] 获取玩家黑暗时代阈值的详细分解信息",
@@ -15962,7 +15962,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerPreviousDarkAgeThreshold()",
+        "displayName": "Game.GetEras():GetPlayerPreviousDarkAgeThreshold()",
         "exampleCode": "local pEras = pGame:GetEras()\nlocal amount = pEras:GetPlayer(playerID)",
         "notes": [
           "获取时代管理器",
@@ -16002,7 +16002,7 @@
             "description": "玩家的黑暗时代分数阈值"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerDarkAgeThreshold()",
+        "displayName": "Game.GetEras():GetPlayerDarkAgeThreshold()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal darkAgeThreshold = pGameEras:GetPlayerDarkAgeThreshold(playerID)\nif score < darkAgeThreshold then\n    -- 分数低于阈值，下个时代为黑暗时代\nend",
         "notes": [
           "[作用] 获取玩家进入黑暗时代所需的分数阈值",
@@ -16040,7 +16040,7 @@
             "description": "该玩家是否总是被允许进行纪念活动任务"
           }
         ],
-        "displayName": "Game:GetEras():IsPlayerAlwaysAllowedCommemorationQuest()",
+        "displayName": "Game.GetEras():IsPlayerAlwaysAllowedCommemorationQuest()",
         "exampleCode": "local gameEras = Game.GetEras()\nlocal allowed = gameEras:IsPlayerAlwaysAllowedCommemorationQuest(playerID)",
         "notes": [
           "[作用] 判断玩家在黄金时代时是否总是被允许进行纪念活动（Commemoration Quest）任务",
@@ -16077,7 +16077,7 @@
             "description": "黄金时代阈值分解数组，每个元素包含 sourceString（来源名称）和 sourceValue（数值）"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerGoldenAgeThresholdBreakdown()",
+        "displayName": "Game.GetEras():GetPlayerGoldenAgeThresholdBreakdown()",
         "exampleCode": "local pEras = Game.GetEras()\nlocal thresholdBreakdown = pEras:GetPlayerGoldenAgeThresholdBreakdown(playerID)\nif thresholdBreakdown ~= nil then\n    for _,source in ipairs(thresholdBreakdown) do\n        for sourceString, sourceValue in pairs(source) do\n            -- sourceString 是来源名称，sourceValue 是数值\n        end\n    end\nend",
         "notes": [
           "[作用] 获取玩家黄金时代阈值的分解明细",
@@ -16113,7 +16113,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetEras():GetCurrentEraNumPlayersAsOrLessAdvanced()",
+        "displayName": "Game.GetEras():GetCurrentEraNumPlayersAsOrLessAdvanced()",
         "exampleCode": "local amount = pGame:GetEras(playerID)",
         "notes": [
           "获取时代管理器",
@@ -16151,7 +16151,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetEras():GetCurrentEraNumPlayersMoreAdvanced()",
+        "displayName": "Game.GetEras():GetCurrentEraNumPlayersMoreAdvanced()",
         "exampleCode": "local amount = pGame:GetEras(playerID)",
         "notes": [
           "获取时代管理器",
@@ -16189,7 +16189,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerPreviousScore()",
+        "displayName": "Game.GetEras():GetPlayerPreviousScore()",
         "exampleCode": "local pEras = pGame:GetEras()\nlocal amount = pEras:GetPlayer(playerID)",
         "notes": [
           "获取时代管理器",
@@ -16229,7 +16229,7 @@
             "description": "玩家是否处于英勇黄金时代"
           }
         ],
-        "displayName": "Game:GetEras():HasHeroicGoldenAge()",
+        "displayName": "Game.GetEras():HasHeroicGoldenAge()",
         "exampleCode": "local pGameEras = Game.GetEras()\nif pGameEras:HasHeroicGoldenAge(playerID) then\n    -- 玩家处于英勇黄金时代\nend",
         "notes": [
           "[作用] 判断指定玩家是否处于英勇黄金时代",
@@ -16267,7 +16267,7 @@
             "description": "纪念类型索引数组"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerCommemorateChoices()",
+        "displayName": "Game.GetEras():GetPlayerCommemorateChoices()",
         "exampleCode": "local gameEras = Game.GetEras()\nif gameEras ~= nil then\n    local commemorateChoices = gameEras:GetPlayerCommemorateChoices(localPlayerID)\n    if commemorateChoices ~= nil then\n        for _,commemorationType in ipairs(commemorateChoices) do\n            -- 使用 GameInfo.CommemorationTypes[commemorationType] 获取纪念信息\n        end\n    end\nend",
         "notes": [
           "获取玩家在新时代可用的纪念（Commencement）选择列表",
@@ -16304,7 +16304,7 @@
             "description": "前一个时代的时代分来源明细，每个元素为 {来源名 = 分值} 的键值对表"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerPreviousEraScoreBreakdown()",
+        "displayName": "Game.GetEras():GetPlayerPreviousEraScoreBreakdown()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal previousScoreBreakdown = pGameEras:GetPlayerPreviousEraScoreBreakdown(playerID)\nfor i, source in ipairs(previousScoreBreakdown) do\n    for sourceString, sourceValue in pairs(source) do\n        -- sourceString: 时代分来源名称\n        -- sourceValue: 该来源的分值\n    end\nend",
         "notes": [
           "获取玩家在前一个时代的时代分来源明细",
@@ -16343,7 +16343,7 @@
             "description": "玩家当前激活的纪念类型索引数组，可用 GameInfo.CommemorationTypes 查询详细信息"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerActiveCommemorations()",
+        "displayName": "Game.GetEras():GetPlayerActiveCommemorations()",
         "exampleCode": "local pGameEras = Game.GetEras()\nlocal activeCommemorations = pGameEras:GetPlayerActiveCommemorations(playerID)\nfor i,activeCommemoration in ipairs(activeCommemorations) do\n    local commemorationInfo = GameInfo.CommemorationTypes[activeCommemoration]\n    if (commemorationInfo ~= nil) then\n        local bonusText = Locale.Lookup(commemorationInfo.NormalAgeBonusDescription)\n    end\nend",
         "notes": [
           "[作用] 获取玩家当前激活的纪念（Commemoration）类型列表",
@@ -16381,7 +16381,7 @@
             "description": "上一个黄金时代的分数阈值"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerPreviousGoldenAgeThreshold()",
+        "displayName": "Game.GetEras():GetPlayerPreviousGoldenAgeThreshold()",
         "exampleCode": "local pEras = Game.GetEras()\nif pEras ~= nil then\n    local threshold = pEras:GetPlayerPreviousGoldenAgeThreshold(playerID)\nend",
         "notes": [
           "[作用] 获取玩家在上一个时代获得黄金时代所需的分数阈值",
@@ -16419,7 +16419,7 @@
             "description": "时代得分基线值（用于黄金时代/黑暗时代判定）"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerThresholdBaseline()",
+        "displayName": "Game.GetEras():GetPlayerThresholdBaseline()",
         "exampleCode": "local pGameEras = Game.GetEras()\nif pGameEras ~= nil then\n    local baseline = pGameEras:GetPlayerThresholdBaseline(playerID)\nend",
         "notes": [
           "[作用] 获取玩家的时代得分基线值，用于判定黄金时代和黑暗时代",
@@ -16450,7 +16450,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetEras():GetPlayerComplimentChoices()",
+        "displayName": "Game.GetEras():GetPlayerComplimentChoices()",
         "exampleCode": "local pEras = pGame:GetEras()\npEras:GetPlayer(playerID)",
         "notes": [
           "获取时代管理器",
@@ -16490,7 +16490,7 @@
             "description": "时代分数来源明细，每个元素为 {来源名称: 分值} 的表"
           }
         ],
-        "displayName": "Game:GetEras():GetPlayerCurrentEraScoreBreakdown()",
+        "displayName": "Game.GetEras():GetPlayerCurrentEraScoreBreakdown()",
         "exampleCode": "local pEras = Game.GetEras()\nlocal breakdown = pEras:GetPlayerCurrentEraScoreBreakdown(playerID)\nfor i,source in ipairs(breakdown) do\n    for sourceName, sourceValue in pairs(source) do\n        if sourceValue > 0 then\n            -- sourceName: string, sourceValue: number\n        end\n    end\nend",
         "notes": [
           "[作用] 获取指定玩家当前时代分数的来源明细",
@@ -16559,7 +16559,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetFalloutManager():AddFallout()",
+        "displayName": "Game.GetFalloutManager():AddFallout()",
         "exampleCode": "Game.GetFalloutManager():AddFallout(iPlotIndex, iPlagueTurns);",
         "notes": [
           "[作用] 为指定单元格添加核辐射效果，持续指定回合数",
@@ -16596,7 +16596,7 @@
             "description": "该单元格是否存在核辐射"
           }
         ],
-        "displayName": "Game:GetFalloutManager():HasFallout()",
+        "displayName": "Game.GetFalloutManager():HasFallout()",
         "exampleCode": "local pFalloutManager = Game.GetFalloutManager()\nif pFalloutManager ~= nil then\n    local hasFallout = pFalloutManager:HasFallout(plotIndex)\nend",
         "notes": [
           "[作用] 检查指定单元格是否存在核辐射（Red Death 场景）",
@@ -16628,7 +16628,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetFalloutManager():RemoveFallout()",
+        "displayName": "Game.GetFalloutManager():RemoveFallout()",
         "exampleCode": "Game.GetFalloutManager():RemoveFallout(Plot:GetIndex())\n-- 也可以先缓存 manager：\nlocal pFalloutManager = Game.GetFalloutManager()\npFalloutManager:RemoveFallout(iPlotIndex)",
         "notes": [
           "[作用] 移除指定单元格的核辐射效果",
@@ -16670,7 +16670,7 @@
             "type": ":boolean"
           }
         ],
-        "displayName": "Game:GetFalloutManager():SetFalloutPreventsWork()",
+        "displayName": "Game.GetFalloutManager():SetFalloutPreventsWork()",
         "exampleCode": "local pFalloutManager = Game.GetFalloutManager()\npFalloutManager:SetFalloutPreventsWork(iPlotIndex, true)",
         "notes": [
           "[作用] 设置核辐射（或瘟疫）是否阻止单元格工作",
@@ -16707,7 +16707,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetFalloutManager():SetFalloutTurnsRemaining()",
+        "displayName": "Game.GetFalloutManager():SetFalloutTurnsRemaining()",
         "exampleCode": "local pFalloutManager = Game.GetFalloutManager()\npFalloutManager:SetFalloutTurnsRemaining(iPlotIndex, iPlague)",
         "notes": [
           "[作用] 设置指定单元格的核辐射/污染剩余回合数",
@@ -16745,7 +16745,7 @@
             "description": "剩余核辐射消散回合数"
           }
         ],
-        "displayName": "Game:GetFalloutManager():GetFalloutTurnsRemaining()",
+        "displayName": "Game.GetFalloutManager():GetFalloutTurnsRemaining()",
         "exampleCode": "local kFalloutManager = Game.GetFalloutManager()\nlocal turnsRemaining = kFalloutManager:GetFalloutTurnsRemaining(plot:GetIndex())",
         "notes": [
           "[作用] 查询指定单元格的核辐射剩余消散回合数",
@@ -16776,7 +16776,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetFalloutManager():GetReactorCount()",
+        "displayName": "Game.GetFalloutManager():GetReactorCount()",
         "exampleCode": "local amount = pGame:GetFalloutManager()",
         "notes": [
           "获取核辐射管理器",
@@ -16816,7 +16816,7 @@
             "description": "指定单元格的核辐射是否阻止工作，可能为 nil"
           }
         ],
-        "displayName": "Game:GetFalloutManager():GetFalloutPreventsWork()",
+        "displayName": "Game.GetFalloutManager():GetFalloutPreventsWork()",
         "exampleCode": "local preventsWork = Game.GetFalloutManager():GetFalloutPreventsWork(plotIndex)\nif preventsWork == nil then\n    preventsWork = true\nend",
         "notes": [
           "[作用] 查询指定单元格的核辐射是否阻止工作",
@@ -16848,7 +16848,7 @@
             "description": "当前覆盖的核辐射伤害值"
           }
         ],
-        "displayName": "Game:GetFalloutManager():GetFalloutDamageOverride()",
+        "displayName": "Game.GetFalloutManager():GetFalloutDamageOverride()",
         "exampleCode": "local pFalloutManager = Game.GetFalloutManager()\nif pFalloutManager ~= nil then\n    local damage = pFalloutManager:GetFalloutDamageOverride()\n    if damage ~= nil and damage ~= FalloutDamages.USE_FALLOUT_DEFAULT then\n        -- 使用 damage 值\n    end\nend",
         "notes": [
           "获取核辐射管理器当前的覆盖伤害值",
@@ -16884,7 +16884,7 @@
             "type": ":table"
           }
         ],
-        "displayName": "Game:GetFalloutManager():GetReactorByIndex()",
+        "displayName": "Game.GetFalloutManager():GetReactorByIndex()",
         "exampleCode": "local reactorInfo = pGame:GetFalloutManager(reactorID)",
         "notes": [
           "获取核辐射管理器",
@@ -16918,7 +16918,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetFalloutManager():SetFalloutDamageOverride()",
+        "displayName": "Game.GetFalloutManager():SetFalloutDamageOverride()",
         "exampleCode": "local pFalloutManager = Game.GetFalloutManager()\npFalloutManager:SetFalloutDamageOverride(currentDamage)",
         "notes": [
           "[作用] 设置全局辐射伤害值，影响所有处于辐射区域的单位",
@@ -16956,7 +16956,7 @@
             "description": "反应堆年龄"
           }
         ],
-        "displayName": "Game:GetFalloutManager():GetReactorAge()",
+        "displayName": "Game.GetFalloutManager():GetReactorAge()",
         "exampleCode": "local kFalloutManager = Game.GetFalloutManager()\nif kFalloutManager ~= nil then\n    local iReactorAge = kFalloutManager:GetReactorAge(pCity)\n    if iReactorAge ~= nil then\n        -- iReactorAge 为反应堆年龄\n    end\nend",
         "notes": [
           "[作用] 获取指定城市反应堆的年龄，用于显示核电站项目工具提示",
@@ -16994,7 +16994,7 @@
             "description": "反应堆事故阈值等级（0-3）"
           }
         ],
-        "displayName": "Game:GetFalloutManager():GetReactorAccidentThreshold()",
+        "displayName": "Game.GetFalloutManager():GetReactorAccidentThreshold()",
         "exampleCode": "local kFalloutManager = Game.GetFalloutManager()\nif kFalloutManager ~= nil then\n    local iAccidentThreshold = kFalloutManager:GetReactorAccidentThreshold(pCity)\n    if iAccidentThreshold ~= nil then\n        if iAccidentThreshold > 0 then\n            -- 有事故风险\n        end\n    end\nend",
         "notes": [
           "[作用] 获取指定城市反应堆的事故阈值等级",
@@ -17074,7 +17074,7 @@
             "description": "联盟收益的格式化文本（包含换行符）"
           }
         ],
-        "displayName": "Game:GetGameDiplomacy():GetAllianceBenefitsString()",
+        "displayName": "Game.GetGameDiplomacy():GetAllianceBenefitsString()",
         "exampleCode": "local pDiplomacy = Game.GetGameDiplomacy()\nif pDiplomacy ~= nil then\n    local tooltip = pDiplomacy:GetAllianceBenefitsString(allianceData.Index, allianceLevel, true)\n    -- tooltip 包含联盟收益的格式化文本\nend",
         "notes": [
           "[作用] 返回指定联盟类型和等级的收益描述文本，用于显示在 tooltip 中",
@@ -17106,7 +17106,7 @@
             "description": "谴责或好友关系持续的回合数"
           }
         ],
-        "displayName": "Game:GetGameDiplomacy():GetDenounceTimeLimit()",
+        "displayName": "Game.GetGameDiplomacy():GetDenounceTimeLimit()",
         "exampleCode": "local iRemainingTurns = iDenounceTurn + Game.GetGameDiplomacy():GetDenounceTimeLimit() - Game.GetCurrentGameTurn()",
         "notes": [
           "[作用] 获取谴责/好友关系持续的回合数上限",
@@ -17138,7 +17138,7 @@
             "description": "最小和平/战争持续回合数"
           }
         ],
-        "displayName": "Game:GetGameDiplomacy():GetMinPeaceDuration()",
+        "displayName": "Game.GetGameDiplomacy():GetMinPeaceDuration()",
         "exampleCode": "local pGameDiplomacy = Game.GetGameDiplomacy()\nif pGameDiplomacy ~= nil then\n    local turns = pGameDiplomacy:GetMinPeaceDuration()\nend",
         "notes": [
           "[作用] 查询和平或战争状态的最小持续回合数",
@@ -17170,7 +17170,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetGameDiplomacy():SetAlliesShareVisFlag()",
+        "displayName": "Game.GetGameDiplomacy():SetAlliesShareVisFlag()",
         "exampleCode": "Game.GetGameDiplomacy():SetAlliesShareVisFlag(false)",
         "notes": [
           "[作用] 设置盟友之间是否共享视野标志",
@@ -17213,7 +17213,7 @@
             "description": "不满日志条目数组，每个条目包含 Amount、Initiator、Turn、Description、Target 字段"
           }
         ],
-        "displayName": "Game:GetGameDiplomacy():GetGrievanceLogEntries()",
+        "displayName": "Game.GetGameDiplomacy():GetGrievanceLogEntries()",
         "exampleCode": "local kGameDiplomacy = Game.GetGameDiplomacy()\nlocal m_kLogEntries = kGameDiplomacy:GetGrievanceLogEntries(selectedPlayerID, localPlayerID)\nif m_kLogEntries ~= nil then\n    for i, kEntry in ipairs(m_kLogEntries) do\n        local amount = kEntry[\"Amount\"]\n        local initiator = kEntry[\"Initiator\"]\n        local turn = kEntry[\"Turn\"]\n        local description = kEntry[\"Description\"]\n    end\nend",
         "notes": [
           "[作用] 查询两个玩家之间的不满（Grievance）日志条目",
@@ -17256,7 +17256,7 @@
             "description": "怨恨变化的工具提示文本"
           }
         ],
-        "displayName": "Game:GetGameDiplomacy():GetGrievanceChangeTooltip()",
+        "displayName": "Game.GetGameDiplomacy():GetGrievanceChangeTooltip()",
         "exampleCode": "local kGameDiplomacy = Game.GetGameDiplomacy()\nif kGameDiplomacy ~= nil then\n    local tooltip = kGameDiplomacy:GetGrievanceChangeTooltip(selectedPlayerID, localPlayerID)\nend",
         "notes": [
           "获取指定玩家间怨恨变化的工具提示文本",
@@ -17298,7 +17298,7 @@
             "description": "每回合怨恨值变化量，正数表示对方怨恨你，负数表示你怨恨对方"
           }
         ],
-        "displayName": "Game:GetGameDiplomacy():GetGrievanceChangePerTurn()",
+        "displayName": "Game.GetGameDiplomacy():GetGrievanceChangePerTurn()",
         "exampleCode": "local pGameDiplomacy = Game.GetGameDiplomacy()\nif pGameDiplomacy ~= nil then\n    local changePerTurn = pGameDiplomacy:GetGrievanceChangePerTurn(selectedPlayerID, localPlayerID)\nend",
         "notes": [
           "[作用] 获取两个玩家之间每回合怨恨值（Grievance）的变化量",
@@ -17384,7 +17384,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetGreatPeople():GrantPerson()",
+        "displayName": "Game.GetGreatPeople():GrantPerson()",
         "exampleCode": "Game.GetGreatPeople():GrantPerson(individual, class, era, cost, 0, false)",
         "notes": [
           "[作用] 授予玩家指定的伟人个体",
@@ -17416,7 +17416,7 @@
             "description": "伟人时间线数组，每个元素包含 Individual、Class、Era、Claimant、Cost 等字段"
           }
         ],
-        "displayName": "Game:GetGreatPeople():GetTimeline()",
+        "displayName": "Game.GetGreatPeople():GetTimeline()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    local pTimeline = pGreatPeople:GetTimeline()\n    for i, entry in ipairs(pTimeline) do\n        -- entry 包含 Individual、Class、Era、Claimant、Cost 等字段\n    end\nend",
         "notes": [
           "[作用] 获取当前游戏的伟人时间线，返回一个包含所有伟人信息的数组",
@@ -17460,7 +17460,7 @@
             "description": "伟大人物的获取条件描述文本"
           }
         ],
-        "displayName": "Game:GetGreatPeople():GetEarnConditionsText()",
+        "displayName": "Game.GetGreatPeople():GetEarnConditionsText()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    local earnCondText = pGreatPeople:GetEarnConditionsText(playerID, greatPersonIndividualType)\n    -- earnCondText 包含获取该伟大人物的条件描述\nend",
         "notes": [
           "[作用] 获取指定玩家获取某个伟大人物的条件文本描述",
@@ -17503,7 +17503,7 @@
             "description": "该玩家已获得的指定类别伟人数量"
           }
         ],
-        "displayName": "Game:GetGreatPeople():CountPeopleReceivedByPlayer()",
+        "displayName": "Game.GetGreatPeople():CountPeopleReceivedByPlayer()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    local count = pGreatPeople:CountPeopleReceivedByPlayer(classIndex, playerID)\nend",
         "notes": [
           "[作用] 查询指定玩家已获得的某类伟人数量",
@@ -17546,7 +17546,7 @@
             "description": "玩家是否可以拒绝该伟人"
           }
         ],
-        "displayName": "Game:GetGreatPeople():CanRejectPerson()",
+        "displayName": "Game.GetGreatPeople():CanRejectPerson()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    local canReject = pGreatPeople:CanRejectPerson(playerID, greatPersonIndividualType)\nend",
         "notes": [
           "[作用] 查询玩家是否可以拒绝招募某个伟人",
@@ -17587,7 +17587,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetGreatPeople():GetRecruitCost()",
+        "displayName": "Game.GetGreatPeople():GetRecruitCost()",
         "exampleCode": "local GPPCost = pGame:GetGreatPeople(playerID, greatPersonIndividualType)",
         "notes": [
           "获取GreatPeople，参数：playerID, greatPersonIndividualType，返回 number",
@@ -17632,7 +17632,7 @@
             "description": "拒绝该伟人所需的点数成本"
           }
         ],
-        "displayName": "Game:GetGreatPeople():GetRejectCost()",
+        "displayName": "Game.GetGreatPeople():GetRejectCost()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    if pGreatPeople:CanRejectPerson(playerID, individualType) then\n        local rejectCost = pGreatPeople:GetRejectCost(playerID, individualType)\n    end\nend",
         "notes": [
           "[作用] 获取拒绝招募某位伟人所需的点数成本",
@@ -17664,7 +17664,7 @@
             "description": "过去伟大人物时间线数组，每个元素包含 Claimant、Individual、Cost 等字段"
           }
         ],
-        "displayName": "Game:GetGreatPeople():GetPastTimeline()",
+        "displayName": "Game.GetGreatPeople():GetPastTimeline()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    local pTimeline = pGreatPeople:GetPastTimeline()\n    for i, entry in ipairs(pTimeline) do\n        if entry.Claimant then\n            -- entry.Individual, entry.Cost 等字段可用\n        end\n    end\nend",
         "notes": [
           "[作用] 获取已招募的过去伟大人物时间线",
@@ -17713,7 +17713,7 @@
             "description": "赞助该伟人所需的资源数量"
           }
         ],
-        "displayName": "Game:GetGreatPeople():GetPatronizeCost()",
+        "displayName": "Game.GetGreatPeople():GetPatronizeCost()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    local goldCost = pGreatPeople:GetPatronizeCost(playerID, individualID, YieldTypes.GOLD)\n    local faithCost = pGreatPeople:GetPatronizeCost(playerID, individualID, YieldTypes.FAITH)\nend",
         "notes": [
           "[作用] 获取赞助特定伟人所需的资源数量（金币或信仰）",
@@ -17756,7 +17756,7 @@
             "description": "是否可以招募该伟大人物"
           }
         ],
-        "displayName": "Game:GetGreatPeople():CanRecruitPerson()",
+        "displayName": "Game.GetGreatPeople():CanRecruitPerson()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    local canRecruit = pGreatPeople:CanRecruitPerson(playerID, greatPersonIndividualType)\nend",
         "notes": [
           "[作用] 判断指定玩家是否可以招募某个伟大人物",
@@ -17803,7 +17803,7 @@
             "description": "是否可以用指定产出赞助该伟人"
           }
         ],
-        "displayName": "Game:GetGreatPeople():CanPatronizePerson()",
+        "displayName": "Game.GetGreatPeople():CanPatronizePerson()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    local canPatronize = pGreatPeople:CanPatronizePerson(playerID, greatPersonIndividualType, YieldTypes.GOLD)\nend",
         "notes": [
           "[作用] 判断玩家是否可以用指定产出类型赞助某位伟人",
@@ -17839,7 +17839,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetGreatPeople():RecruitPerson()",
+        "displayName": "Game.GetGreatPeople():RecruitPerson()",
         "exampleCode": "pGame:GetGreatPeople(playerID, greatPersonIndividualType)",
         "notes": [
           "获取GreatPeople，参数：playerID, greatPersonIndividualType",
@@ -17885,7 +17885,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetGreatPeople():CreatePerson()",
+        "displayName": "Game.GetGreatPeople():CreatePerson()",
         "exampleCode": "Game.GetGreatPeople():CreatePerson(playerID, greatPersonIndividualType, x, y)",
         "notes": [
           "[作用] 在指定地图位置为指定玩家生成伟人单位",
@@ -17921,7 +17921,7 @@
             "description": "该伟人阶层是否可用"
           }
         ],
-        "displayName": "Game:GetGreatPeople():IsClassAvailable()",
+        "displayName": "Game.GetGreatPeople():IsClassAvailable()",
         "exampleCode": "local pGreatPeople = Game.GetGreatPeople()\nif pGreatPeople ~= nil then\n    if pGreatPeople:IsClassAvailable(row.Index) then\n        -- 输入你的代码\n    end\nend",
         "notes": [
           "[作用] 判断指定伟人阶层是否对当前玩家可用",
@@ -18138,7 +18138,7 @@
             "description": "活跃任务的描述文本"
           }
         ],
-        "displayName": "Game:GetQuestsManager():GetActiveQuestDescription()",
+        "displayName": "Game.GetQuestsManager():GetActiveQuestDescription()",
         "exampleCode": "local questsManager = Game.GetQuestsManager()\nif questsManager ~= nil then\n    local description = questsManager:GetActiveQuestDescription(localPlayerID, playerID, questIndex)\nend",
         "notes": [
           "[作用] 获取指定城邦对本地玩家的活跃任务描述文本",
@@ -18185,7 +18185,7 @@
             "description": "本地化后的任务名称字符串"
           }
         ],
-        "displayName": "Game:GetQuestsManager():GetActiveQuestName()",
+        "displayName": "Game.GetQuestsManager():GetActiveQuestName()",
         "exampleCode": "local questsManager = Game.GetQuestsManager()\nif questsManager ~= nil then\n    local questInfo = GameInfo.Quests[\"QUEST_SEND_TRADE_ROUTE\"]\n    if questInfo ~= nil then\n        if questsManager:HasActiveQuestFromPlayer(localPlayerID, cityStatePlayerID, questInfo.Index) then\n            local questName = questsManager:GetActiveQuestName(localPlayerID, cityStatePlayerID, questInfo.Index)\n            -- questName 是本地化的任务名称\n        end\n    end\nend",
         "notes": [
           "[作用] 获取指定城邦任务的本地化名称，用于 UI 显示",
@@ -18233,7 +18233,7 @@
             "description": "任务奖励的描述文本"
           }
         ],
-        "displayName": "Game:GetQuestsManager():GetActiveQuestReward()",
+        "displayName": "Game.GetQuestsManager():GetActiveQuestReward()",
         "exampleCode": "local questsManager = Game.GetQuestsManager()\nif questsManager ~= nil then\n    local reward = questsManager:GetActiveQuestReward(localPlayerID, cityStateID, questIndex)\nend",
         "notes": [
           "[作用] 获取城邦任务的奖励描述文本",
@@ -18281,7 +18281,7 @@
             "description": "该玩家在此城市国家是否有进行中的任务"
           }
         ],
-        "displayName": "Game:GetQuestsManager():HasActiveQuestFromPlayer()",
+        "displayName": "Game.GetQuestsManager():HasActiveQuestFromPlayer()",
         "exampleCode": "local questsManager = Game.GetQuestsManager()\nif questsManager ~= nil then\n    for questInfo in GameInfo.Quests() do\n        if questsManager:HasActiveQuestFromPlayer(localPlayerID, cityOwner, questInfo.Index) then\n            -- 该城市国家有此任务\n        end\n    end\nend",
         "notes": [
           "[作用] 检查指定玩家在指定城市国家是否有进行中的任务",
@@ -18312,7 +18312,7 @@
             "type": ":string"
           }
         ],
-        "displayName": "Game:GetQuestsManager():TypeName()",
+        "displayName": "Game.GetQuestsManager():TypeName()",
         "exampleCode": "local pQuestsManager = pGame:GetQuestsManager()\nlocal type = pQuestsManager:TypeName()",
         "notes": [
           "获取QuestsManager，返回 string",
@@ -18452,7 +18452,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetReligion():AddBelief()",
+        "displayName": "Game.GetReligion():AddBelief()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\nif pGameReligion ~= nil then\n    pGameReligion:FoundReligion(playerID, religionIndex)\n    pGameReligion:AddBelief(playerID, GameInfo.Beliefs[\"BELIEF_CATHEDRAL\"].Index)\nend",
         "notes": [
           "[作用] 向已建立的宗教添加信仰条目",
@@ -18489,7 +18489,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetReligion():FoundPantheon()",
+        "displayName": "Game.GetReligion():FoundPantheon()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\npGameReligion:FoundPantheon(playerID, GameInfo.Beliefs[\"BELIEF_NUN\"].Index)",
         "notes": [
           "[作用] 为指定玩家建立万神殿",
@@ -18526,7 +18526,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetReligion():FoundReligion()",
+        "displayName": "Game.GetReligion():FoundReligion()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\nif pGameReligion ~= nil then\n    pGameReligion:FoundReligion(iPlayer, GameInfo.Religions[\"RELIGION_CATHOLICISM\"].Index)\nend",
         "notes": [
           "[作用] 为指定玩家创建一个正式宗教",
@@ -18565,7 +18565,7 @@
             "description": "宗教名称的本地化文本键"
           }
         ],
-        "displayName": "Game:GetReligion():GetName()",
+        "displayName": "Game.GetReligion():GetName()",
         "exampleCode": "local pReligion = Game.GetReligion()\nlocal religionName = pReligion:GetName(religionType)\n-- 通常与 Locale.Lookup() 配合使用：\nlocal displayName = Locale.Lookup(religionName)",
         "notes": [
           "[作用] 根据宗教类型ID获取宗教的本地化名称文本键",
@@ -18597,7 +18597,7 @@
             "description": "已创建的宗教数组，每个元素包含 Religion（宗教类型ID）、Founder（创建者玩家ID）、Beliefs（信念列表）"
           }
         ],
-        "displayName": "Game:GetReligion():GetReligions()",
+        "displayName": "Game.GetReligion():GetReligions()",
         "exampleCode": "local pAllReligions = Game.GetReligion():GetReligions()\nfor _, religionInfo in ipairs(pAllReligions) do\n    local religionType = religionInfo.Religion\n    -- 检查是否为已建立的非泛灵宗教\n    if Game.GetReligion():HasBeenFounded(religionType) then\n        -- 输入你的代码\n    end\nend",
         "notes": [
           "[作用] 获取游戏中所有已创建的宗教列表",
@@ -18634,7 +18634,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetReligion():AddBeliefHash()",
+        "displayName": "Game.GetReligion():AddBeliefHash()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\npGameReligion:AddBeliefHash(iPlayer, GameInfo.Beliefs[\"BELIEF_FEED_THE_WORLD\"].Hash)",
         "notes": [
           "为指定玩家的宗教添加一个信念",
@@ -18672,7 +18672,7 @@
             "description": "该信仰是否已被某个万神殿使用"
           }
         ],
-        "displayName": "Game:GetReligion():IsInSomePantheon()",
+        "displayName": "Game.GetReligion():IsInSomePantheon()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\nif not pGameReligion:IsInSomePantheon(beliefIndex) then\n    -- 该信仰未被任何万神殿使用\nend",
         "notes": [
           "判断某个信仰是否已被任何万神殿选用",
@@ -18698,7 +18698,7 @@
         "functionB": "AddBuilding",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetReligion():AddBuilding()",
+        "displayName": "Game.GetReligion():AddBuilding()",
         "exampleCode": "pGame:GetReligion()",
         "notes": [
           "获取玩家的宗教管理器，可用于查询和修改信仰余额"
@@ -18742,7 +18742,7 @@
             "description": "该信条是否已达到该宗教的上限"
           }
         ],
-        "displayName": "Game:GetReligion():IsTooManyForReligion()",
+        "displayName": "Game.GetReligion():IsTooManyForReligion()",
         "exampleCode": "local bTooMany = Game.GetReligion():IsTooManyForReligion(beliefIndex, religionType)\nif bTooMany then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 检查指定信条是否已超出该宗教的容量上限（同一信条类别的信条已被该宗教采用）"
@@ -18777,7 +18777,7 @@
             "description": "该宗教是否已被创立"
           }
         ],
-        "displayName": "Game:GetReligion():HasBeenFounded()",
+        "displayName": "Game.GetReligion():HasBeenFounded()",
         "exampleCode": "local pReligion = Game.GetReligion()\nif pReligion ~= nil then\n    local isFounded = pReligion:HasBeenFounded(religionType)\nend",
         "notes": [
           "[作用] 查询指定宗教类型是否已被玩家创立",
@@ -18815,7 +18815,7 @@
             "description": "该信念是否已被任何宗教采用"
           }
         ],
-        "displayName": "Game:GetReligion():IsInSomeReligion()",
+        "displayName": "Game.GetReligion():IsInSomeReligion()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\nlocal bUsed = pGameReligion:IsInSomeReligion(beliefIndex)\nif not bUsed then\n    -- 该信念可用\nend",
         "notes": [
           "[作用] 检查某个信念（belief）是否已被任何宗教采用",
@@ -18840,7 +18840,7 @@
         "functionB": "HasBeliefEachType",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetReligion():HasBeliefEachType()",
+        "displayName": "Game.GetReligion():HasBeliefEachType()",
         "exampleCode": "pGame:GetReligion()",
         "notes": [
           "获取玩家的宗教管理器，可用于查询和修改信仰余额"
@@ -18884,7 +18884,7 @@
             "description": "该信仰是否对指定宗教类型来说是新类型"
           }
         ],
-        "displayName": "Game:GetReligion():IsNewTypeForReligion()",
+        "displayName": "Game.GetReligion():IsNewTypeForReligion()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\nlocal isNewType = pGameReligion:IsNewTypeForReligion(beliefIndex, religionType)",
         "notes": [
           "[作用] 判断某个信仰条目对于指定宗教类型是否是新类型（即该宗教尚未使用过该信仰类型）",
@@ -18921,7 +18921,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetReligion():FoundPantheonHash()",
+        "displayName": "Game.GetReligion():FoundPantheonHash()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\npGameReligion:FoundPantheonHash(iPlayer, GameInfo.Beliefs[\"BELIEF_RIVER_GODDESS\"].Hash)",
         "notes": [
           "[作用] 为指定玩家建立神殿（Pantheon）信仰",
@@ -18953,7 +18953,7 @@
             "description": "建立下一个万神殿所需的最小信仰值"
           }
         ],
-        "displayName": "Game:GetReligion():GetMinimumFaithNextPantheon()",
+        "displayName": "Game.GetReligion():GetMinimumFaithNextPantheon()",
         "exampleCode": "local pGameReligion = Game.GetReligion()\nif pGameReligion ~= nil then\n    local iPantheonFaith = pGameReligion:GetMinimumFaithNextPantheon()\nend",
         "notes": [
           "[作用] 查询建立下一个万神殿所需的最小信仰值",
@@ -19013,7 +19013,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateDestinationYieldFromAttachingResource()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationYieldFromAttachingResource()",
         "exampleCode": "local pTradeManager = pGame:GetTradeManager()\nlocal yield = pTradeManager:Calculate()",
         "notes": [
           "获取TradeManager，返回 number",
@@ -19078,7 +19078,7 @@
             "description": "贸易路线产出的产出值"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateDestinationYieldFromModifiers()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationYieldFromModifiers()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nlocal yield = tradeManager:CalculateDestinationYieldFromModifiers(\n    m_originCityOwner, m_originCityID, cityOwner, cityID, yieldIndex, resourceID\n)",
         "notes": [
           "[作用] 计算贸易路线目的地城市的修饰符产出",
@@ -19137,7 +19137,7 @@
             "description": "从贸易路径获得的目的地产出值"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateDestinationYieldFromPath()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationYieldFromPath()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nlocal partialValue = tradeManager:CalculateDestinationYieldFromPath(originCityPlayerID, originCityID, toCityPlayerID, toCityID, yieldIndex)",
         "notes": [
           "[作用] 计算贸易路线中从贸易站（Trading Posts）获得的目的地产出值",
@@ -19195,7 +19195,7 @@
             "description": "目标城市从潜在贸易路线获得的收益值"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateDestinationYieldFromPotentialRoute()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationYieldFromPotentialRoute()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nlocal yield = tradeManager:CalculateDestinationYieldFromPotentialRoute(originCityPlayerID, originCityID, toCityPlayerID, toCityID, yieldIndex)",
         "notes": [
           "[作用] 计算目标城市从潜在贸易路线获得的收益值",
@@ -19226,7 +19226,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateOriginYieldFromAttachingResource()",
+        "displayName": "Game.GetTradeManager():CalculateOriginYieldFromAttachingResource()",
         "exampleCode": "local pTradeManager = pGame:GetTradeManager()\nlocal yield = pTradeManager:Calculate()",
         "notes": [
           "获取TradeManager，返回 number",
@@ -19291,7 +19291,7 @@
             "description": "贸易路线从修改器获得的产出值"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateOriginYieldFromModifiers()",
+        "displayName": "Game.GetTradeManager():CalculateOriginYieldFromModifiers()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nlocal resourceID = -1\nlocal partialValue = tradeManager:CalculateOriginYieldFromModifiers(m_originCityOwner, m_originCityID, cityOwner, cityID, yieldIndex, resourceID)",
         "notes": [
           "[作用] 计算贸易路线从修改器（Modifiers）获得的来源产出值",
@@ -19348,7 +19348,7 @@
             "description": "从贸易路径获得的收益值"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateOriginYieldFromPath()",
+        "displayName": "Game.GetTradeManager():CalculateOriginYieldFromPath()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nlocal yield = tradeManager:CalculateOriginYieldFromPath(m_originCityOwner, m_originCityID, cityOwner, cityID, yieldIndex)",
         "notes": [
           "[作用] 计算从起始城市到目标城市贸易路径上获得的收益值",
@@ -19406,7 +19406,7 @@
             "description": "从出发城市视角计算的该产出在潜在贸易路线中的收益值"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateOriginYieldFromPotentialRoute()",
+        "displayName": "Game.GetTradeManager():CalculateOriginYieldFromPotentialRoute()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nlocal partialValue = tradeManager:CalculateOriginYieldFromPotentialRoute(\n    m_originCityOwner, m_originCityID, cityOwner, cityID, yieldIndex\n)",
         "notes": [
           "[作用] 计算从出发城市视角出发，在潜在贸易路线中某个产出的收益值",
@@ -19437,7 +19437,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateYieldFromIncomingRoutes()",
+        "displayName": "Game.GetTradeManager():CalculateYieldFromIncomingRoutes()",
         "exampleCode": "local pTradeManager = pGame:GetTradeManager()\nlocal yield = pTradeManager:Calculate()",
         "notes": [
           "获取TradeManager，返回 number",
@@ -19470,7 +19470,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateYieldFromOutgoingRoutes()",
+        "displayName": "Game.GetTradeManager():CalculateYieldFromOutgoingRoutes()",
         "exampleCode": "local pTradeManager = pGame:GetTradeManager()\nlocal yield = pTradeManager:Calculate()",
         "notes": [
           "获取TradeManager，返回 number",
@@ -19530,7 +19530,7 @@
             "description": "是否可以建立该贸易路线"
           }
         ],
-        "displayName": "Game:GetTradeManager():CanStartRoute()",
+        "displayName": "Game.GetTradeManager():CanStartRoute()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nif tradeManager:CanStartRoute(originCity:GetOwner(), originCity:GetID(), destinationCity:GetOwner(), destinationCity:GetID()) then\n    -- 可以建立贸易路线\nend",
         "notes": [
           "[作用] 检查两个城市之间是否可以建立贸易路线",
@@ -19562,7 +19562,7 @@
             "type": ":boolean"
           }
         ],
-        "displayName": "Game:GetTradeManager():CanStartRouteWithResource()",
+        "displayName": "Game.GetTradeManager():CanStartRouteWithResource()",
         "exampleCode": "local True_False = pGame:GetTradeManager()",
         "notes": [
           "获取TradeManager，返回 boolean",
@@ -19619,7 +19619,7 @@
             "description": "各产量类型的数值数组，索引从 1 开始，可通过 GameInfo.Yields 获取对应产量信息"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateOriginYieldsFromPotentialRoute()",
+        "displayName": "Game.GetTradeManager():CalculateOriginYieldsFromPotentialRoute()",
         "exampleCode": "local pTradeManager = Game.GetTradeManager()\nlocal yields = pTradeManager:CalculateOriginYieldsFromPotentialRoute(\n    originOwnerID, originCityID, destOwnerID, destCityID\n)\nif yields ~= nil then\n    -- yields[i] 对应 GameInfo.Yields[i-1] 的产量值\n    for i = 1, #yields do\n        if yields[i] > 0 then\n            -- 输入你的代码\n        end\n    end\nend",
         "notes": [
           "[作用] 计算两城之间贸易路线的基础产量（不含路径加成和修正）",
@@ -19671,7 +19671,7 @@
             "description": "收益数组，按收益类型索引"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateDestinationYieldsFromPath()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationYieldsFromPath()",
         "exampleCode": "local pTradeManager = Game.GetTradeManager()\nlocal pathYields = pTradeManager:CalculateDestinationYieldsFromPath(originCity:GetOwner(), originCity:GetID(), destinationCity:GetOwner(), destinationCity:GetID())",
         "notes": [
           "[作用] 计算贸易路径中目标城市的收益",
@@ -19697,7 +19697,7 @@
         "functionB": "CalculateDestinationYieldsFromAttachingResource",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetTradeManager():CalculateDestinationYieldsFromAttachingResource()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationYieldsFromAttachingResource()",
         "exampleCode": "local pTradeManager = pGame:GetTradeManager()\npTradeManager:Calculate()",
         "notes": [
           "获取TradeManager",
@@ -19752,7 +19752,7 @@
             "description": "各产量类型（Food, Production 等）的修正值数组，按 yieldIndex 索引"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateOriginYieldsFromModifiers()",
+        "displayName": "Game.GetTradeManager():CalculateOriginYieldsFromModifiers()",
         "exampleCode": "local pTradeManager = Game.GetTradeManager()\nlocal modifierYields = pTradeManager:CalculateOriginYieldsFromModifiers(originOwnerID, originCityID, destOwnerID, destCityID)",
         "notes": [
           "[作用] 计算贸易路线中来自修正器（modifiers）的来源城市产量",
@@ -19805,7 +19805,7 @@
             "description": "按 yield 索引排列的产出值数组，索引从 1 开始"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateDestinationYieldsFromPotentialRoute()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationYieldsFromPotentialRoute()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nlocal routeYields = tradeManager:CalculateDestinationYieldsFromPotentialRoute(originCity:GetOwner(), originCity:GetID(), destinationCity:GetOwner(), destinationCity:GetID())",
         "notes": [
           "[作用] 计算从 originCity 到 destinationCity 的潜在贸易路线产出（目标城市视角）",
@@ -19868,7 +19868,7 @@
             "description": "传送门出口位置（用于山脉隧道等）"
           }
         ],
-        "displayName": "Game:GetTradeManager():GetTradeRoutePath()",
+        "displayName": "Game.GetTradeManager():GetTradeRoutePath()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nlocal pathPlots, portalEntrances, portalExits = tradeManager:GetTradeRoutePath(originCityPlayerID, originCityID, toCityPlayerID, toCityID)\nif pathPlots ~= nil and table.count(pathPlots) > 0 then\n    -- pathPlots 包含贸易路线经过的所有单元格\nend",
         "notes": [
           "[作用] 获取两个城市之间的贸易路线路径，返回路径单元格和传送门信息",
@@ -19895,7 +19895,7 @@
         "functionB": "CalculateOriginYieldsFromAttachingResource",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetTradeManager():CalculateOriginYieldsFromAttachingResource()",
+        "displayName": "Game.GetTradeManager():CalculateOriginYieldsFromAttachingResource()",
         "exampleCode": "local pTradeManager = pGame:GetTradeManager()\npTradeManager:Calculate()",
         "notes": [
           "获取TradeManager",
@@ -19950,7 +19950,7 @@
             "description": "路径加成的收益数组，索引从1开始对应 GameInfo.Yields"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateOriginYieldsFromPath()",
+        "displayName": "Game.GetTradeManager():CalculateOriginYieldsFromPath()",
         "exampleCode": "local pTradeManager = Game.GetTradeManager()\nlocal kPathYields = pTradeManager:CalculateOriginYieldsFromPath(originOwnerID, originCityID, destOwnerID, destCityID)",
         "notes": [
           "[作用] 计算贸易路线从出发城市到目的地城市的路径加成收益",
@@ -20003,7 +20003,7 @@
             "description": "每种 yield 类型的修正值数组，索引从 1 开始对应 GameInfo.Yields"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateDestinationYieldsFromModifiers()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationYieldsFromModifiers()",
         "exampleCode": "local pTradeManager = Game.GetTradeManager()\nlocal yields = pTradeManager:CalculateDestinationYieldsFromModifiers(originCityPlayerID, originCityID, toCityPlayerID, toCityID)\n-- yields[index] 为对应 yield 类型的修正值",
         "notes": [
           "[作用] 计算贸易路线到目标城市的修正收益（来自政策、文明特性等）",
@@ -20062,7 +20062,7 @@
             "description": "目标城市接收的宗教压力值"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateDestinationReligiousPressureFromPotentialRoute()",
+        "displayName": "Game.GetTradeManager():CalculateDestinationReligiousPressureFromPotentialRoute()",
         "exampleCode": "local pGame = Game\nlocal pTradeManager = pGame.GetTradeManager()\nif pTradeManager ~= nil then\n    local pressure = pTradeManager:CalculateDestinationReligiousPressureFromPotentialRoute(\n        originCity:GetOwner(),\n        originCity:GetID(),\n        destinationCity:GetOwner(),\n        destinationCity:GetID(),\n        religionIndex\n    )\n    -- pressure 为 number 类型的宗教压力值\nend",
         "notes": [
           "[作用] 计算目标城市从潜在贸易路线接收的宗教压力",
@@ -20110,7 +20110,7 @@
             "type": ":boolean"
           }
         ],
-        "displayName": "Game:GetTradeManager():IsRouteAllowed()",
+        "displayName": "Game.GetTradeManager():IsRouteAllowed()",
         "exampleCode": "local pTradeManager = pGame:GetTradeManager()\nlocal True_False = pTradeManager:IsRoute(originCityPlayerID, originCityID, toCityPlayerID, toCityID)",
         "notes": [
           "获取TradeManager，参数：originCityPlayerID, originCityID, toCityPlayerID, toCityID，返回 boolean",
@@ -20171,7 +20171,7 @@
             "description": "宗教压力值"
           }
         ],
-        "displayName": "Game:GetTradeManager():CalculateOriginReligiousPressureFromPotentialRoute()",
+        "displayName": "Game.GetTradeManager():CalculateOriginReligiousPressureFromPotentialRoute()",
         "exampleCode": "local tradeManager = Game.GetTradeManager()\nif tradeManager ~= nil then\n    local pressure = tradeManager:CalculateOriginReligiousPressureFromPotentialRoute(originCity:GetOwner(), originCity:GetID(), destinationCity:GetOwner(), destinationCity:GetID(), religionIndex)\nend",
         "notes": [
           "[作用] 计算从来源城市到目标城市的宗教压力",
@@ -20265,7 +20265,7 @@
             "description": "投票成本数据表，包含 MaxVotes 属性和从 0 开始索引的成本数组"
           }
         ],
-        "displayName": "Game:GetWorldCongress():GetVotesandFavorCost()",
+        "displayName": "Game.GetWorldCongress():GetVotesandFavorCost()",
         "exampleCode": "local pWorldCongress = Game.GetWorldCorngress()\nif pWorldCorngress ~= nil then\n    local kCostData = pWorldCongress:GetVotesandFavorCost(localPlayerID)\n    -- kCostData.MaxVotes: 最大投票数\n    -- kCostData[index]: 从 0 开始索引的成本值\nend",
         "notes": [
           "[作用] 获取指定玩家的 World Congress 投票成本数据",
@@ -20296,7 +20296,7 @@
             "description": "世界议会是否正在进行"
           }
         ],
-        "displayName": "Game:GetWorldCongress():IsInSession()",
+        "displayName": "Game.GetWorldCongress():IsInSession()",
         "exampleCode": "local pWorldCongress = Game.GetWorldCongress()\nlocal bInSession = pWorldCongress:IsInSession()",
         "notes": [
           "[作用] 查询世界议会是否正在进行",
@@ -20328,7 +20328,7 @@
             "description": "世界会议状态数据，包含剩余回合数和进度百分比"
           }
         ],
-        "displayName": "Game:GetWorldCongress():GetMeetingStatus()",
+        "displayName": "Game.GetWorldCongress():GetMeetingStatus()",
         "exampleCode": "local pCongressMeetingData = Game.GetWorldCongress():GetMeetingStatus()\nif pCongressMeetingData ~= nil then\n    local turnsLeft = pCongressMeetingData.TurnsLeft + 1\n    local percentage = pCongressMeetingData.Percentage / 100\nend",
         "notes": [
           "[作用] 获取世界会议的当前状态，包括距离下次会议的剩余回合数和进度百分比",
@@ -20367,7 +20367,7 @@
             "description": "按 stage 编号组织的决议数据表，包含 Type、ChosenOption、ChosenThing、TargetType 等字段"
           }
         ],
-        "displayName": "Game:GetWorldCongress():GetResolutions()",
+        "displayName": "Game.GetWorldCongress():GetResolutions()",
         "exampleCode": "local localPlayerID = Game.GetLocalPlayer()\nlocal pWorldCongress = Game.GetWorldCongress()\nif pWorldCongress ~= nil then\n    local kResolutions = pWorldCongress:GetResolutions(localPlayerID)\n    if kResolutions ~= nil then\n        for i, kResolutionData in pairs(kResolutions) do\n            if type(i) == \"number\" then -- 数字 key 对应 stage 编号\n                -- kResolutionData.Type, kResolutionData.ChosenOption, kResolutionData.ChosenThing\n            end\n        end\n    end\nend",
         "notes": [
           "[作用] 获取指定玩家在世界议会中的所有决议数据",
@@ -20405,7 +20405,7 @@
             "description": "紧急会议数据对象，包含 Proposals 字段"
           }
         ],
-        "displayName": "Game:GetWorldCongress():GetEmergencies()",
+        "displayName": "Game.GetWorldCongress():GetEmergencies()",
         "exampleCode": "local pWorldCongress = Game.GetWorldCongress()\nlocal pEmergencyData = pWorldCongress:GetEmergencies(Game.GetLocalPlayer())\nlocal kProposals = pEmergencyData.Proposals",
         "notes": [
           "[作用] 获取指定玩家的紧急会议提案列表",
@@ -20443,7 +20443,7 @@
             "description": "之前该决议的投票数据表，包含 PlayerSelections、ChosenThing、TargetType 等字段；首次出现的决议返回 nil"
           }
         ],
-        "displayName": "Game:GetWorldCongress():GetPreviousVotesOnResolution()",
+        "displayName": "Game.GetWorldCongress():GetPreviousVotesOnResolution()",
         "exampleCode": "local pWorldCongress = Game.GetWorldCongress()\nif pWorldCongress ~= nil then\n    local kPreviousData = pWorldCongress:GetPreviousVotesOnResolution(resolutionType)\n    if kPreviousData ~= nil then\n        -- 处理之前的投票数据\n    end\nend",
         "notes": [
           "[作用] 获取指定决议在上一次世界议会中的投票数据",
@@ -20481,7 +20481,7 @@
             "description": "包含 Resolutions 字段的审查结果表"
           }
         ],
-        "displayName": "Game:GetWorldCongress():GetReview()",
+        "displayName": "Game.GetWorldCongress():GetReview()",
         "exampleCode": "local kReviewData = Game.GetWorldCongress():GetReview(Game.GetLocalPlayer())",
         "notes": [
           "[作用] 获取世界议会的审查结果，包含决议投票结果和详情",
@@ -20507,7 +20507,7 @@
         "functionB": "GetTurnsUntilSpecialSessionAllowed",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetWorldCongress():GetTurnsUntilSpecialSessionAllowed()",
+        "displayName": "Game.GetWorldCongress():GetTurnsUntilSpecialSessionAllowed()",
         "exampleCode": "local pWorldCongress = pGame:GetWorldCongress()\npWorldCongress:GetTurns()",
         "notes": [
           "获取WorldCongress",
@@ -20547,7 +20547,7 @@
             "description": "提案分类表，键为提案类型，值包含ProposalsOfType字段"
           }
         ],
-        "displayName": "Game:GetWorldCongress():GetProposals()",
+        "displayName": "Game.GetWorldCongress():GetProposals()",
         "exampleCode": "local pWorldCongress = Game.GetWorldCongress()\nif pWorldCongress ~= nil then\n    local kResult = pWorldCongress:GetProposals(Game.GetLocalPlayer())\n    if kResult ~= nil then\n        local kProposals = kResult.Proposals\n    end\nend",
         "notes": [
           "[作用] 获取指定玩家的世界大会提案列表",
@@ -20913,7 +20913,7 @@
         "functionB": "CreateHero",
         "argsB": [],
         "returns": [],
-        "displayName": "Game:GetHeroesManager():CreateHero()",
+        "displayName": "Game.GetHeroesManager():CreateHero()",
         "exampleCode": "local pHeroesManager = pGame:GetHeroesManager()\npHeroesManager:Create()",
         "notes": [
           "获取HeroesManager",
@@ -20959,7 +20959,7 @@
             "description": "该玩家是否已发现此英雄类"
           }
         ],
-        "displayName": "Game:GetHeroesManager():IsHeroDiscovered()",
+        "displayName": "Game.GetHeroesManager():IsHeroDiscovered()",
         "exampleCode": "local pGameHeroes = Game.GetHeroesManager()\nif pGameHeroes ~= nil then\n    for row in GameInfo.HeroClasses() do\n        if pGameHeroes:IsHeroDiscovered(Game.GetLocalPlayer(), row.Index) then\n            -- 输入你的代码\n        end\n    end\nend",
         "notes": [
           "查询指定玩家是否已发现某英雄类",
@@ -21000,7 +21000,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetHeroesManager():SetHeroDiscovered()",
+        "displayName": "Game.GetHeroesManager():SetHeroDiscovered()",
         "exampleCode": "local hManager = Game.GetHeroesManager()\nif hManager ~= nil then\n    hManager:SetHeroDiscovered(playerID, heroIndex, true)\nend",
         "notes": [
           "[作用] 标记指定玩家的某个英雄职业为已发现状态",
@@ -21030,7 +21030,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Game:GetHeroesManager():PlayerDiscoverNextHero()",
+        "displayName": "Game.GetHeroesManager():PlayerDiscoverNextHero()",
         "exampleCode": "pGame:GetHeroesManager(playerID)",
         "notes": [
           "获取HeroesManager，参数：playerID",
@@ -21071,7 +21071,7 @@
             "description": "包含城市 ID 的 table，通过 .id 属性获取实际 city ID"
           }
         ],
-        "displayName": "Game:GetHeroesManager():GetHeroOriginCityID()",
+        "displayName": "Game.GetHeroesManager():GetHeroOriginCityID()",
         "exampleCode": "local pGameHeroes = Game.GetHeroesManager()\nlocal kCityID = pGameHeroes:GetHeroOriginCityID(kHeroDef.Index)\nlocal pCity = pPlayerCities:FindID(kCityID.id)",
         "notes": [
           "获取英雄起源城市的 ID 信息",
@@ -21108,7 +21108,7 @@
             "description": "英雄类别索引，返回 -1 表示该单位不是英雄"
           }
         ],
-        "displayName": "Game:GetHeroesManager():GetUnitHeroClass()",
+        "displayName": "Game.GetHeroesManager():GetUnitHeroClass()",
         "exampleCode": "local pGameHeroes = Game.GetHeroesManager()\nif pGameHeroes ~= nil then\n    local heroClassIndex = pGameHeroes:GetUnitHeroClass(unit.Index)\n    if heroClassIndex ~= -1 then\n        local heroClassInfo = GameInfo.HeroClasses[heroClassIndex]\n    end\nend",
         "notes": [
           "[作用] 获取指定单位所属的英雄类别索引",
@@ -21146,7 +21146,7 @@
             "description": "拥有该英雄的玩家 ID，-1 表示未被认领"
           }
         ],
-        "displayName": "Game:GetHeroesManager():GetHeroClaimPlayer()",
+        "displayName": "Game.GetHeroesManager():GetHeroClaimPlayer()",
         "exampleCode": "local pGameHeroes = Game.GetHeroesManager()\nlocal playerID = pGameHeroes:GetHeroClaimPlayer(kHeroDef.Index)",
         "notes": [
           "[作用] 查询指定英雄职业是否已被某玩家认领",
@@ -21184,7 +21184,7 @@
             "description": "英雄职业的基础行动次数"
           }
         ],
-        "displayName": "Game:GetHeroesManager():GetHeroClassBaseCharges()",
+        "displayName": "Game.GetHeroesManager():GetHeroClassBaseCharges()",
         "exampleCode": "local pGameHeroes = Game.GetHeroesManager()\nif pGameHeroes ~= nil then\n    local charges = pGameHeroes:GetHeroClassBaseCharges(eHeroClass)\nend",
         "notes": [
           "[作用] 获取指定英雄职业的基础行动次数（Charges）",
@@ -21222,7 +21222,7 @@
             "description": "建筑类型索引，可用于 GameInfo.Buildings 索引查询"
           }
         ],
-        "displayName": "Game:GetHeroesManager():GetPlayerHeroOriginBuildingType()",
+        "displayName": "Game.GetHeroesManager():GetPlayerHeroOriginBuildingType()",
         "exampleCode": "local pGameHeroes = Game.GetHeroesManager()\nlocal eOriginBuildingType = pGameHeroes:GetPlayerHeroOriginBuildingType(playerID)\nlocal pOriginBuildingInfo = GameInfo.Buildings[eOriginBuildingType]\nif pOriginBuildingInfo ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取指定玩家英雄起源建筑的类型索引",
@@ -21786,7 +21786,7 @@
             "description": "活跃科技节点数组，每个元素包含 TechType 字段，可用于遍历当前可用科技"
           }
         ],
-        "displayName": "Game:GetTechs():GetActiveTechNodes()",
+        "displayName": "Game.GetTechs():GetActiveTechNodes()",
         "exampleCode": "local techNodes = Game.GetTechs():GetActiveTechNodes()\nfor _, node in ipairs(techNodes) do\n    local techInfo = GameInfo.Technologies[node.TechType]\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 返回当前游戏中所有活跃科技节点的数组",
@@ -22166,7 +22166,7 @@
             "type": ":boolean"
           }
         ],
-        "displayName": "Game:GetEconomicManager():IsResourceMonopoly()",
+        "displayName": "Game.GetEconomicManager():IsResourceMonopoly()",
         "exampleCode": "local True_False = pGame:GetEconomicManager()",
         "notes": [
           "获取EconomicManager，返回 boolean",
@@ -22206,7 +22206,7 @@
             "type": ":table"
           }
         ],
-        "displayName": "Game:GetEconomicManager():GetPlayerCorporations()",
+        "displayName": "Game.GetEconomicManager():GetPlayerCorporations()",
         "exampleCode": "local pEconomicManager = pGame:GetEconomicManager()\nlocal corporations = pEconomicManager:GetPlayer(playerID)",
         "notes": [
           "获取EconomicManager，参数：playerID，返回 table",
@@ -22248,7 +22248,7 @@
             "type": ":boolean"
           }
         ],
-        "displayName": "Game:GetEconomicManager():HasIndustry()",
+        "displayName": "Game.GetEconomicManager():HasIndustry()",
         "exampleCode": "local True_False = pGame:GetEconomicManager(playerID, resourceIndex)",
         "notes": [
           "获取EconomicManager，参数：playerID, resourceIndex，返回 boolean",
@@ -22294,7 +22294,7 @@
             "description": "该玩家是否可以在该资源上建立产业"
           }
         ],
-        "displayName": "Game:GetEconomicManager():CanHaveIndustry()",
+        "displayName": "Game.GetEconomicManager():CanHaveIndustry()",
         "exampleCode": "local pGameEconomic = Game.GetEconomicManager()\nif pGameEconomic:CanHaveIndustry(localPlayerID, eResourceType) then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 判断玩家是否可以在指定资源类型上建立产业（Industry）",
@@ -22338,7 +22338,7 @@
             "description": "公司名称，可能为 nil 或空字符串"
           }
         ],
-        "displayName": "Game:GetEconomicManager():GetCorporationName()",
+        "displayName": "Game.GetEconomicManager():GetCorporationName()",
         "exampleCode": "local pEcoMgr = Game.GetEconomicManager()\nif pEcoMgr ~= nil then\n    local corpName = pEcoMgr:GetCorporationName(Game.GetLocalPlayer(), plot:GetResourceType())\n    if corpName ~= nil and corpName ~= \"\" then\n        -- 输入你的代码\n    end\nend",
         "notes": [
           "[作用] 获取指定玩家和资源的公司名称",
@@ -22374,7 +22374,7 @@
             "type": ":table"
           }
         ],
-        "displayName": "Game:GetEconomicManager():GetPlayerIndustries()",
+        "displayName": "Game.GetEconomicManager():GetPlayerIndustries()",
         "exampleCode": "local pEconomicManager = pGame:GetEconomicManager()\nlocal industries = pEconomicManager:GetPlayer(playerID)",
         "notes": [
           "获取EconomicManager，参数：playerID，返回 table",
@@ -22416,7 +22416,7 @@
             "type": ":boolean"
           }
         ],
-        "displayName": "Game:GetEconomicManager():HasCorporation()",
+        "displayName": "Game.GetEconomicManager():HasCorporation()",
         "exampleCode": "local True_False = pGame:GetEconomicManager(playerID, resourceIndex)",
         "notes": [
           "获取EconomicManager，参数：playerID, resourceIndex，返回 boolean",
@@ -22462,7 +22462,7 @@
             "description": "玩家是否已建立该资源的公司"
           }
         ],
-        "displayName": "Game:GetEconomicManager():HasCorporationOf()",
+        "displayName": "Game.GetEconomicManager():HasCorporationOf()",
         "exampleCode": "local pGameEconomic = Game.GetEconomicManager()\nif pGameEconomic ~= nil then\n    local bHasCorpo = pGameEconomic:HasCorporationOf(localPlayerID, eResourceType)\nend",
         "notes": [
           "[作用] 判断指定玩家是否已建立指定资源的公司（Monopolies 与垄断模式专属）",
@@ -22506,7 +22506,7 @@
             "description": "该玩家控制的指定资源数量"
           }
         ],
-        "displayName": "Game:GetEconomicManager():GetNumControlledResources()",
+        "displayName": "Game.GetEconomicManager():GetNumControlledResources()",
         "exampleCode": "local pGameEconomic = Game.GetEconomicManager()\nlocal amount = pGameEconomic:GetNumControlledResources(playerID, resourceIndex)",
         "notes": [
           "[作用] 查询指定玩家控制的特定资源数量",
@@ -22549,7 +22549,7 @@
             "description": "玩家是否拥有该资源的产业"
           }
         ],
-        "displayName": "Game:GetEconomicManager():HasIndustryOf()",
+        "displayName": "Game.GetEconomicManager():HasIndustryOf()",
         "exampleCode": "local pGameEconomic = Game.GetEconomicManager()\nif pGameEconomic:HasIndustryOf(localPlayerID, eResourceType) then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 判断指定玩家是否已拥有某资源的 Industry（产业）",
@@ -22588,7 +22588,7 @@
             "description": "拥有该资源垄断的玩家ID"
           }
         ],
-        "displayName": "Game:GetEconomicManager():GetResourceMonopolyPlayer()",
+        "displayName": "Game.GetEconomicManager():GetResourceMonopolyPlayer()",
         "exampleCode": "local pGameEconomic = Game.GetEconomicManager()\nif pGameEconomic ~= nil then\n    local monopolyID = pGameEconomic:GetResourceMonopolyPlayer(kResourceData.index)\n    -- monopolyID 表示垄断该资源的玩家ID\nend",
         "notes": [
           "[作用] 查询指定资源的垄断玩家",
@@ -22631,7 +22631,7 @@
             "description": "玩家是否可以对该资源建立公司"
           }
         ],
-        "displayName": "Game:GetEconomicManager():CanHaveCorporation()",
+        "displayName": "Game.GetEconomicManager():CanHaveCorporation()",
         "exampleCode": "local pGameEconomic = Game.GetEconomicManager()\nif pGameEconomic:CanHaveCorporation(localPlayerID, eResourceType) then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 判断玩家是否可以对指定资源建立公司（Monopolies & Corporations 模式）"
@@ -22661,7 +22661,7 @@
             "description": "地图资源数量字典，key 为资源 index，value 为该资源的总数量"
           }
         ],
-        "displayName": "Game:GetEconomicManager():GetMapResources()",
+        "displayName": "Game.GetEconomicManager():GetMapResources()",
         "exampleCode": "local pGameEconomic = Game.GetEconomicManager()\nlocal kMapResources = pGameEconomic:GetMapResources()\nif kMapResources[resourceIndex] > 0 then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取地图上所有资源的总数量",
@@ -22858,7 +22858,7 @@
             "description": "紧急事件对象，可能为 nil"
           }
         ],
-        "displayName": "Game:GetEmergencyManager():GetSingleEmergency()",
+        "displayName": "Game.GetEmergencyManager():GetSingleEmergency()",
         "exampleCode": "local pEmergencyMgr = Game.GetEmergencyManager()\nif pEmergencyMgr ~= nil then\n    local emergency = pEmergencyMgr:GetSingleEmergency(emergencyTarget, emergencyType)\n    if emergency then\n        -- emergency.ShortDescriptionText, emergency.TurnsLeft, emergency.TargetID, emergency.EmergencyType\n    end\nend",
         "notes": [
           "[作用] 获取单个紧急事件的详细信息",
@@ -22896,7 +22896,7 @@
             "description": "紧急事件信息数组，每个元素包含 HasBegun、TargetID、MemberIDs、NameText、TurnsLeft、GoalsTable 等字段"
           }
         ],
-        "displayName": "Game:GetEmergencyManager():GetEmergencyInfoTable()",
+        "displayName": "Game.GetEmergencyManager():GetEmergencyInfoTable()",
         "exampleCode": "local pEmergencyManager = Game.GetEmergencyManager()\nif pEmergencyManager ~= nil then\n    local emergencies = pEmergencyManager:GetEmergencyInfoTable(Game.GetLocalPlayer())\n    for _, emergency in ipairs(emergencies) do\n        if emergency.HasBegun then\n            -- 处理已开始的紧急事件\n        end\n    end\nend",
         "notes": [
           "[作用] 获取指定玩家的紧急事件信息表",
@@ -22934,7 +22934,7 @@
             "description": "紧急事件信息表，包含 eTarget（目标玩家ID）和 eEmergencyType（紧急事件类型）"
           }
         ],
-        "displayName": "Game:GetEmergencyManager():GetNextBlockingEmergency()",
+        "displayName": "Game.GetEmergencyManager():GetNextBlockingEmergency()",
         "exampleCode": "local eEmergencyTable = Game.GetEmergencyManager():GetNextBlockingEmergency(Game.GetLocalPlayer())\nif eEmergencyTable ~= nil then\n    -- eEmergencyTable.eTarget 目标玩家ID\n    -- eEmergencyTable.eEmergencyType 紧急事件类型\nend",
         "notes": [
           "[作用] 获取下一个阻塞的紧急事件信息",
@@ -53123,7 +53123,7 @@
         "functionB": "TypeName",
         "argsB": [],
         "returns": [],
-        "displayName": "Plot.GetArea():TypeName()",
+        "displayName": "Plot:GetArea():TypeName()",
         "exampleCode": "local pArea = Plot.GetArea()\npArea:TypeName()",
         "notes": [
           "获取Area"
@@ -57545,7 +57545,7 @@
             "description": "领土名称的本地化键值（需通过 Locale.Lookup() 转换为显示文本）"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():GetName()",
+        "displayName": "Territories.GetTerritoryAt():GetName()",
         "exampleCode": "local pTerritory = Territories.GetTerritoryAt(Plot:GetIndex())\nif pTerritory ~= nil then\n    local name = pTerritory:GetName()\n    -- name 是本地化键值，需通过 Locale.Lookup() 获取显示文本\n    local displayName = Locale.Lookup(name)\nend",
         "notes": [
           "[作用] 根据单元格索引获取对应的领土对象，然后返回该领土的本地化名称键值",
@@ -57586,7 +57586,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():GetCentroid()",
+        "displayName": "Territories.GetTerritoryAt():GetCentroid()",
         "exampleCode": "local centerX, centerY = pTerritories:GetTerritoryAt()",
         "notes": [
           "获取TerritoryAt，返回 number, number",
@@ -57626,7 +57626,7 @@
             "description": "是否为海洋"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():IsSea()",
+        "displayName": "Territories.GetTerritoryAt():IsSea()",
         "exampleCode": "local pTerritory = Territories.GetTerritoryAt(plotID)\nif pTerritory ~= nil then\n    if pTerritory:IsSea() then\n        -- 海洋 Territory\n    end\nend",
         "notes": [
           "[作用] 判断 Territory 是否为海洋",
@@ -57664,7 +57664,7 @@
             "description": "该单元格对应的 Territory 是否为湖泊"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():IsLake()",
+        "displayName": "Territories.GetTerritoryAt():IsLake()",
         "exampleCode": "local pTerritory = Territories.GetTerritoryAt(plotIndex)\nif pTerritory ~= nil then\n    local isLake = pTerritory:IsLake()\nend",
         "notes": [
           "[作用] 判断 Territory 是否为湖泊",
@@ -57702,7 +57702,7 @@
             "description": "地形类别索引，可与 GameInfo.TerrainClasses 的 Index 字段比较"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():GetTerrainClass()",
+        "displayName": "Territories.GetTerritoryAt():GetTerrainClass()",
         "exampleCode": "local pTerritory = Territories.GetTerritoryAt(plotIndex)\nif pTerritory ~= nil then\n    local terrainClassIndex = pTerritory:GetTerrainClass()\nend",
         "notes": [
           "获取指定单元格所在 Territory 的地形类别索引",
@@ -57738,7 +57738,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():GetID()",
+        "displayName": "Territories.GetTerritoryAt():GetID()",
         "exampleCode": "local pTerritory = Territories.GetTerritoryAt(iPlot)\nif pTerritory ~= nil then\n    local eTerritory = pTerritory:GetID()\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取指定单元格所在领地的唯一ID",
@@ -57772,7 +57772,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():GetTotalNaturalWonders()",
+        "displayName": "Territories.GetTerritoryAt():GetTotalNaturalWonders()",
         "exampleCode": "local amount = pTerritories:GetTerritoryAt()",
         "notes": [
           "获取TerritoryAt，返回 number",
@@ -57810,7 +57810,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():GetRiverEdgeCount()",
+        "displayName": "Territories.GetTerritoryAt():GetRiverEdgeCount()",
         "exampleCode": "local amount = pTerritories:GetTerritoryAt()",
         "notes": [
           "获取TerritoryAt，返回 number",
@@ -57845,7 +57845,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():GetPlotCount()",
+        "displayName": "Territories.GetTerritoryAt():GetPlotCount()",
         "exampleCode": "local pTerritoryAt = pTerritories:GetTerritoryAt(plotID)\nlocal amount = pTerritoryAt:GetPlotCount()",
         "notes": [
           "获取TerritoryAt，返回 number",
@@ -57875,7 +57875,7 @@
         "functionB": "GetBoundaries",
         "argsB": [],
         "returns": [],
-        "displayName": "Territories:GetTerritoryAt():GetBoundaries()",
+        "displayName": "Territories.GetTerritoryAt():GetBoundaries()",
         "exampleCode": "pTerritories:GetTerritoryAt()",
         "notes": [
           "获取TerritoryAt",
@@ -57913,7 +57913,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():GetTotalFeatures()",
+        "displayName": "Territories.GetTerritoryAt():GetTotalFeatures()",
         "exampleCode": "local amount = pTerritories:GetTerritoryAt()",
         "notes": [
           "获取TerritoryAt，返回 number",
@@ -57951,7 +57951,7 @@
             "type": ":boolean"
           }
         ],
-        "displayName": "Territories:GetTerritoryAt():IsNone()",
+        "displayName": "Territories.GetTerritoryAt():IsNone()",
         "exampleCode": "local pTerritoryAt = pTerritories:GetTerritoryAt(plotID)\nlocal True_False = pTerritoryAt:IsNone()",
         "notes": [
           "获取TerritoryAt，返回 boolean",
@@ -57986,7 +57986,7 @@
         "functionB": "SetName",
         "argsB": [],
         "returns": [],
-        "displayName": "Territories:GetTerritoryAt():SetName()",
+        "displayName": "Territories.GetTerritoryAt():SetName()",
         "exampleCode": "local pTerritoryAt = pTerritories:GetTerritoryAt(plotID)\npTerritoryAt:SetName()",
         "notes": [
           "获取TerritoryAt",
@@ -58017,7 +58017,7 @@
         "functionB": "GetFeatureCount",
         "argsB": [],
         "returns": [],
-        "displayName": "Territories:GetTerritoryAt():GetFeatureCount()",
+        "displayName": "Territories.GetTerritoryAt():GetFeatureCount()",
         "exampleCode": "local pTerritoryAt = pTerritories:GetTerritoryAt(plotID)\npTerritoryAt:GetFeatureCount()",
         "notes": [
           "获取TerritoryAt",
@@ -61019,7 +61019,7 @@
         "functionB": "TypeName",
         "argsB": [],
         "returns": [],
-        "displayName": "Unit.GetReligion():TypeName()",
+        "displayName": "Unit:GetReligion():TypeName()",
         "exampleCode": "Unit.GetReligion()",
         "notes": [
           "获取玩家的宗教管理器，可用于查询和修改信仰余额"
@@ -66801,7 +66801,7 @@
             "description": "是否可以放置资源"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():CanPlaceResource()",
+        "displayName": "WorldBuilder.MapManager():CanPlaceResource()",
         "exampleCode": "local bCanPlace = WorldBuilder.MapManager():CanPlaceResource(plotIndex, resourceType, true)\nif bCanPlace then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 判断指定单元格上是否可以放置指定类型的资源"
@@ -66824,7 +66824,7 @@
         "functionB": "GetPlotValue",
         "argsB": [],
         "returns": [],
-        "displayName": "WorldBuilder:MapManager():GetPlotValue()",
+        "displayName": "WorldBuilder.MapManager():GetPlotValue()",
         "exampleCode": "local result_0 = pWorldBuilder:MapManager()\nresult_0:GetPlot()",
         "notes": [
           "查询 MapManager",
@@ -66864,7 +66864,7 @@
             "description": "单元格是否邻接河流"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():DoesPlotBorderRiver()",
+        "displayName": "WorldBuilder.MapManager():DoesPlotBorderRiver()",
         "exampleCode": "local bBordersRiver = WorldBuilder.MapManager():DoesPlotBorderRiver(kPlot:GetIndex())\nif not bBordersRiver then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 判断指定单元格是否邻接河流",
@@ -66901,7 +66901,7 @@
             "description": "资源是否可作为改良设施放置"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():IsImprovementPlaceable()",
+        "displayName": "WorldBuilder.MapManager():IsImprovementPlaceable()",
         "exampleCode": "for type in GameInfo.Resources() do\n    if WorldBuilder.MapManager():IsImprovementPlaceable(type.Index) then\n        -- 该资源可作为改良设施放置\n    end\nend",
         "notes": [
           "[作用] 判断指定资源是否可作为改良设施放置在地图上",
@@ -66952,7 +66952,7 @@
             "description": "操作是否成功"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():EditCliff()",
+        "displayName": "WorldBuilder.MapManager():EditCliff()",
         "exampleCode": "local bStatus = WorldBuilder.MapManager():EditCliff(plot, edge, true)\n-- 也可以传递 4 个参数：WorldBuilder.MapManager():EditCliff(plot, edge, true, false)\nif bStatus then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 在地图编辑器中编辑单元格的悬崖边",
@@ -67003,7 +67003,7 @@
             "description": "是否能放置"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():CanPlaceImprovement()",
+        "displayName": "WorldBuilder.MapManager():CanPlaceImprovement()",
         "exampleCode": "local bCanPlace = WorldBuilder.MapManager():CanPlaceImprovement(plotIndex, improvementType, owner, true)\nif not bCanPlace then\n    WorldBuilder.MapManager():SetImprovementType(plotIndex, -1)\nend",
         "notes": [
           "[作用] 判断指定单元格上能否放置指定改良设施",
@@ -67050,7 +67050,7 @@
             "description": "是否可以放置该地形特征"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():CanPlaceFeature()",
+        "displayName": "WorldBuilder.MapManager():CanPlaceFeature()",
         "exampleCode": "if WorldBuilder.MapManager():CanPlaceFeature( plot, featureType, { IgnoreExisting=true } ) then\n    WorldBuilder.MapManager():SetFeatureType( plot, featureType );\nend\n-- 也可以传递单元格对象：WorldBuilder.MapManager():CanPlaceFeature( Plot, featureType, { IgnoreExisting=true } )",
         "notes": [
           "[作用] 判断指定单元格上是否可以放置指定的地形特征",
@@ -67093,7 +67093,7 @@
             "description": "操作是否成功"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():SetContinentType()",
+        "displayName": "WorldBuilder.MapManager():SetContinentType()",
         "exampleCode": "local bStatus = WorldBuilder.MapManager():SetContinentType(plot, continentTypeIndex)\nif bStatus then\n    -- 设置成功\nend",
         "notes": [
           "[作用] 为指定单元格设置大陆类型",
@@ -67134,7 +67134,7 @@
             "description": "该单元格上的奇观是否离其他奇观过近"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():IsWonderTooClose()",
+        "displayName": "WorldBuilder.MapManager():IsWonderTooClose()",
         "exampleCode": "if WorldBuilder.MapManager():IsWonderTooClose(plot, wonderIndex) then\n    -- 奇观位置与其他奇观过近\nend",
         "notes": [
           "[作用] 检查指定单元格上的奇观是否与其他奇观距离过近"
@@ -67179,7 +67179,7 @@
             "description": "操作是否成功"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():SetImprovementType()",
+        "displayName": "WorldBuilder.MapManager():SetImprovementType()",
         "exampleCode": "local pMapManager = WorldBuilder.MapManager()\n-- 放置改良设施\nlocal bResult = pMapManager:SetImprovementType(plotIndex, improvementType, playerID)\nif bResult then\n    -- 放置成功\nend\n\n-- 移除改良设施\npMapManager:SetImprovementType(plotIndex, -1)",
         "notes": [
           "[作用] 在 WorldBuilder 中设置单元格的改良设施类型",
@@ -67217,7 +67217,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:MapManager():SetImprovementPillaged()",
+        "displayName": "WorldBuilder.MapManager():SetImprovementPillaged()",
         "exampleCode": "WorldBuilder.MapManager():SetImprovementPillaged(plot, true)",
         "notes": [
           "[作用] 设置指定单元格上的改良设施是否处于被劫掠状态",
@@ -67259,7 +67259,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:MapManager():SetRouteType()",
+        "displayName": "WorldBuilder.MapManager():SetRouteType()",
         "exampleCode": "WorldBuilder.MapManager():SetRouteType(plot, routeType, isPillaged)\n-- 也可以只传递 plot 和 routeType（移除路线）：WorldBuilder.MapManager():SetRouteType(plot, RouteTypes.NONE)",
         "notes": [
           "[作用] 在 WorldBuilder 编辑器中设置指定单元格的路线类型",
@@ -67285,7 +67285,7 @@
         "functionB": "LoadPlotsFromTiled",
         "argsB": [],
         "returns": [],
-        "displayName": "WorldBuilder:MapManager():LoadPlotsFromTiled()",
+        "displayName": "WorldBuilder.MapManager():LoadPlotsFromTiled()",
         "exampleCode": "WorldBuilder.MapManager():LoadPlotsFromTiled()",
         "notes": [
           "[作用] 从 Tiled 地图文件加载单元格数据到 WorldBuilder",
@@ -67330,7 +67330,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:MapManager():SetPlotValue()",
+        "displayName": "WorldBuilder.MapManager():SetPlotValue()",
         "exampleCode": "WorldBuilder.MapManager():SetPlotValue(plotIndex, \"Feature\", \"Direction\", \"FEATURE_JUNGLE\")",
         "notes": [
           "[作用] 在 WorldBuilder 编辑器中设置单元格的指定属性值",
@@ -67366,7 +67366,7 @@
             "description": "地图高度"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():GetDimensionsFromTiled()",
+        "displayName": "WorldBuilder.MapManager():GetDimensionsFromTiled()",
         "exampleCode": "local Width, Height = WorldBuilder.MapManager():GetDimensionsFromTiled()",
         "notes": [
           "[作用] 获取 WorldBuilder tiled 地图的宽度和高度",
@@ -67403,7 +67403,7 @@
             "description": "大洲所有单元格的索引数组，可通过 Map.GetPlotByIndex() 转换为单元格对象"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():GetContinentPlots()",
+        "displayName": "WorldBuilder.MapManager():GetContinentPlots()",
         "exampleCode": "local ContinentPlots = WorldBuilder.MapManager():GetContinentPlots(eContinent)\nif ContinentPlots ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取指定大洲的所有单元格索引列表",
@@ -67449,7 +67449,7 @@
             "description": "操作是否成功"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():SetFeatureType()",
+        "displayName": "WorldBuilder.MapManager():SetFeatureType()",
         "exampleCode": "WorldBuilder.MapManager():SetFeatureType(plotIndex, featureTypeIndex, { Direction = direction, IgnoreExisting = true })\n-- 移除特征：WorldBuilder.MapManager():SetFeatureType(plotIndex, -1)",
         "notes": [
           "[作用] 设置指定单元格的地形特征类型",
@@ -67486,7 +67486,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:MapManager():SetAllRevealed()",
+        "displayName": "WorldBuilder.MapManager():SetAllRevealed()",
         "exampleCode": "WorldBuilder.MapManager():SetAllRevealed(true, entry.PlayerIndex)",
         "notes": [
           "[作用] 在世界编辑器中为指定玩家揭示全部地图图块",
@@ -67521,7 +67521,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:MapManager():SetCoastalLowland()",
+        "displayName": "WorldBuilder.MapManager():SetCoastalLowland()",
         "exampleCode": "WorldBuilder.MapManager():SetCoastalLowland(iPlotIndex, eLowlandType)",
         "notes": [
           "[作用] 设置地图编辑器中选择单元格的海岸低地类型",
@@ -67567,7 +67567,7 @@
             "description": "操作是否成功"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():SetResourceType()",
+        "displayName": "WorldBuilder.MapManager():SetResourceType()",
         "exampleCode": "local Plot = Map.GetPlotByIndex(iMapIndex)\nlocal bResult = WorldBuilder.MapManager():SetResourceType(Plot, eResourceType, 1)\n-- 也可以直接传递单元格索引\n-- 移除资源：WorldBuilder.MapManager():SetResourceType(Plot, NO_RESOURCE)\nif bResult then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 在单元格上设置或移除资源",
@@ -67615,7 +67615,7 @@
             "description": "放置特征后会影响的所有单元格索引列表"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():GetFeaturePlacementPlotList()",
+        "displayName": "WorldBuilder.MapManager():GetFeaturePlacementPlotList()",
         "exampleCode": "local pMapManager = WorldBuilder.MapManager()\nif pMapManager ~= nil then\n    local aPlots = pMapManager:GetFeaturePlacementPlotList(plot, featureType, { Direction = 0, IgnoreExisting = true })\nend",
         "notes": [
           "[作用] 获取指定单元格上放置地形特征后会影响的所有单元格列表",
@@ -67662,7 +67662,7 @@
             "description": "操作是否成功"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():SetRevealed()",
+        "displayName": "WorldBuilder.MapManager():SetRevealed()",
         "exampleCode": "local bStatus = WorldBuilder.MapManager():SetRevealed(plot, true, playerIndex)\nif bStatus then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 设置单元格在世界编辑器中对指定玩家的可见性状态",
@@ -67713,7 +67713,7 @@
             "description": "失败时的错误码哈希值"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():EditRiver()",
+        "displayName": "WorldBuilder.MapManager():EditRiver()",
         "exampleCode": "local bStatus, eResult = WorldBuilder.MapManager():EditRiver(plot, edge, bAdd)\nif bStatus then\n    -- 河流操作成功\nelse\n    -- 处理错误\nend",
         "notes": [
           "[作用] 在地图上添加或移除指定单元格边缘的河流",
@@ -67754,7 +67754,7 @@
             "description": "是否设置成功"
           }
         ],
-        "displayName": "WorldBuilder:MapManager():SetTerrainType()",
+        "displayName": "WorldBuilder.MapManager():SetTerrainType()",
         "exampleCode": "local bSuccess = WorldBuilder.MapManager():SetTerrainType(plotIndex, terrainType)\nif bSuccess then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 设置指定单元格的地形类型",
@@ -67820,7 +67820,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:ConfigurationManager():SetMapValue()",
+        "displayName": "WorldBuilder.ConfigurationManager():SetMapValue()",
         "exampleCode": "WorldBuilder.ConfigurationManager():SetMapValue(\"MapScript\", strMapScript)",
         "notes": [
           "[作用] 设置WorldBuilder配置管理器的地图配置项",
@@ -67844,7 +67844,7 @@
         "functionB": "GetMapValue",
         "argsB": [],
         "returns": [],
-        "displayName": "WorldBuilder:ConfigurationManager():GetMapValue()",
+        "displayName": "WorldBuilder.ConfigurationManager():GetMapValue()",
         "exampleCode": "pWorldBuilder:ConfigurationManager()",
         "notes": [
           "查询 ConfigurationManager",
@@ -67878,7 +67878,7 @@
             "description": "地图配置信息，包含 Width(宽度)、Height(高度)、Ruleset(规则集)、MapScript(地图脚本) 四个字段"
           }
         ],
-        "displayName": "WorldBuilder:ConfigurationManager():GetMapValues()",
+        "displayName": "WorldBuilder.ConfigurationManager():GetMapValues()",
         "exampleCode": "local pConfigMgr = WorldBuilder.ConfigurationManager()\nlocal attribs = pConfigMgr:GetMapValues()",
         "notes": [
           "[作用] 获取当前地图的配置信息，包括宽度、高度、规则集和地图脚本名称",
@@ -67965,7 +67965,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetRandomMajorStartingPosition()",
+        "displayName": "WorldBuilder.PlayerManager():SetRandomMajorStartingPosition()",
         "exampleCode": "WorldBuilder:PlayerManager():SetRandomMajorStartingPosition(plotIndex)",
         "notes": [
           "[作用] 将指定单元格标记为随机主要文明的起始位置",
@@ -68001,7 +68001,7 @@
             "description": "玩家是否已初始化"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():IsPlayerInitialized()",
+        "displayName": "WorldBuilder.PlayerManager():IsPlayerInitialized()",
         "exampleCode": "local playerInitialized = WorldBuilder.PlayerManager():IsPlayerInitialized(playerIndex)\nif playerInitialized then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 检查指定玩家在 WorldBuilder 编辑器中是否已完成初始化",
@@ -68042,7 +68042,7 @@
             "description": "玩家是否已解锁该科技"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():PlayerHasTech()",
+        "displayName": "WorldBuilder.PlayerManager():PlayerHasTech()",
         "exampleCode": "local hasTech = WorldBuilder.PlayerManager():PlayerHasTech(playerIndex, techIndex)\nif hasTech then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 查询指定玩家是否已解锁指定科技"
@@ -68065,7 +68065,7 @@
         "functionB": "SetPlayerSlotStatus",
         "argsB": [],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetPlayerSlotStatus()",
+        "displayName": "WorldBuilder.PlayerManager():SetPlayerSlotStatus()",
         "exampleCode": "pWorldBuilder:PlayerManager()",
         "notes": [
           "执行 PlayerManager",
@@ -68106,7 +68106,7 @@
             "description": "起始位置信息对象，可能为 nil。包含 Type（起始位置类型）及对应类型的标识字段"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():GetStartPositionInfo()",
+        "displayName": "WorldBuilder.PlayerManager():GetStartPositionInfo()",
         "exampleCode": "local startPosInfo = WorldBuilder.PlayerManager():GetStartPositionInfo(plotIndex)\nif startPosInfo ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取指定单元格的起始位置信息",
@@ -68143,7 +68143,7 @@
             "description": "添加的玩家索引，失败时返回 -1"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():AddPlayer()",
+        "displayName": "WorldBuilder.PlayerManager():AddPlayer()",
         "exampleCode": "local playerIndex = WorldBuilder:PlayerManager():AddPlayer(false)\nif playerIndex ~= -1 then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 在世界编辑器中添加一个玩家",
@@ -68178,7 +68178,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetCivilizationStartingPosition()",
+        "displayName": "WorldBuilder.PlayerManager():SetCivilizationStartingPosition()",
         "exampleCode": "WorldBuilder.PlayerManager():SetCivilizationStartingPosition(civTypeIndex, Plot)",
         "notes": [
           "[作用] 在世界编辑器中设置文明的起始位置"
@@ -68223,7 +68223,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetPlayerLeader()",
+        "displayName": "WorldBuilder.PlayerManager():SetPlayerLeader()",
         "exampleCode": "WorldBuilder.PlayerManager():SetPlayerLeader(playerID, leaderType, civType, civLevelType)",
         "notes": [
           "[作用] 在WorldBuilder中设置玩家的领袖、文明和文明等级"
@@ -68258,7 +68258,7 @@
             "description": "玩家配置信息，包含 IsBarbarian、Name、Civ、Leader、IsHuman、Gold、Faith、IsFullCiv 等字段"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():GetPlayerConfig()",
+        "displayName": "WorldBuilder.PlayerManager():GetPlayerConfig()",
         "exampleCode": "local playerConfig = WorldBuilder.PlayerManager():GetPlayerConfig(i)",
         "notes": [
           "[作用] 获取指定索引玩家的配置信息",
@@ -68296,7 +68296,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetLeaderStartingPosition()",
+        "displayName": "WorldBuilder.PlayerManager():SetLeaderStartingPosition()",
         "exampleCode": "if plotID ~= nil then\n    WorldBuilder.PlayerManager():SetLeaderStartingPosition(leaderType, plotID)\nend",
         "notes": [
           "[作用] 在 WorldBuilder 模式下设置指定领袖的起始位置",
@@ -68331,7 +68331,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():ClearStartingPosition()",
+        "displayName": "WorldBuilder.PlayerManager():ClearStartingPosition()",
         "exampleCode": "WorldBuilder.PlayerManager():ClearStartingPosition(x, y)\n-- 也可以传递单元格对象：WorldBuilder.PlayerManager():ClearStartingPosition(Plot)",
         "notes": [
           "[作用] 清除指定位置的玩家起始点"
@@ -68354,7 +68354,7 @@
         "functionB": "InitializePlayer",
         "argsB": [],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():InitializePlayer()",
+        "displayName": "WorldBuilder.PlayerManager():InitializePlayer()",
         "exampleCode": "pWorldBuilder:PlayerManager()",
         "notes": [
           "执行 PlayerManager",
@@ -68389,7 +68389,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():ClearPlayerStartingPosition()",
+        "displayName": "WorldBuilder.PlayerManager():ClearPlayerStartingPosition()",
         "exampleCode": "WorldBuilder.PlayerManager():ClearPlayerStartingPosition(playerIndex)",
         "notes": [
           "[作用] 清除指定玩家在 WorldBuilder 编辑器中的起始位置",
@@ -68425,7 +68425,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetPlayerFaith()",
+        "displayName": "WorldBuilder.PlayerManager():SetPlayerFaith()",
         "exampleCode": "WorldBuilder.PlayerManager():SetPlayerFaith(playerIndex, faith)",
         "notes": [
           "[作用] 在世界编辑器中设置指定玩家的信仰值"
@@ -68461,7 +68461,7 @@
             "description": "槽位状态，与 SlotStatus 枚举值比较（如 SlotStatus.SS_CLOSED）"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():GetSlotStatus()",
+        "displayName": "WorldBuilder.PlayerManager():GetSlotStatus()",
         "exampleCode": "for i = 0, GameDefines.MAX_PLAYERS - 1 do\n    local eStatus = WorldBuilder.PlayerManager():GetSlotStatus(i)\n    if eStatus ~= SlotStatus.SS_CLOSED then\n        local playerConfig = WorldBuilder.PlayerManager():GetPlayerConfig(i)\n    end\nend",
         "notes": [
           "[作用] 查询 WorldBuilder 中指定玩家索引的槽位状态",
@@ -68504,7 +68504,7 @@
             "description": "玩家是否已解锁该市政"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():PlayerHasCivic()",
+        "displayName": "WorldBuilder.PlayerManager():PlayerHasCivic()",
         "exampleCode": "local hasCivic = WorldBuilder.PlayerManager():PlayerHasCivic(playerIndex, civicIndex)\nif hasCivic then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 查询玩家是否已解锁指定市政",
@@ -68545,7 +68545,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetPlayerHasTech()",
+        "displayName": "WorldBuilder.PlayerManager():SetPlayerHasTech()",
         "exampleCode": "WorldBuilder.PlayerManager():SetPlayerHasTech(playerIndex, techTypeIndex, progress)",
         "notes": [
           "[作用] 在世界编辑器模式下设置玩家对某项科技的掌握进度",
@@ -68580,7 +68580,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetPlayerEra()",
+        "displayName": "WorldBuilder.PlayerManager():SetPlayerEra()",
         "exampleCode": "WorldBuilder.PlayerManager():SetPlayerEra(playerIndex, eraType)",
         "notes": [
           "[作用] 设置指定玩家的时代",
@@ -68616,7 +68616,7 @@
             "description": "玩家索引，无玩家起始位置时返回 -1"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():GetStartPositionPlayer()",
+        "displayName": "WorldBuilder.PlayerManager():GetStartPositionPlayer()",
         "exampleCode": "WorldBuilder:PlayerManager():GetStartPositionPlayer(plot)\n-- 也可以传递单元格索引：WorldBuilder:PlayerManager():GetStartPositionPlayer(plotIndex)\n",
         "notes": [
           "[作用] 获取指定单元格上设置有起始位置的玩家索引",
@@ -68647,7 +68647,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetRandomMinorStartingPosition()",
+        "displayName": "WorldBuilder.PlayerManager():SetRandomMinorStartingPosition()",
         "exampleCode": "local pPlayerManager = WorldBuilder.PlayerManager()\npPlayerManager:SetRandomMinorStartingPosition(plotIndex)",
         "notes": [
           "[作用] 在世界编辑器中为指定单元格设置随机城邦起始位置",
@@ -68682,7 +68682,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetPlayerGold()",
+        "displayName": "WorldBuilder.PlayerManager():SetPlayerGold()",
         "exampleCode": "WorldBuilder.PlayerManager():SetPlayerGold(playerIndex, gold)",
         "notes": [
           "[作用] 设置指定玩家的金币数量",
@@ -68722,7 +68722,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetPlayerStartingPosition()",
+        "displayName": "WorldBuilder.PlayerManager():SetPlayerStartingPosition()",
         "exampleCode": "local pPlayerManager = WorldBuilder.PlayerManager()\npPlayerManager:SetPlayerStartingPosition(playerIndex, x, y)\n-- 也可以传递单元格对象：pPlayerManager:SetPlayerStartingPosition(playerIndex, Plot)",
         "notes": [
           "[作用] 设置玩家的起始生成位置",
@@ -68753,7 +68753,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():UninitializePlayer()",
+        "displayName": "WorldBuilder.PlayerManager():UninitializePlayer()",
         "exampleCode": "WorldBuilder.PlayerManager():UninitializePlayer(m_SelectedPlayer.Index)",
         "notes": [
           "[作用] 从世界编辑器中移除指定索引的玩家",
@@ -68783,7 +68783,7 @@
             "type": ":number"
           }
         ],
-        "displayName": "WorldBuilder:PlayerManager():GetMaxPlayers()",
+        "displayName": "WorldBuilder.PlayerManager():GetMaxPlayers()",
         "exampleCode": "local maxPlayers = pWorldBuilder:PlayerManager()",
         "notes": [
           "查询 PlayerManager，返回 number",
@@ -68827,7 +68827,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:PlayerManager():SetPlayerHasCivic()",
+        "displayName": "WorldBuilder.PlayerManager():SetPlayerHasCivic()",
         "exampleCode": "local playerManager = WorldBuilder.PlayerManager()\nif playerManager ~= nil then\n    playerManager:SetPlayerHasCivic(playerID, civicTypeIndex, progress)\nend",
         "notes": [
           "[作用] 为指定玩家设置市政进度（WorldBuilder 编辑器专用）",
@@ -68943,7 +68943,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:ModManager():RemoveString()",
+        "displayName": "WorldBuilder.ModManager():RemoveString()",
         "exampleCode": "local pModManager = WorldBuilder.ModManager()\nif pModManager ~= nil then\n    pModManager:RemoveString(key, forLanguage)\nend",
         "notes": [
           "[作用] 从 ModManager 中移除指定键的语言字符串",
@@ -68967,7 +68967,7 @@
         "functionB": "GetString",
         "argsB": [],
         "returns": [],
-        "displayName": "WorldBuilder:ModManager():GetString()",
+        "displayName": "WorldBuilder.ModManager():GetString()",
         "exampleCode": "pWorldBuilder:ModManager()",
         "notes": [
           "查询 ModManager",
@@ -69011,7 +69011,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:ModManager():SetString()",
+        "displayName": "WorldBuilder.ModManager():SetString()",
         "exampleCode": "WorldBuilder.ModManager():SetString(key, text, languageLocale)",
         "notes": [
           "[作用] 在 WorldBuilder 的 ModManager 中设置指定语言的本地化文本条目",
@@ -69057,7 +69057,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:ModManager():SetKeyStringPairByIndex()",
+        "displayName": "WorldBuilder.ModManager():SetKeyStringPairByIndex()",
         "exampleCode": "WorldBuilder.ModManager():SetKeyStringPairByIndex(index, key, text, forLanguage)",
         "notes": [
           "[作用] 更新指定索引位置的键值对，包括键名和文本内容",
@@ -69082,7 +69082,7 @@
         "functionB": "GetLanguageByIndex",
         "argsB": [],
         "returns": [],
-        "displayName": "WorldBuilder:ModManager():GetLanguageByIndex()",
+        "displayName": "WorldBuilder.ModManager():GetLanguageByIndex()",
         "exampleCode": "pWorldBuilder:ModManager()",
         "notes": [
           "查询 ModManager",
@@ -69132,7 +69132,7 @@
             "description": "字符串显示文本"
           }
         ],
-        "displayName": "WorldBuilder:ModManager():GetKeyStringPairByIndex()",
+        "displayName": "WorldBuilder.ModManager():GetKeyStringPairByIndex()",
         "exampleCode": "local key, text = WorldBuilder.ModManager():GetKeyStringPairByIndex(index, forLanguage)\nif key ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 按索引获取 WorldBuilder Mod 管理器中的键值字符串对",
@@ -69258,7 +69258,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():CreateDistrict()",
+        "displayName": "WorldBuilder.CityManager():CreateDistrict()",
         "exampleCode": "local eDistrict = GameInfo.Districts[\"DISTRICT_CAMPUS\"].Index\nWorldBuilder.CityManager():CreateDistrict(pCity, eDistrict, 100, iPlotIndex)",
         "notes": [
           "[作用] 在 WorldBuilder 中为城市创建区域",
@@ -69295,7 +69295,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():RemoveBuilding()",
+        "displayName": "WorldBuilder.CityManager():RemoveBuilding()",
         "exampleCode": "WorldBuilder.CityManager():RemoveBuilding(pCity, buildingEntry.Type.BuildingType)",
         "notes": [
           "[作用] 从指定城市中移除指定类型的建筑",
@@ -69336,7 +69336,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():SetDistrictValue()",
+        "displayName": "WorldBuilder.CityManager():SetDistrictValue()",
         "exampleCode": "local pDistrict = CityManager.GetDistrictAt(Plot)\nif pDistrict ~= nil then\n    WorldBuilder.CityManager():SetDistrictValue(pDistrict, \"Pillaged\", true)\nend",
         "notes": [
           "[作用] 在世界编辑器中设置城区的指定属性值",
@@ -69367,7 +69367,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():RemoveAt()",
+        "displayName": "WorldBuilder.CityManager():RemoveAt()",
         "exampleCode": "WorldBuilder.CityManager():RemoveAt(plot)",
         "notes": [
           "[作用] 在世界编辑器中移除指定单元格上的城市",
@@ -69408,7 +69408,7 @@
             "description": "查询到的属性值，类型取决于 valueName"
           }
         ],
-        "displayName": "WorldBuilder:CityManager():GetDistrictValue()",
+        "displayName": "WorldBuilder.CityManager():GetDistrictValue()",
         "exampleCode": "local isDistrictPillaged = WorldBuilder.CityManager():GetDistrictValue(pDistrict, \"Pillaged\")",
         "notes": [
           "[作用] 在世界编辑器中查询城区的指定属性值",
@@ -69438,7 +69438,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():Remove()",
+        "displayName": "WorldBuilder.CityManager():Remove()",
         "exampleCode": "local pCity = Cities.GetCityInPlot(plot)\nif pCity ~= nil then\n    WorldBuilder.CityManager():Remove(pCity)\nend",
         "notes": [
           "[作用] 在世界编辑器中移除指定城市",
@@ -69469,7 +69469,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():RemoveAll()",
+        "displayName": "WorldBuilder.CityManager():RemoveAll()",
         "exampleCode": "local iPlayer = g_PlacementSettings.Player\nif iPlayer ~= -1 then\n    WorldBuilder.CityManager():RemoveAll(iPlayer)\nend",
         "notes": [
           "[作用] 移除指定玩家的所有城市",
@@ -69500,7 +69500,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():RemoveDistrict()",
+        "displayName": "WorldBuilder.CityManager():RemoveDistrict()",
         "exampleCode": "local pDistrict = CityManager.GetDistrictAt(plot)\nif pDistrict ~= nil then\n    WorldBuilder.CityManager():RemoveDistrict(pDistrict)\nend",
         "notes": [
           "[作用] 从城市中移除指定区域",
@@ -69558,7 +69558,7 @@
             "description": "操作结果描述信息"
           }
         ],
-        "displayName": "WorldBuilder:CityManager():CreateBuilding()",
+        "displayName": "WorldBuilder.CityManager():CreateBuilding()",
         "exampleCode": "local bStatus, sStatus = WorldBuilder.CityManager():CreateBuilding(pCity, \"BUILDING_MONUMENT\", 100)\n-- 也可以指定单元格：WorldBuilder.CityManager():CreateBuilding(pCity, \"BUILDING_MONUMENT\", 100, Plot)\nif bStatus then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 在 WorldBuilder 模式下为指定城市创建建筑，支持指定建造完成度和单元格",
@@ -69597,7 +69597,7 @@
             "description": "单元格所属城市信息，包含 PlayerID 和 CityID 字段；无所有者时返回 nil"
           }
         ],
-        "displayName": "WorldBuilder:CityManager():GetPlotOwner()",
+        "displayName": "WorldBuilder.CityManager():GetPlotOwner()",
         "exampleCode": "local owner = WorldBuilder.CityManager():GetPlotOwner(Plot)\n-- 也可以传递单元格索引：local owner = WorldBuilder.CityManager():GetPlotOwner(plotIndex)\nif owner ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取指定单元格所属城市的玩家 ID 和城市 ID",
@@ -69639,7 +69639,7 @@
             "description": "城市属性的当前值，未设置时返回 nil"
           }
         ],
-        "displayName": "WorldBuilder:CityManager():GetCityValue()",
+        "displayName": "WorldBuilder.CityManager():GetCityValue()",
         "exampleCode": "local population = WorldBuilder.CityManager():GetCityValue(pCity, \"Population\")\nif population ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 获取城市指定属性的当前值",
@@ -69674,7 +69674,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():Create()",
+        "displayName": "WorldBuilder.CityManager():Create()",
         "exampleCode": "WorldBuilder.CityManager():Create(playerEntry.PlayerIndex, plot)\n-- 也可以传递坐标：WorldBuilder.CityManager():Create(playerID, plot:GetX(), plot:GetY())",
         "notes": [
           "[作用] 在 WorldBuilder 中为指定玩家创建城市",
@@ -69716,7 +69716,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():SetCityValue()",
+        "displayName": "WorldBuilder.CityManager():SetCityValue()",
         "exampleCode": "WorldBuilder.CityManager():SetCityValue(pCity, \"Population\", 4)",
         "notes": [
           "[作用] 在世界编辑器中设置城市的指定属性值",
@@ -69763,7 +69763,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():SetPlotOwner()",
+        "displayName": "WorldBuilder.CityManager():SetPlotOwner()",
         "exampleCode": "WorldBuilder.CityManager():SetPlotOwner(plot:GetX(), plot:GetY(), entry.Player, entry.ID)\n-- 也可以传递单元格对象和城市对象：WorldBuilder.CityManager():SetPlotOwner(plot, city)\n-- 移除所有权：WorldBuilder.CityManager():SetPlotOwner(plot:GetX(), plot:GetY(), false)",
         "notes": [
           "[作用] 在世界编辑器中设置单元格的所有权归属",
@@ -69810,7 +69810,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:CityManager():SetPlotOwner()",
+        "displayName": "WorldBuilder.CityManager():SetPlotOwner()",
         "exampleCode": "local pCityManager = WorldBuilder.CityManager()\nif pCityManager ~= nil then\n    pCityManager:SetPlotOwner(x, y, playerIndex, cityId)\n    -- 也可以传递单元格对象和城市对象：pCityManager:SetPlotOwner(Plot, pCity)\n    -- 移除所有权：pCityManager:SetPlotOwner(x, y, false)\nend",
         "notes": [
           "[作用] 在世界编辑器模式下设置单元格的所有权",
@@ -69852,7 +69852,7 @@
             "description": "城市对象，未找到时返回 nil"
           }
         ],
-        "displayName": "WorldBuilder:CityManager():GetCity()",
+        "displayName": "WorldBuilder.CityManager():GetCity()",
         "exampleCode": "local pCity = WorldBuilder:CityManager():GetCity(playerID, cityID)\n-- 也可以直接调用：local pCity = CityManager.GetCity(playerID, cityID)\nif pCity ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 根据玩家 ID 和城市 ID 获取城市对象",
@@ -70183,7 +70183,7 @@
             "description": "创建的单位的 ID，创建失败时为 nil"
           }
         ],
-        "displayName": "WorldBuilder:UnitManager():Create()",
+        "displayName": "WorldBuilder.UnitManager():Create()",
         "exampleCode": "local unit, unitID = WorldBuilder.UnitManager():Create(unitTypeIndex, playerIndex, x, y)\n-- 也可以传递单元格对象：local unit, unitID = WorldBuilder.UnitManager():Create(unitTypeIndex, playerIndex, Plot)\nif unit ~= nil and unitID ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 在 WorldBuilder 编辑器中创建一个单位",
@@ -70214,7 +70214,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:UnitManager():Remove()",
+        "displayName": "WorldBuilder.UnitManager():Remove()",
         "exampleCode": "WorldBuilder.UnitManager():Remove(pUnit)",
         "notes": [
           "[作用] 从地图上移除指定的单位对象"
@@ -70244,7 +70244,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:UnitManager():RemoveAll()",
+        "displayName": "WorldBuilder.UnitManager():RemoveAll()",
         "exampleCode": "if playerID ~= -1 then\n    WorldBuilder.UnitManager():RemoveAll(playerID)\nend",
         "notes": [
           "[作用] 移除指定玩家的所有单位",
@@ -70274,7 +70274,7 @@
           }
         ],
         "returns": [],
-        "displayName": "WorldBuilder:UnitManager():RemoveAt()",
+        "displayName": "WorldBuilder.UnitManager():RemoveAt()",
         "exampleCode": "WorldBuilder.UnitManager():RemoveAt(plot)\n-- plot 也可以是单元格对象：WorldBuilder.UnitManager():RemoveAt(Plot)",
         "notes": [
           "[作用] 在世界编辑器中移除指定单元格上的单位",
@@ -79607,7 +79607,7 @@
           }
         ],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Remove()",
+        "displayName": "UI.GetGameParameters():Remove()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Add(\"CustomData\")\nif pParameters ~= nil then\n    pParameters:Remove(\"OldKey\")\n    local pData = pParameters:Add(\"NewKey\")\n    pData:AppendValue(value)\nend",
         "notes": [
           "[作用] 从 GameParameters 中移除指定键名的参数组",
@@ -79632,7 +79632,7 @@
         "functionB": "SetValue",
         "argsB": [],
         "returns": [],
-        "displayName": "UI:GetGameParameters():SetValue()",
+        "displayName": "UI.GetGameParameters():SetValue()",
         "exampleCode": "local pGameParameters = pUI:GetGameParameters()\npGameParameters:SetValue()",
         "notes": [
           "获取GameParameters",
@@ -79672,7 +79672,7 @@
         ],
         "functionC": "",
         "argsC": [],
-        "displayName": "UI:GetGameParameters():Get():Value()",
+        "displayName": "UI.GetGameParameters():Get():Value()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(\"CustomData\")\nif pParameters ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 从 GameParameters 中根据 key 获取参数对象",
@@ -79709,7 +79709,7 @@
             "description": "参数组对象，支持 Get/Add/Remove/AppendValue/GetCount/GetKeyAt/GetValueAt/RemoveAt 方法"
           }
         ],
-        "displayName": "UI:GetGameParameters():Add()",
+        "displayName": "UI.GetGameParameters():Add()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(\"CustomData\")\nif pParameters == nil then\n    pParameters = UI.GetGameParameters():Add(\"CustomData\")\nend\nif pParameters ~= nil then\n    local pData = pParameters:Add(key)\n    pData:AppendValue(value)\nend",
         "notes": [
           "[作用] 在 UI GetGameParameters 的参数容器中创建或获取一个命名的参数组",
@@ -79748,7 +79748,7 @@
             "description": "参数组数据对象，支持 Get/GetCount/GetValueAt 等方法"
           }
         ],
-        "displayName": "UI:GetGameParameters():Get()",
+        "displayName": "UI.GetGameParameters():Get()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(\"CustomData\")\nif pParameters ~= nil then\n    local count = pParameters:GetCount()\nend",
         "notes": [
           "[作用] 从 UI 参数存储中读取指定键名的参数组",
@@ -79775,7 +79775,7 @@
         "functionC": "SetValue",
         "argsC": [],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():SetValue()",
+        "displayName": "UI.GetGameParameters():Get():SetValue()",
         "exampleCode": "pUI:GetGameParameters()",
         "notes": [
           "获取GameParameters",
@@ -79824,7 +79824,7 @@
             "description": "指定索引处的值，类型取决于存储的数据"
           }
         ],
-        "displayName": "UI:GetGameParameters():Get():GetValueAt()",
+        "displayName": "UI.GetGameParameters():Get():GetValueAt()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(\"TutorialGoals\")\nif pParameters ~= nil then\n    local count = pParameters:GetCount()\n    for i = 0, count-1, 1 do\n        local value = pParameters:GetValueAt(i)\n    end\nend",
         "notes": [
           "[作用] 根据索引从参数值对象中获取存储的数据",
@@ -79864,7 +79864,7 @@
             "description": "参数条目的数量"
           }
         ],
-        "displayName": "UI:GetGameParameters():Get():GetCount()",
+        "displayName": "UI.GetGameParameters():Get():GetCount()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(key)\nif pParameters ~= nil then\n    local count = pParameters:GetCount()\n    for i = 0, count - 1, 1 do\n        local value = pParameters:GetValueAt(i)\n    end\nend",
         "notes": [
           "[作用] 获取 GameParameters 中指定键下存储的值的数量",
@@ -79903,7 +79903,7 @@
             "description": "参数表对象，支持 Get/Add/Remove/GetCount/GetValueAt/GetKeyAt 等方法"
           }
         ],
-        "displayName": "UI:GetGameParameters():Get():Get()",
+        "displayName": "UI.GetGameParameters():Get():Get()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(\"CustomData\")\nif pParameters ~= nil then\n    local pValues = pParameters:Get(key)\n    if pValues ~= nil then\n        -- 输入你的代码\n    end\nend",
         "notes": [
           "[作用] 获取 UI 侧的 GameParameters 参数表，用于读写游戏参数数据",
@@ -79942,7 +79942,7 @@
           }
         ],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():RemoveAt()",
+        "displayName": "UI.GetGameParameters():Get():RemoveAt()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(\"UnitActionRestrictions\")\nif pParameters ~= nil then\n    local pData = pParameters:Get(unitTypeName)\n    if pData ~= nil then\n        local count = pData:GetCount()\n        for i = 0, count - 1, 1 do\n            if pData:GetValueAt(i) == actionName then\n                pData:RemoveAt(i)\n                break\n            end\n        end\n    end\nend",
         "notes": [
           "[作用] 删除参数数据表中指定索引位置的元素",
@@ -79982,7 +79982,7 @@
           }
         ],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():AppendValue()",
+        "displayName": "UI.GetGameParameters():Get():AppendValue()",
         "exampleCode": "local pParameters = UI:GetGameParameters():Get(\"SectionName\")\nif pParameters ~= nil then\n    local pData = pParameters:Get(\"KeyName\")\n    if pData ~= nil then\n        pData:AppendValue(value)\n    end\nend",
         "notes": [
           "[作用] 向 GameParameters 数据条目中追加一个值",
@@ -80027,7 +80027,7 @@
             "description": "指定索引处的键名"
           }
         ],
-        "displayName": "UI:GetGameParameters():Get():GetKeyAt()",
+        "displayName": "UI.GetGameParameters():Get():GetKeyAt()",
         "exampleCode": "local pParams = UI.GetGameParameters():Get(\"UnitMoveRestrictions\")\nif pParams ~= nil then\n    for i = 0, pParams:GetCount()-1, 1 do\n        local key = pParams:GetKeyAt(i)\n    end\nend",
         "notes": [
           "获取参数列表中指定索引处的键名，用于遍历参数组",
@@ -80053,7 +80053,7 @@
         "functionC": "SetValueAt",
         "argsC": [],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():SetValueAt()",
+        "displayName": "UI.GetGameParameters():Get():SetValueAt()",
         "exampleCode": "pUI:GetGameParameters()",
         "notes": [
           "获取GameParameters",
@@ -80084,7 +80084,7 @@
         "functionC": "GetAt",
         "argsC": [],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():GetAt()",
+        "displayName": "UI.GetGameParameters():Get():GetAt()",
         "exampleCode": "pUI:GetGameParameters()",
         "notes": [
           "获取GameParameters",
@@ -80129,7 +80129,7 @@
             "description": "指定索引处的参数值"
           }
         ],
-        "displayName": "UI:GetGameParameters():Get():GetValue()",
+        "displayName": "UI.GetGameParameters():Get():GetValue()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(key)\nif pParameters ~= nil then\n    local count = pParameters:GetCount()\n    for i = 1, count, 1 do\n        local value = pParameters:GetValueAt(i-1)\n    end\nend",
         "notes": [
           "[作用] 获取游戏参数的值",
@@ -80156,7 +80156,7 @@
         "functionC": "GetValueIndex",
         "argsC": [],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():GetValueIndex()",
+        "displayName": "UI.GetGameParameters():Get():GetValueIndex()",
         "exampleCode": "pUI:GetGameParameters()",
         "notes": [
           "获取GameParameters",
@@ -80186,7 +80186,7 @@
         "functionC": "ContainsValue",
         "argsC": [],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():ContainsValue()",
+        "displayName": "UI.GetGameParameters():Get():ContainsValue()",
         "exampleCode": "pUI:GetGameParameters()",
         "notes": [
           "获取GameParameters",
@@ -80216,7 +80216,7 @@
         "functionC": "InsertValueAt",
         "argsC": [],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():InsertValueAt()",
+        "displayName": "UI.GetGameParameters():Get():InsertValueAt()",
         "exampleCode": "pUI:GetGameParameters()",
         "notes": [
           "获取GameParameters",
@@ -80259,7 +80259,7 @@
           }
         ],
         "returns": [],
-        "displayName": "UI:GetGameParameters():Get():Remove()",
+        "displayName": "UI.GetGameParameters():Get():Remove()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Get(\"TutorialGoals\")\nif pParameters ~= nil then\n    local pGoal = pParameters:Get(goal.Id)\n    if pGoal ~= nil then\n        pParameters:Remove(goal.Id)\n    end\nend",
         "notes": [
           "[作用] 从 GameParameters 的参数组中删除指定条目",
@@ -80304,7 +80304,7 @@
             "description": "参数组对象，支持 Get/GetCount/GetValueAt/AppendValue/Remove 方法"
           }
         ],
-        "displayName": "UI:GetGameParameters():Get():Add()",
+        "displayName": "UI.GetGameParameters():Get():Add()",
         "exampleCode": "local pParameters = UI.GetGameParameters():Add(\"CustomData\")\nif pParameters ~= nil then\n    local pData = pParameters:Add(key)\n    pData:AppendValue(value)\nend",
         "notes": [
           "[作用] 通过键名创建新的参数组，用于存储自定义数据",
@@ -102631,7 +102631,7 @@
           }
         ],
         "returns": [],
-        "displayName": "Fractal:Create():BuildRidges()",
+        "displayName": "Fractal.Create():BuildRidges()",
         "exampleCode": "local pFractal = Fractal.Create(g_iW, g_iH, grain_amount, iFlags, 6, 5)\npFractal:BuildRidges(numPlates, iFlags, 1, 2)",
         "notes": [
           "[作用] 在分形对象中构建山脊线，用于模拟板块边界、粗糙化海岸线和形成内陆海",
@@ -102705,7 +102705,7 @@
             "description": "分形噪声高度值"
           }
         ],
-        "displayName": "Fractal:Create():GetHeight()",
+        "displayName": "Fractal.Create():GetHeight()",
         "exampleCode": "local frac = Fractal.Create(iW, iH, grain, flags, fracXExp, fracYExp)\nlocal height = frac:GetHeight(x, y)\n-- 也可以传入百分比：local threshold = frac:GetHeight(percent)",
         "notes": [
           "[作用] 创建分形噪声生成器并查询指定位置或百分位的高度值",
@@ -102767,7 +102767,7 @@
             "description": "创建的分形对象，用于后续地形高度计算"
           }
         ],
-        "displayName": "Fractal:Create():Destroy()",
+        "displayName": "Fractal.Create():Destroy()",
         "exampleCode": "local pFractal = Fractal.Create(g_iW, g_iH, grain, fracFlags, 6, 5)\nif pFractal ~= nil then\n    -- 输入你的代码\nend",
         "notes": [
           "[作用] 使用分形算法创建地形生成器对象",
