@@ -3435,7 +3435,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 2
+      "enrichAnalysisCount": 2,
+      "humanChecked": true
     },
     {
       "id": "E-BuildingBuildProgressChanged",
@@ -3559,7 +3560,8 @@
       "enriched": true,
       "enrichComplete": true,
       "enrichSource": "workshop",
-      "enrichAnalysisCount": 4
+      "enrichAnalysisCount": 4,
+      "humanChecked": true
     },
     {
       "id": "E-BuildingVisibilityChanged",
@@ -3911,15 +3913,14 @@
         }
       ],
       "callbackSignature": "OnCityFocusChanged(playerID: number, cityID: number)",
-      "exampleCode": "function OnCityFocusChanged(playerID, cityID)\n    local pPlayer = Players[playerID];\n    if pPlayer ~= nil and pPlayer:IsLocalPlayer() then\n        local pCity = pPlayer:GetCities():FindID(cityID);\n        if pCity ~= nil then\n            -- 城市焦点已变更\n        end\n    end\nend\nEvents.CityFocusChanged.Add(OnCityFocusChanged);",
+      "exampleCode": "function OnCityFocusChanged(playerID, cityID)\n    local pPlayer = Players[playerID];\n    if pPlayer ~= nil then\n        local pCity = pPlayer:GetCities():FindID(cityID);\n        if pCity ~= nil then\n            -- 城市焦点已变更\n        end\n    end\nend\nEvents.CityFocusChanged.Add(OnCityFocusChanged);",
       "notes": [
-        "[作用] 当城市的焦点类型（如食物焦点、生产力焦点、科技焦点）变更时触发",
-        "回调不直接传递新的焦点类型，需通过 Cities:GetFocusType() 或相应 API 获取变更后的焦点状态",
-        "部分 handler 为复用而声明了 4 个参数（含 plotX, plotY），但 CityFocusChanged 仅传递 playerID 和 cityID，后两个参数为 nil"
+        "[作用] 当城市的焦点类型（如食物焦点、生产力焦点、科技焦点）变更时触发"
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 11
+      "enrichAnalysisCount": 11,
+      "humanChecked": true
     },
     {
       "id": "E-CityInitialized",
@@ -4654,7 +4655,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 13
+      "enrichAnalysisCount": 13,
+      "humanChecked": true
     },
     {
       "id": "E-CitySiegeStatusChanged",
@@ -6165,7 +6167,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 8
+      "enrichAnalysisCount": 8,
+      "humanChecked": true
     },
     {
       "id": "E-DistrictBuildingRestore",
@@ -6450,7 +6453,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 5
+      "enrichAnalysisCount": 5,
+      "humanChecked": true
     },
     {
       "id": "E-DistrictSelectionChanged",
@@ -7378,12 +7382,12 @@
         "[作用] 游戏核心引擎完成事件批处理后通知 UI 层刷新显示状态",
         "[触发条件] 此事件不是每帧触发的事件。官方注释原文：'may fire multiple times as a turn begins, as well as after player actions'——在回合开始时可能多次触发，也在玩家执行操作后触发。如果没有任何游戏事件发生，此事件不会触发。",
         "与 GameCoreEventPublishComplete 的区别：PlaybackComplete 是事件回放阶段的完成信号，仅在需要回放事件时触发（回合切换、操作执行）；PublishComplete 是事件发布阶段的完成信号，每帧固定触发。",
-        "用于更新城市横幅统计、单位标志状态、地图标签等 UI 元素。CityBannerManager 和 UnitFlagManager 使用此事件处理脏标记的视觉更新。",
-        "非本地玩家（旁观者模式）时部分处理会被跳过（m_activeLocalPlayer == -1）。"
+        "用于更新城市横幅统计、单位标志状态、地图标签等 UI 元素。CityBannerManager 和 UnitFlagManager 使用此事件处理脏标记的视觉更新。"
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 11
+      "enrichAnalysisCount": 11,
+      "humanChecked": true
     },
     {
       "id": "E-GameCoreEventPublishComplete",
@@ -7406,7 +7410,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 11
+      "enrichAnalysisCount": 11,
+      "humanChecked": true
     },
     {
       "id": "E-GameCoreProcessingComplete",
@@ -8513,7 +8518,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 1
+      "enrichAnalysisCount": 1,
+      "humanChecked": true
     },
     {
       "id": "E-InputActionFinished",
@@ -12731,7 +12737,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 1
+      "enrichAnalysisCount": 1,
+      "humanChecked": true
     },
     {
       "id": "E-TerrainTypeChanged",
@@ -14712,7 +14719,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 5
+      "enrichAnalysisCount": 5,
+      "humanChecked": true
     },
     {
       "id": "E-UnitVisibilityChanged",
@@ -15242,7 +15250,8 @@
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 3
+      "enrichAnalysisCount": 3,
+      "humanChecked": true
     },
     {
       "id": "E-WonderCompletedNarrative",

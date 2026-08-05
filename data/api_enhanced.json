@@ -478,7 +478,7 @@
         "notes": [
           "[作用] 返回城市的建筑管理器对象，可查询建筑状态、Great Work 插槽、维护费等信息",
           "返回的对象通常非 nil，但部分代码会做 nil 检查后再使用",
-          "常用方法：:GetBuildingsAtLocation(plotID) 获取指定单元格上的建筑类型列表",
+          "常用方法：:GetBuildingsAtLocation(plotID) 获取指定单元格上的建筑类型数组",
           "常用方法：:HasBuilding(buildingIndex) 检查城市是否拥有某建筑",
           "常用方法：:IsPillaged(buildingType) 检查建筑是否被掠夺",
           "常用方法：:GetNumGreatWorkSlots(buildingIndex) 获取建筑的 Great Work 插槽数量",
@@ -520,14 +520,13 @@
           {
             "name": "buildingTypes",
             "type": ":table",
-            "description": "建筑类型索引列表，可用 ipairs 遍历，每个元素作为 GameInfo.Buildings 的键"
+            "description": "建筑类型索引数组，可用 ipairs 遍历，每个元素作为 GameInfo.Buildings 的键"
           }
         ],
         "displayName": "City:GetBuildings():GetBuildingsAtLocation()",
         "exampleCode": "local pCityBuildings = pCity:GetBuildings()\nif pCityBuildings ~= nil then\n    local kBuildingTypes = pCityBuildings:GetBuildingsAtLocation(plotID)\n    for _, buildingType in ipairs(kBuildingTypes) do\n        local building = GameInfo.Buildings[buildingType]\n    end\nend",
         "notes": [
-          "[作用] 返回指定单元格上属于该城市的所有建筑类型索引列表",
-          "plotID 通常通过 Map.GetCityPlots():GetPurchasedPlots() 获取的已购买单元格列表，或通过 plot:GetIndex() 获取",
+          "[作用] 返回指定单元格上属于该城市的所有建筑类型索引数组",
           "返回的建筑类型索引可用作 GameInfo.Buildings 的键",
           "只能获取已建成的建筑，未建成的建筑可以使用 GetConstructionsAtLocation"
         ],
@@ -535,7 +534,8 @@
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 6
+        "enrichAnalysisCount": 6,
+        "humanChecked": true
       },
       "Q-CityGetBuildingsGetBuildingTourismFromGreatWorks": {
         "id": "Q-CityGetBuildingsGetBuildingTourismFromGreatWorks",
@@ -1491,7 +1491,8 @@
         "enriched": true,
         "enrichComplete": true,
         "enrichSource": "workshop",
-        "enrichAnalysisCount": 20
+        "enrichAnalysisCount": 20,
+        "humanChecked": true
       },
       "Q-CityGetBuildQueueCanProduce": {
         "id": "Q-CityGetBuildQueueCanProduce",
@@ -1761,7 +1762,8 @@
         "enriched": true,
         "enrichComplete": true,
         "enrichSource": "workshop",
-        "enrichAnalysisCount": 8
+        "enrichAnalysisCount": 8,
+        "humanChecked": true
       },
       "A-CityGetBuildQueueFinishProgress": {
         "id": "A-CityGetBuildQueueFinishProgress",
@@ -1785,7 +1787,8 @@
         "signature": "FinishProgress()",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 1
+        "enrichAnalysisCount": 1,
+        "humanChecked": true
       },
       "Q-CityGetBuildQueueGetBuildingCost": {
         "id": "Q-CityGetBuildQueueGetBuildingCost",
@@ -1971,13 +1974,13 @@
           {
             "name": "constructions",
             "type": ":table",
-            "description": "该单元格上的建筑类型索引列表，每个元素可用于 GameInfo.Buildings[] 查找"
+            "description": "该单元格上的建筑类型索引数组，每个元素可用于 GameInfo.Buildings[] 查找"
           }
         ],
         "displayName": "City:GetBuildQueue():GetConstructionsAtLocation()",
         "exampleCode": "local cityBuildQueue = pCity:GetBuildQueue()\nif cityBuildQueue ~= nil then\n    local constructionTypes = cityBuildQueue:GetConstructionsAtLocation(plotID)\n    for _, buildingHash in ipairs(constructionTypes) do\n        local building = GameInfo.Buildings[buildingHash]\n        -- 使用 building\n    end\nend",
         "notes": [
-          "[作用] 查询城市在指定单元格上的建造队列中的建筑类型索引列表",
+          "[作用] 查询城市在指定单元格上的建造队列中的建筑类型索引数组",
           "GetBuildQueue() 可能返回 nil，调用前需判空",
           "返回值为 table，每个元素是建筑类型索引（number），可用于 GameInfo.Buildings[] 查找",
           "只能获取尚未建成的建筑，获取已建成建筑可使用 GetBuildingsAtLocation"
@@ -1986,7 +1989,8 @@
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 2
+        "enrichAnalysisCount": 2,
+        "humanChecked": true
       },
       "Q-CityGetBuildQueueGetCurrentProductionTypeHash": {
         "id": "Q-CityGetBuildQueueGetCurrentProductionTypeHash",
@@ -2290,7 +2294,7 @@
           {
             "name": "militaryFormationType",
             "type": ":number",
-            "description": "军事编队类型（仅单位生产时使用）"
+            "description": "军事编队类型（仅生产单位时使用）"
           }
         ],
         "returns": [
@@ -2312,7 +2316,8 @@
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 15
+        "enrichAnalysisCount": 15,
+        "humanChecked": true
       },
       "Q-CityGetBuildQueueGetUnitArmyCost": {
         "id": "Q-CityGetBuildQueueGetUnitArmyCost",
@@ -4526,7 +4531,8 @@
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 2
+        "enrichAnalysisCount": 2,
+        "humanChecked": true
       },
       "Q-CityGetDistrictsGetDistrictGetAirSlots": {
         "id": "Q-CityGetDistrictsGetDistrictGetAirSlots",
@@ -5412,7 +5418,8 @@
         "enriched": true,
         "enrichComplete": true,
         "enrichSource": "workshop",
-        "enrichAnalysisCount": 6
+        "enrichAnalysisCount": 6,
+        "humanChecked": true
       },
       "Q-CityGetDistrictsGetDistrictGetAdjacencyYield": {
         "id": "Q-CityGetDistrictsGetDistrictGetAdjacencyYield",
@@ -7686,7 +7693,8 @@
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 2
+        "enrichAnalysisCount": 2,
+        "humanChecked": true
       },
       "Q-CityGetGrowthGetOccupationGrowthModifier": {
         "id": "Q-CityGetGrowthGetOccupationGrowthModifier",
@@ -40435,7 +40443,7 @@
           {
             "name": "targetPlayerID",
             "type": ":number",
-            "description": "目标玩家ID"
+            "description": "目标玩家 ID"
           },
           {
             "name": "warType",
@@ -40454,13 +40462,14 @@
         "notes": [
           "[作用] 向目标玩家宣战",
           "第三个参数 isSurprise 通常为 true，表示突袭战争",
-          "调用前可用 CanDeclareWarOn() 检查是否可以宣战"
+          "可向团队队友或自己（参数 targetPlayerID 填自己的玩家 ID）宣战，这会导致团队所有成员相互宣战"
         ],
         "signature": "DeclareWarOn(targetPlayerID: number, warType: number, isSurprise: boolean)",
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 40
+        "enrichAnalysisCount": 40,
+        "humanChecked": true
       },
       "Q-PlayerGetDiplomacyGetAllianceLevel": {
         "id": "Q-PlayerGetDiplomacyGetAllianceLevel",
@@ -42476,9 +42485,8 @@
         "displayName": "Player:GetDiplomacy():MakePeaceWith()",
         "exampleCode": "local pDiplo = pPlayer:GetDiplomacy()\nif pDiplo ~= nil then\n    pDiplo:MakePeaceWith(targetPlayerID)\nend",
         "notes": [
-          "向目标玩家发起和平，结束与该玩家的战争状态",
-          "需先检查 CanMakePeaceWith 确认可行性",
-          "无返回值"
+          "[作用] 向目标玩家发起和平，结束与该玩家的战争状态",
+          "据说可与蛮族和解（尚未测试）"
         ],
         "signature": "MakePeaceWith(targetPlayerID: number)",
         "functionC": "",
@@ -54222,7 +54230,8 @@
         "signature": "HasFeatureBeenAdded() -> added: boolean",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 2
+        "enrichAnalysisCount": 2,
+        "humanChecked": true
       },
       "Q-PlotIsAdjacentOwned": {
         "id": "Q-PlotIsAdjacentOwned",
@@ -54742,19 +54751,19 @@
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "查询并返回值",
         "displayName": "Plot:IsLake()",
-        "exampleCode": "local isLake = Plot:IsLake()\nif isLake then\n    -- 输入你的代码\nend",
+        "exampleCode": "local isLake = Plot:IsLake()\nif isLake then\n    -- 单元格是湖泊\nend",
         "notes": [
           "[作用] 判断 Plot 是否为湖泊（Lake）",
-          "无参数，直接返回布尔值",
           "常与 IsWater() 组合使用，如 Plot:IsWater() and not Plot:IsLake() 判断是否为海洋/海岸",
-          "在地图标签系统中用于筛选湖泊区域进行标注"
+          "在地图标签系统中用于筛选湖泊进行标注"
         ],
         "signature": "IsLake() -> isLake: boolean",
         "functionB": "",
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 8
+        "enrichAnalysisCount": 8,
+        "humanChecked": true
       },
       "Q-PlotIsMountain": {
         "id": "Q-PlotIsMountain",
@@ -55465,24 +55474,24 @@
           {
             "name": "isWater",
             "type": ":boolean",
-            "description": "该单元格是否为水域（海洋、海岸、海湾等）"
+            "description": "该单元格是否为水域（海洋、海岸、湖泊）"
           }
         ],
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "查询并返回值",
         "displayName": "Plot:IsWater()",
-        "exampleCode": "local isWater = Plot:IsWater()",
+        "exampleCode": "local isWater = Plot:IsWater()\nlocal isLake = Plot:IsLake()\nif isWater and not isLake then\n    -- 海洋或海岸\nend",
         "notes": [
-          "[作用] 判断单元格是否为水域（海洋、海岸、海湾等，不包括内陆湖）",
-          "常与 IsImpassable() 组合用于过滤可通行单元格",
-          "内陆湖需要单独用 IsLake() 判断"
+          "[作用] 判断单元格是否为水域（海洋、海岸、湖泊）",
+          "可与 IsLake() 组合使用，判断单元格是否为海洋/海岸"
         ],
         "signature": "IsWater() -> isWater: boolean",
         "functionB": "",
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 10
+        "enrichAnalysisCount": 10,
+        "humanChecked": true
       },
       "Q-PlotIsWOfCliff": {
         "id": "Q-PlotIsWOfCliff",
@@ -80734,7 +80743,8 @@
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 14
+        "enrichAnalysisCount": 14,
+        "humanChecked": true
       },
       "Q-UIGetTextControl": {
         "id": "Q-UIGetTextControl",
