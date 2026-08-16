@@ -21,7 +21,7 @@
       }
     },
     "enhanced": true,
-    "totalEntries": 3270
+    "totalEntries": 3273
   },
   "objects": {
     "Cities": {
@@ -39689,7 +39689,7 @@
           {
             "name": "policyIndex",
             "type": ":number",
-            "description": "策略索引，通过 GameInfo.Policies 获取"
+            "description": "政策卡索引，通过 GameInfo.Policies 获取"
           }
         ],
         "returns": [],
@@ -39698,7 +39698,7 @@
         "notes": [
           "[作用] 解锁玩家文化树中的一个策略",
           "需要先通过 GetCulture() 获取文化管理器，结果可能为 nil",
-          "策略索引通过 GameInfo.Policies[\"POLICY_XXX\"].Index 获取"
+          "政策卡索引通过 GameInfo.Policies[\"POLICY_XXX\"].Index 获取"
         ],
         "signature": "UnlockPolicy(policyIndex: number)",
         "functionC": "",
@@ -39822,27 +39822,28 @@
           {
             "name": "policyIndex",
             "type": ":number",
-            "description": "策略索引或哈希值"
+            "description": "政策卡索引"
           }
         ],
         "returns": [
           {
             "name": "isActive",
             "type": ":boolean",
-            "description": "指定策略是否处于激活状态"
+            "description": "指定政策卡是否处于激活状态"
           }
         ],
         "displayName": "Player:GetCulture():IsPolicyActive()",
-        "exampleCode": "local pCulture = pPlayer:GetCulture()\nif pCulture ~= nil then\n    local isActive = pCulture:IsPolicyActive(ePolicyIndex)\nend",
+        "exampleCode": "local pCulture = pPlayer:GetCulture()\nif pCulture ~= nil then\n    local isActive = pCulture:IsPolicyActive(policyIndex)\nend",
         "notes": [
-          "[作用] 检查玩家是否激活了指定的政策/策略",
-          "policyIndex 通过 GameInfo.Policies 获取，或使用预定义的常量变量"
+          "[作用] 检查玩家是否激活了指定的政策卡",
+          "policyIndex 通过 GameInfo.Policies 获取"
         ],
         "signature": "IsPolicyActive(policyIndex: number) -> isActive: boolean",
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 5
+        "enrichAnalysisCount": 5,
+        "humanChecked": true
       },
       "A-PlayerGetCultureReset": {
         "id": "A-PlayerGetCultureReset",
@@ -64384,7 +64385,8 @@
         "notes": [
           "[作用] 获取单位的类型名称字符串，用于类型判断和筛选",
           "返回值为 GameInfo.Units 中的 Type 字符串（如 'UNIT_SETTLER'、'UNIT_WARRIOR'）",
-          "比 unit:GetType() 返回数字索引更直观，适合用于字符串比较"
+          "比 unit:GetType() 返回数字索引更直观，适合用于字符串比较",
+          "[注意] Gameplay 返回获得LOC NAME，UI 环境获得 unitType"
         ],
         "signature": "GetTypeName(unit: object) -> unitTypeName: string",
         "functionB": "",
@@ -64514,26 +64516,25 @@
             "description": "地图坐标 Y"
           },
           {
-            "name": "number",
+            "name": "ring",
             "type": ":number",
-            "description": "要创建的单位数量"
+            "description": "单位生成在坐标第几环。为 0 时强制生成在坐标处"
           }
         ],
         "returns": [],
         "invokeNote": "通过命名空间调用：Object.Method()",
         "typeNote": "执行操作，无返回值",
         "displayName": "UnitManager.InitUnitValidAdjacentHex()",
-        "exampleCode": "UnitManager.InitUnitValidAdjacentHex(playerID, \"UNIT_HEAVY_CHARIOT\", g_iInvaderX, g_iInvaderY, 3)",
+        "exampleCode": "UnitManager.InitUnitValidAdjacentHex(playerID, \"UNIT_HEAVY_CHARIOT\", g_iInvaderX, g_iInvaderY, 0)",
         "notes": [
-          "[作用] 在指定坐标周围的有效相邻格中创建指定数量的单位",
-          "单位不会直接放在指定坐标上，而是在其相邻的有效格中生成",
-          "仅用于 GamePlay 环境（剧本脚本）",
-          "第 5 个参数为创建数量，不同场景中使用 1、3、4 等值"
+          "[作用] 在指定坐标周围的有效相邻格中生成单位",
+          "第 5 个参数控制单位生成在坐标的第几环。例如，为 0 时强制生成在坐标处，为 1 时强制生成在坐标第 1 环"
         ],
         "signature": "InitUnitValidAdjacentHex(playerID: number, unitType: string, x: number, y: number, number: number) -> void",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 57
+        "enrichAnalysisCount": 57,
+        "humanChecked": true
       },
       "Q-UnitManagerIsUnit": {
         "id": "Q-UnitManagerIsUnit",
@@ -80745,37 +80746,6 @@
         "enrichComplete": true,
         "enrichAnalysisCount": 14,
         "humanChecked": true
-      },
-      "Q-UIGetTextControl": {
-        "id": "Q-UIGetTextControl",
-        "type": "QUERY",
-        "table": "UI",
-        "functionA": "GetTextControl",
-        "invoke": "Dot (Global)",
-        "availability": "UI",
-        "argsA": [],
-        "returns": [
-          {
-            "name": "textControl",
-            "type": ":object",
-            "description": "按钮控件内的文本控件对象，可调用 GetSizeX/GetSizeY/GetText/SetColor 等方法"
-          }
-        ],
-        "invokeNote": "通过命名空间调用：Object.Method()",
-        "typeNote": "Button 控件的内置方法，返回其内部的文本控件引用",
-        "displayName": "UI.GetTextControl()",
-        "exampleCode": "local pTextControl = buttonControl:GetTextControl()\nif pTextControl ~= nil then\n    local sizeX = pTextControl:GetSizeX()\n    local text = pTextControl:GetText()\nend",
-        "notes": [
-          "[作用] 获取按钮控件内部的文本控件对象，用于读取文本内容、计算文本尺寸或设置文本颜色",
-          "此方法是 Button/PopupButton 控件的方法，不是 UI 根对象的直接方法",
-          "获取到的 textControl 可调用 GetSizeX/GetSizeY 计算文本尺寸，用于自适应按钮大小"
-        ],
-        "signature": "GetTextControl() -> textControl: object",
-        "functionB": "",
-        "functionC": "",
-        "enriched": true,
-        "enrichComplete": true,
-        "enrichAnalysisCount": 10
       },
       "A-UISetARXTagsContentByClass": {
         "id": "A-UISetARXTagsContentByClass",
@@ -98167,7 +98137,7 @@
         "exampleCode": "local partialScreen = ContextPtr:LookUpControl(\"/InGame/PartialScreens\")\nif partialScreen ~= nil then\n    partialScreen:AddChildAtIndex(ContextPtr, 6)\nend",
         "notes": [
           "[作用] 将子控件插入到父控件指定索引位置",
-          "索引从 1 开始计数",
+          "索引从 0 开始，索引越小越先渲染（越位于底层）",
           "用于控制子控件的显示顺序（z-order）"
         ],
         "signature": "AddChildAtIndex(child: object, index: number)",
@@ -99237,13 +99207,13 @@
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "执行操作，无返回值或返回操作结果",
         "displayName": "Control:RegisterMouseOverCallback()",
-        "exampleCode": "pControl:RegisterMouseOverCallback()",
+        "exampleCode": "local pButton = Controls.MyButton\npButton:RegisterMouseOverCallback(function(uiControl)\n    -- 鼠标悬停时的处理逻辑\nend)",
         "notes": [
-          "执行 RegisterMouseOverCallback",
-          "这是实例方法，需要先获取 Control 对象才能调用",
-          "执行操作，无返回值"
+          "[作用] 注册鼠标悬停（MouseOver）期间的回调函数",
+          "与 ClearMouseOverCallback 配对使用，后者可清除已注册的回调",
+          "注意：官方脚本中无本函数的使用实例，签名参照 RegisterMouseEnterCallback 同族方法推断"
         ],
-        "signature": "RegisterMouseOverCallback()",
+        "signature": "RegisterMouseOverCallback(callback: function)",
         "enrichUnused": true,
         "usageSummary": "未在 lua 文件中找到此函数的使用",
         "enrichmentStats": {
@@ -99375,6 +99345,64 @@
         "enriched": true,
         "enrichComplete": true,
         "enrichAnalysisCount": 1
+      },
+      "Q-ControlGetTextButton": {
+        "id": "Q-ControlGetTextButton",
+        "type": "QUERY",
+        "table": "Control",
+        "functionA": "GetTextButton",
+        "invoke": "Colon (Instance)",
+        "availability": "UI",
+        "argsA": [],
+        "returns": [
+          {
+            "name": "textButton",
+            "type": ":object",
+            "description": "获取 CheckBox/RadioButton/Button 控件内部的文本按钮控件对象，可调用 SetText/SetColor/GetSizeX/GetSizeY 等方法"
+          }
+        ],
+        "invokeNote": "通过实例调用：instance:Method()",
+        "typeNote": "CheckBox/RadioButton/Button 控件的内置方法，返回其内部的文本按钮控件引用。区别于 GetTextControl() 泛型方法，此方法专用于 CheckBox/RadioButton 等含文本的交互控件。",
+        "displayName": "Control:GetTextButton()",
+        "exampleCode": "local pTextBtn = checkBoxControl:GetTextButton()\nif pTextBtn ~= nil then\n    pTextBtn:SetText(Locale.Lookup(\"LOC_KEY\"))\n    pTextBtn:SetColor(packedColor)\nend",
+        "notes": [
+          "[作用] 获取 CheckBox/RadioButton/Button 控件内部的文本按钮控件，用于设置文本、颜色或计算文本尺寸",
+          "官方 MinimapPanel.lua 使用 GetTextButton() 而非 GetTextControl()",
+          "获取到的 textButton 可调用 SetText/SetColor/GetSizeX/GetSizeY 等方法"
+        ],
+        "signature": "GetTextButton() -> TextButton: object",
+        "functionB": "",
+        "functionC": "",
+        "enriched": true
+      },
+      "Q-ControlGetTextControl": {
+        "id": "Q-ControlGetTextControl",
+        "type": "QUERY",
+        "table": "Control",
+        "functionA": "GetTextControl",
+        "invoke": "Colon (Instance)",
+        "availability": "UI",
+        "argsA": [],
+        "returns": [
+          {
+            "name": "textControl",
+            "type": ":object",
+            "description": "获取 Button 控件内部的文本控件对象，可调用 GetSizeX/GetSizeY/GetText/SetColor 等方法"
+          }
+        ],
+        "invokeNote": "通过实例调用：instance:Method()",
+        "typeNote": "Button/PopupButton 等控件的内置方法，返回其内部的文本控件引用。区别于 GetTextButton()（CheckBox/RadioButton 专有）。",
+        "displayName": "Control:GetTextControl()",
+        "exampleCode": "local pTextControl = buttonControl:GetTextControl()\nif pTextControl ~= nil then\n    local sizeX = pTextControl:GetSizeX()\n    local text = pTextControl:GetText()\nend",
+        "notes": [
+          "[作用] 获取按钮控件内部的文本控件对象，用于读取文本内容、计算文本尺寸或设置文本颜色",
+          "此方法是 Button/PopupButton 控件的方法，不是 UI 全局函数",
+          "获取到的 textControl 可调用 GetSizeX/GetSizeY 计算文本尺寸，用于自适应按钮大小"
+        ],
+        "signature": "GetTextControl() -> textControl: object",
+        "functionB": "",
+        "functionC": "",
+        "enriched": true
       }
     },
     "UserConfiguration": {
@@ -107846,121 +107874,65 @@
           "environments": []
         }
       }
+    },
+    "CheckBox": {
+      "Q-UICheckBoxSetSelected": {
+        "id": "Q-UICheckBoxSetSelected",
+        "type": "ACTION",
+        "table": "CheckBox",
+        "functionA": "SetSelected",
+        "invoke": "Dot (Global)",
+        "availability": "UI",
+        "argsA": [
+          {
+            "name": "isSelected",
+            "type": "bool",
+            "description": "是否选中高亮状态"
+          }
+        ],
+        "returns": [],
+        "invokeNote": "通过命名空间调用：Object.Method()",
+        "typeNote": "设置 CheckBox/RadioButton 控件的选中高亮外观。与 SetCheck 功能相同但侧重按钮外观高亮效果。",
+        "displayName": "CheckBox:SetSelected()",
+        "exampleCode": "Controls.MapOptionsButton:SetSelected(true)\nControls.LensButton:SetSelected(false)",
+        "notes": [
+          "[作用] 设置 CheckBox/RadioButton 的选中高亮外观状态",
+          "官方 MinimapPanel.lua 使用 SetSelected 控制 MapOptionsButton/LensButton 的外观状态",
+          "SetCheck 设置勾选逻辑状态，SetSelected 设置选中高亮外观。大多数情况下可互换使用。"
+        ],
+        "signature": "SetSelected(isSelected: bool)",
+        "functionB": "",
+        "functionC": "",
+        "enriched": true
+      },
+      "Q-UICheckBoxIsSelected": {
+        "id": "Q-UICheckBoxIsSelected",
+        "type": "QUERY",
+        "table": "CheckBox",
+        "functionA": "IsSelected",
+        "invoke": "Dot (Global)",
+        "availability": "UI",
+        "argsA": [],
+        "returns": [
+          {
+            "name": "isSelected",
+            "type": "bool",
+            "description": "是否处于选中高亮状态"
+          }
+        ],
+        "invokeNote": "通过命名空间调用：Object.Method()",
+        "typeNote": "查询 CheckBox/RadioButton 控件是否处于选中高亮外观状态。",
+        "displayName": "CheckBox:IsSelected()",
+        "exampleCode": "if Controls.MapOptionsButton:IsSelected() then\n    -- panel is open\nend",
+        "notes": [
+          "[作用] 查询 CheckBox/RadioButton 是否处于选中高亮外观状态",
+          "官方 MinimapPanel.lua 使用 IsSelected 判断按钮是否处于按下/高亮状态"
+        ],
+        "signature": "IsSelected() -> isSelected: bool",
+        "functionB": "",
+        "functionC": "",
+        "enriched": true
+      }
     }
-  },
-  "Q-UIGetTextButton": {
-    "id": "Q-UIGetTextButton",
-    "type": "QUERY",
-    "table": "Control",
-    "functionA": "GetTextButton",
-    "invoke": "Dot (Global)",
-    "availability": "UI",
-    "argsA": [],
-    "returns": [
-      {
-        "name": "textButton",
-        "type": ":object",
-        "description": "获取 CheckBox/RadioButton/Button 控件内部的文本按钮控件对象，可调用 SetText/SetColor/GetSizeX/GetSizeY 等方法"
-      }
-    ],
-    "invokeNote": "通过命名空间调用：Object.Method()",
-    "typeNote": "CheckBox/RadioButton/Button 控件的内置方法，返回其内部的文本按钮控件引用。区别于 GetTextControl() 泛型方法，此方法专用于 CheckBox/RadioButton 等含文本的交互控件。",
-    "displayName": "UI.GetTextButton()",
-    "exampleCode": "local pTextBtn = checkBoxControl:GetTextButton()\nif pTextBtn ~= nil then\n    pTextBtn:SetText(Locale.Lookup(\"LOC_KEY\"))\n    pTextBtn:SetColor(packedColor)\nend",
-    "notes": [
-      "[作用] 获取 CheckBox/RadioButton/Button 控件内部的文本按钮控件，用于设置文本、颜色或计算文本尺寸",
-      "官方 MinimapPanel.lua 使用 GetTextButton() 而非 GetTextControl()",
-      "获取到的 textButton 可调用 SetText/SetColor/GetSizeX/GetSizeY 等方法"
-    ],
-    "signature": "GetTextButton() -> TextButton: object",
-    "functionB": "",
-    "functionC": "",
-    "enriched": true
-  },
-  "Q-UICheckBoxSetSelected": {
-    "id": "Q-UICheckBoxSetSelected",
-    "type": "ACTION",
-    "table": "CheckBox",
-    "functionA": "SetSelected",
-    "invoke": "Dot (Global)",
-    "availability": "UI",
-    "argsA": [
-      {
-        "name": "isSelected",
-        "type": "bool",
-        "description": "是否选中高亮状态"
-      }
-    ],
-    "returns": [],
-    "invokeNote": "通过命名空间调用：Object.Method()",
-    "typeNote": "设置 CheckBox/RadioButton 控件的选中高亮外观。与 SetCheck 功能相同但侧重按钮外观高亮效果。",
-    "displayName": "CheckBox:SetSelected()",
-    "exampleCode": "Controls.MapOptionsButton:SetSelected(true)\nControls.LensButton:SetSelected(false)",
-    "notes": [
-      "[作用] 设置 CheckBox/RadioButton 的选中高亮外观状态",
-      "官方 MinimapPanel.lua 使用 SetSelected 控制 MapOptionsButton/LensButton 的外观状态",
-      "SetCheck 设置勾选逻辑状态，SetSelected 设置选中高亮外观。大多数情况下可互换使用。"
-    ],
-    "signature": "SetSelected(isSelected: bool)",
-    "functionB": "",
-    "functionC": "",
-    "enriched": true
-  },
-  "Q-UICheckBoxIsSelected": {
-    "id": "Q-UICheckBoxIsSelected",
-    "type": "QUERY",
-    "table": "CheckBox",
-    "functionA": "IsSelected",
-    "invoke": "Dot (Global)",
-    "availability": "UI",
-    "argsA": [],
-    "returns": [
-      {
-        "name": "isSelected",
-        "type": "bool",
-        "description": "是否处于选中高亮状态"
-      }
-    ],
-    "invokeNote": "通过命名空间调用：Object.Method()",
-    "typeNote": "查询 CheckBox/RadioButton 控件是否处于选中高亮外观状态。",
-    "displayName": "CheckBox:IsSelected()",
-    "exampleCode": "if Controls.MapOptionsButton:IsSelected() then\n    -- panel is open\nend",
-    "notes": [
-      "[作用] 查询 CheckBox/RadioButton 是否处于选中高亮外观状态",
-      "官方 MinimapPanel.lua 使用 IsSelected 判断按钮是否处于按下/高亮状态"
-    ],
-    "signature": "IsSelected() -> isSelected: bool",
-    "functionB": "",
-    "functionC": "",
-    "enriched": true
-  },
-  "Q-UIGetTextControl": {
-    "id": "Q-UIGetTextControl",
-    "type": "QUERY",
-    "table": "Control",
-    "functionA": "GetTextControl",
-    "invoke": "Dot (Global)",
-    "availability": "UI",
-    "argsA": [],
-    "returns": [
-      {
-        "name": "textControl",
-        "type": ":object",
-        "description": "获取 Button 控件内部的文本控件对象，可调用 GetSizeX/GetSizeY/GetText/SetColor 等方法"
-      }
-    ],
-    "invokeNote": "通过命名空间调用：Object.Method()",
-    "typeNote": "Button/PopupButton 等控件的内置方法，返回其内部的文本控件引用。区别于 GetTextButton()（CheckBox/RadioButton 专有）。",
-    "displayName": "Control:GetTextControl()",
-    "exampleCode": "local pTextControl = buttonControl:GetTextControl()\nif pTextControl ~= nil then\n    local sizeX = pTextControl:GetSizeX()\n    local text = pTextControl:GetText()\nend",
-    "notes": [
-      "[作用] 获取按钮控件内部的文本控件对象，用于读取文本内容、计算文本尺寸或设置文本颜色",
-      "此方法是 Button/PopupButton 控件的方法，不是 UI 全局函数",
-      "获取到的 textControl 可调用 GetSizeX/GetSizeY 计算文本尺寸，用于自适应按钮大小"
-    ],
-    "signature": "GetTextControl() -> textControl: object",
-    "functionB": "",
-    "functionC": "",
-    "enriched": true
   }
 }

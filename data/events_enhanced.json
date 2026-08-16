@@ -162,7 +162,8 @@
         "获取城市对象的两种方式：CityManager.GetCity(playerID, cityID) 和 Players[playerID]:GetCities():FindID(cityID)",
         "本事件常用于剧本初始化场景：宗教分配、瘟疫系统跟踪、AI 城市生成等一次性设置",
         "BlackDeath 剧本通过 SetObjectState/GetObjectState 在 city 上存入 bInitialized 状态，避免重复初始化同一城市",
-        "Nubia 剧本将回调声明为 local function，避免全局命名冲突"
+        "Nubia 剧本将回调声明为 local function，避免全局命名冲突",
+        "通过忠诚度压力或武力占领城市时也会触发此事件，此时城市 ID 会改变"
       ],
       "enriched": true,
       "enrichComplete": true,
@@ -1136,9 +1137,9 @@
           "description": "触发政策的玩家 ID"
         },
         {
-          "name": "ePolicyIndex",
+          "name": "policyIndex",
           "type": ":number",
-          "description": "政策的索引（ePolicyIndex），可通过 GameInfo.Policies[ePolicyIndex].PolicyType 获取政策类型"
+          "description": "政策的索引（policyIndex），可通过 GameInfo.Policies[policyIndex].PolicyType 获取政策类型"
         },
         {
           "name": "bEnacted",
@@ -1146,12 +1147,12 @@
           "description": "true 表示政策被启用，false 表示被移除/取消"
         }
       ],
-      "callbackSignature": "OnPolicyChanged(iPlayerID: number, ePolicyIndex: number, bEnacted: boolean)",
-      "exampleCode": "function OnPolicyChanged(iPlayerID, ePolicyIndex, bEnacted)\n    local pPlayer = Players[iPlayerID];\n    local sPolicyType = GameInfo.Policies[ePolicyIndex].PolicyType;\n    print(\"Player \" .. iPlayerID .. \" policy \" .. sPolicyType .. (bEnacted and \" enacted\" or \" removed\"));\n\n    -- 可通过 IsPolicyActive 确认当前状态\n    local bActive = pPlayer:GetCulture():IsPolicyActive(ePolicyIndex);\nend\nGameEvents.PolicyChanged.Add(OnPolicyChanged);",
+      "callbackSignature": "OnPolicyChanged(iPlayerID: number, policyIndex: number, bEnacted: boolean)",
+      "exampleCode": "function OnPolicyChanged(iPlayerID, policyIndex, bEnacted)\n    local pPlayer = Players[iPlayerID];\n    local sPolicyType = GameInfo.Policies[policyIndex].PolicyType;\n    print(\"Player \" .. iPlayerID .. \" policy \" .. sPolicyType .. (bEnacted and \" enacted\" or \" removed\"));\n\n    -- 可通过 IsPolicyActive 确认当前状态\n    local bActive = pPlayer:GetCulture():IsPolicyActive(policyIndex);\nend\nGameEvents.PolicyChanged.Add(OnPolicyChanged);",
       "notes": [
         "[作用] 当玩家的政策被启用或取消时触发 Gameplay 事件",
-        "policyID（ePolicyIndex）是政策在 GameInfo.Policies 表中的索引，通过 GameInfo.Policies[ePolicyIndex].PolicyType 查询政策类型字符串",
-        "bEnacted 为 true 时刚启用，false 时刚移除；可通过 pPlayer:GetCulture():IsPolicyActive(ePolicyIndex) 验证当前生效状态",
+        "policyID（policyIndex）是政策在 GameInfo.Policies 表中的索引，通过 GameInfo.Policies[policyIndex].PolicyType 查询政策类型字符串",
+        "bEnacted 为 true 时刚启用，false 时刚移除；可通过 pPlayer:GetCulture():IsPolicyActive(policyIndex) 验证当前生效状态",
         "注意与 Events.GovernmentPolicyChanged（UI 事件，仅 2 参数）区分，后者用于 UI 刷新"
       ],
       "enriched": true,
