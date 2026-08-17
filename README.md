@@ -39,7 +39,7 @@
 | 来源 | 说明 |
 |------|------|
 | **Civ VI Modding Companion 2.0.xlsx** | 社区整理的 Civ6 Lua 函数+事件数据集 |
-| **夏凉凉凉's civ6-modding skill files** | 夏凉凉凉分享的 skill 文档 |
+| **Sumcam-L's civ6-modding skill files** | [夏凉凉凉](https://github.com/Sumcam-L) 分享的 skill 文档 |
 
 ### 数据文件
 
