@@ -6054,29 +6054,31 @@
         {
           "name": "actingPlayerID",
           "type": ":number",
-          "description": "发起外交声明的玩家 ID"
+          "description": "位置参数1，等于本条声明的 FromPlayer。注意：该参数不能判断谁是声明发起者"
         },
         {
           "name": "reactingPlayerID",
           "type": ":number",
-          "description": "接收外交声明的玩家 ID"
+          "description": "位置参数2，等于本条声明的 ToPlayer。注意：该参数不能判断谁是声明接收者"
         },
         {
           "name": "values",
           "type": ":table",
-          "description": "声明详情表，包含 SessionID（会话 ID）、StatementType（声明类型，如 MAKE_DEAL/DENOUNCE）、StatementSubType（子类型）、FromPlayer（视角玩家 ID）、FromPlayerMood（该玩家当前情绪）、Initiator（发起者）"
+          "description": "声明详情表：SessionID（会话ID）、StatementType（声明类型字符串的哈希，可用 DB.MakeHash 比对）、StatementSubType、FromPlayer/ToPlayer、Initiator（会话发起者，判断'谁是声明发起者'的唯一可靠字段）、FromPlayerMood、ResponseType"
         }
       ],
       "callbackSignature": "OnDiplomacyStatement(actingPlayerID: number, reactingPlayerID: number, values: table)",
-      "exampleCode": "function OnDiplomacyStatement(actingPlayerID, reactingPlayerID, values)\n    -- actingPlayerID 是发起声明的玩家\n    -- values.StatementType 包含声明类型（如 \"MAKE_DEAL\"）\n    print(\"Diplomacy statement type: \" .. tostring(values.StatementType))\nend\nEvents.DiplomacyStatement.Add(OnDiplomacyStatement)",
+      "exampleCode": "function OnDiplomacyStatement(actingPlayerID, reactingPlayerID, values)\n    -- 此事件的 acting/reacting 不能用于判断谁是声明发起者、接收者\n    -- 需要使用 values.Initiator 进行判断\n    local localPlayerID = Game.GetLocalPlayer()\n    if values.Initiator ~= localPlayerID then return end\n    -- 判断声明类型：与 DB.MakeHash 比对\n    if DB.MakeHash('DENOUNCE') == values.StatementType then\n        print('本地玩家发起了谴责')\n    end\nend\nEvents.DiplomacyStatement.Add(OnDiplomacyStatement)",
       "notes": [
-        "[作用] 当两名玩家之间发生外交声明（如谴责、和谈提议、交易请求等）时触发，携带声明类型和会话信息",
-        "参数 values 表包含 SessionID、StatementType、StatementSubType、FromPlayer、FromPlayerMood、Initiator 等键",
-        "在 DiplomacyActionView 中由 LateInitialize 注册，随 DiplomacyManager 会话管理联动"
+        "[作用] 当两名玩家之间发生外交声明（谴责、和谈提议、交易请求等）时触发，携带声明类型和会话信息",
+        "此事件的位置参数 actingPlayerID/reactingPlayerID 不能用于判断谁是声明发起者、接收者",
+        "判断'谁发起的会话'的唯一可靠字段是 values.Initiator",
+        "values.StatementType 是声明类型字符串的 Hash，可用 DB.MakeHash() 比对"
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 2
+      "enrichAnalysisCount": 2,
+      "humanChecked": true
     },
     {
       "id": "E-DisableColorKey",

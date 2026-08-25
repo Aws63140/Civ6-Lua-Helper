@@ -41300,11 +41300,6 @@
             "name": "targetPlayerID",
             "type": ":number",
             "description": "目标玩家ID"
-          },
-          {
-            "name": "targetPlayer",
-            "type": ":object",
-            "description": "目标玩家对象（替代 targetPlayerID）"
           }
         ],
         "returns": [
@@ -41325,7 +41320,8 @@
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 9
+        "enrichAnalysisCount": 9,
+        "humanChecked": true
       },
       "Q-PlayerGetDiplomacyGetWarmongerLevel": {
         "id": "Q-PlayerGetDiplomacyGetWarmongerLevel",
@@ -42077,21 +42073,26 @@
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "执行操作，无返回值或返回操作结果",
         "functionB": "SetVisibilityOn",
-        "argsB": [],
+        "argsB": [
+          {
+            "name": "targetPlayerID",
+            "type": ":number",
+            "description": "目标玩家ID"
+          },
+          {
+            "name": "targetVisibility",
+            "type": ":number",
+            "description": "要设置的外交可见性级别，对应 DiplomaticVisibilityTypes 枚举值"
+          }
+        ],
         "returns": [],
         "displayName": "Player:GetDiplomacy():SetVisibilityOn()",
-        "exampleCode": "local pDiplomacy = pPlayer:GetDiplomacy()\npDiplomacy:SetVisibility()",
+        "exampleCode": "local pDiplomacy = pPlayer:GetDiplomacy()\npDiplomacy:SetVisibilityOn(targetPlayerID, targetVisibility)",
         "notes": [
-          "返回玩家的外交管理器，:IsAtWarWith() 可判断是否处于战争状态"
+          "[作用] 设置当前玩家对目标玩家的外交可见性级别"
         ],
         "signature": "SetVisibilityOn()",
-        "enrichUnused": true,
-        "usageSummary": "未在 lua 文件中找到此函数的使用",
-        "enrichmentStats": {
-          "usagesFound": 0,
-          "filesSearched": 0,
-          "environments": []
-        }
+        "humanChecked": true
       },
       "Q-PlayerGetDiplomacyCanLiberateCityTo": {
         "id": "Q-PlayerGetDiplomacyCanLiberateCityTo",
@@ -64386,7 +64387,7 @@
           "[作用] 获取单位的类型名称字符串，用于类型判断和筛选",
           "返回值为 GameInfo.Units 中的 Type 字符串（如 'UNIT_SETTLER'、'UNIT_WARRIOR'）",
           "比 unit:GetType() 返回数字索引更直观，适合用于字符串比较",
-          "[注意] Gameplay 返回获得LOC NAME，UI 环境获得 unitType"
+          "[注意] Gameplay 环境返回LOC NAME，UI 环境返回 unitType"
         ],
         "signature": "GetTypeName(unit: object) -> unitTypeName: string",
         "functionB": "",
