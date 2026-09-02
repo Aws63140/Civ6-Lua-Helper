@@ -4,10 +4,12 @@
 职责：
   - 从 api_enhanced.json 加载增强后的 API 数据
   - 构建层级索引（根对象 → 函数A → 函数B）
-  - 提供模糊搜索功能（匹配最终函数名、displayName 与备注）
+  - 提供布尔表达式搜索（AND / OR / NOT / 引号短语 / 括号分组，见 bool_search.py）
 """
 import json
 import os
+
+from .bool_search import search_entries
 
 
 _DEFAULT_DATA_PATH = os.path.join(
@@ -105,48 +107,30 @@ class ApiDataLoader:
             return []
         return self.root_index[root][func_a][func_b]
 
-    def search(self, query: str) -> list:
+    def search(self, query: str) -> tuple:
         """
-        模糊搜索函数。
+        布尔表达式搜索函数。
 
         搜索范围：最终函数名、displayName、notes
-        搜索逻辑：空格分隔多个关键词，所有关键词都必须匹配
+        语法：AND / OR / NOT（必须大写）、"引号短语"、(括号分组)；
+              词项之间的空格视为隐式 AND（详见 bool_search.py 模块文档）
         排序：函数名匹配 > 显示名 > 备注
+        返回 (results, error)：error 非 None 表示表达式语法错误。
         """
-        if not query:
-            return self.entries
 
-        terms = query.lower().strip().split()
-        results = []
-
-        for entry in self.entries:
-            display_name = entry.get("displayName", "").lower()
-            notes = " ".join(entry.get("notes", [])).lower()
-
+        def fields_of(entry):
             # 确定最终函数名（链式取最后一个）
             final_func = entry.get("functionA", "").lower()
             for suffix in ("B", "C", "D"):
                 fb = entry.get(f"function{suffix}", "")
-                if fb:
-                    final_func = fb.lower()
-                else:
+                if not fb:
                     break
+                final_func = fb.lower()
 
-            score = 0
-            all_match = True
-            for term in terms:
-                if term in final_func:
-                    score += 100
-                elif term in display_name:
-                    score += 60
-                elif term in notes:
-                    score += 20
-                else:
-                    all_match = False
-                    break
+            return [
+                (final_func, 100),
+                (entry.get("displayName", "").lower(), 60),
+                (" ".join(entry.get("notes", [])).lower(), 20),
+            ]
 
-            if all_match:
-                results.append((score, entry))
-
-        results.sort(key=lambda x: -x[0])
-        return [r[1] for r in results]
+        return search_entries(self.entries, query, fields_of)

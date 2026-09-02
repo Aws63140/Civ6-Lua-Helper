@@ -7,11 +7,11 @@
   - 用可拖拽分割器连接两个面板
   - 应用全局暗色主题样式
   - 在状态栏显示加载统计信息
-  - 窗口菜单支持页面切换（QStackedWidget）
+  - 顶部 QTabBar 标签页（Chrome 式）与菜单栏【窗口】菜单双入口切换页面（QStackedWidget）
 """
 from PySide6.QtWidgets import (
     QMainWindow, QSplitter, QStatusBar, QDialog, QLabel, QVBoxLayout, QPushButton, QWidget,
-    QStackedWidget
+    QStackedWidget, QTabBar
 )
 from PySide6.QtCore import QTimer
 from PySide6.QtCore import Qt
@@ -30,6 +30,7 @@ class MainWindow(QMainWindow):
     """
     应用主窗口，支持多页面切换。
 
+    页面切换入口：顶部标签页（QTabBar，直观可见）+ 菜单栏【窗口】菜单，二者状态互相同步。
     QStackedWidget:
       0: 函数查询窗口（搜索 + 详情）
       1: 事件查询窗口（搜索 + 详情）— 懒加载
@@ -52,20 +53,38 @@ class MainWindow(QMainWindow):
         self._events_detail = None
         self._events_page_ready = False
 
+        # 标签页 ↔ 菜单栏双向同步时抑制递归信号（与级联组合框同款约定）
+        self._tabs_updating = False
+
         self.setStyleSheet(DARK_THEME)
         self._setup_ui()
         self._show_startup_dialog()
 
-    # ---- Window menu ----
+    # ---- Page switching ----
 
-    def _on_window_changed(self, action):
-        """Switch between API and Events pages."""
-        page_index = action.data()
-
+    def _switch_page(self, page_index):
+        """切换页面（含事件页懒加载），并同步标签页与菜单栏的选中态。"""
         if page_index == 1 and not self._events_page_ready:
             self._init_events_page()
 
+        self._tabs_updating = True
+        if self._page_tabs.currentIndex() != page_index:
+            self._page_tabs.setCurrentIndex(page_index)
+        for action in self._window_group.actions():
+            action.setChecked(action.data() == page_index)
+        self._tabs_updating = False
+
         self._stack.setCurrentIndex(page_index)
+
+    def _on_tab_changed(self, page_index):
+        """点击顶部标签页切换页面（同步由 _switch_page 抑制递归）。"""
+        if self._tabs_updating:
+            return
+        self._switch_page(page_index)
+
+    def _on_window_changed(self, action):
+        """Switch between API and Events pages (menu bar entry)."""
+        self._switch_page(action.data())
 
     # ---- Events page lazy init ----
 
@@ -148,6 +167,15 @@ class MainWindow(QMainWindow):
 
         self._window_group.triggered.connect(self._on_window_changed)
 
+        # ---- Top tab bar (Chrome-style page switching; 菜单栏入口保留) ----
+        # 标签页放在显眼位置：部分用户注意不到菜单栏的【窗口】菜单
+        self._page_tabs = QTabBar()
+        self._page_tabs.setObjectName("pageTabs")
+        self._page_tabs.addTab("函数查询")
+        self._page_tabs.addTab("事件查询")
+        self._page_tabs.setExpanding(False)
+        self._page_tabs.currentChanged.connect(self._on_tab_changed)
+
         # Help menu
         help_menu = menu_bar.addMenu("帮助(&H)")
 
@@ -179,7 +207,14 @@ class MainWindow(QMainWindow):
         # Page 1: Events placeholder (replaced on first switch)
         self._stack.addWidget(QWidget())
 
-        self.setCentralWidget(self._stack)
+        # ---- Central area: tab row + stacked pages ----
+        central = QWidget()
+        central_lay = QVBoxLayout(central)
+        central_lay.setContentsMargins(8, 4, 8, 0)
+        central_lay.setSpacing(0)
+        central_lay.addWidget(self._page_tabs)
+        central_lay.addWidget(self._stack)
+        self.setCentralWidget(central)
 
         # Signals
         self._search_panel.entry_selected.connect(self._detail_panel.show_entry)

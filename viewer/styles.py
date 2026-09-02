@@ -109,6 +109,41 @@ DARK_THEME = """
         background-color: #3e4451;
         color: #abb2bf;
     }
+    QToolButton#boolSearchHelpButton {
+        background-color: #1e2127;
+        border: 1px solid #3e4451;
+        border-radius: 12px;
+        color: #61afef;
+        font-weight: bold;
+        font-size: 13px;
+    }
+    QToolButton#boolSearchHelpButton:hover {
+        border-color: #61afef;
+        background-color: #3e4451;
+    }
+    QTabBar {
+        background-color: transparent;
+    }
+    QTabBar::tab {
+        background-color: transparent;
+        color: #5c6370;
+        padding: 4px 16px;
+        margin-right: 4px;
+        border: 1px solid transparent;
+        border-top: 2px solid transparent;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+    QTabBar::tab:selected {
+        background-color: #1e2127;
+        color: #61afef;
+        border-color: #3e4451;
+        border-top: 2px solid #61afef;
+    }
+    QTabBar::tab:hover:!selected {
+        background-color: #2c313a;
+        color: #abb2bf;
+    }
 """
 
 

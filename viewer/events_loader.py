@@ -4,6 +4,8 @@ Event data loader.
 import json
 import os
 
+from .bool_search import search_entries
+
 _DEFAULT_DATA_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "data", "events_enhanced.json"
 )
@@ -62,41 +64,25 @@ class EventDataLoader:
             results = [e for e in results if e.get("availability") in match_set]
         return results
 
-    def search(self, query: str, event_system: str = "", availability: str = "") -> list:
+    def search(self, query: str, event_system: str = "", availability: str = "") -> tuple:
         """Search events by query + filters.
 
-        Query: space-separated keywords, AND logic.
+        Query: boolean expression — AND / OR / NOT (uppercase only),
+        quoted phrases, parentheses; space acts as implicit AND
+        (see bool_search.py module docstring).
         Scoring: eventName or eventSystem.eventName full path=100, notes=20.
+        Returns (results, error); error is not None on syntax error.
         """
         pool = self.get_events(event_system, availability)
 
-        if not query:
-            return pool
-
-        terms = query.lower().strip().split()
-        results = []
-
-        for event in pool:
+        def fields_of(event):
             event_name = event.get("eventName", "").lower()
             ev_sys = event.get("eventSystem", "").lower()
             full_path = f"{ev_sys}.{event_name}" if ev_sys else event_name
-            notes = " ".join(event.get("notes", [])).lower()
+            return [
+                (event_name, 100),
+                (full_path, 100),
+                (" ".join(event.get("notes", [])).lower(), 20),
+            ]
 
-            score = 0
-            all_match = True
-            for term in terms:
-                if term in event_name:
-                    score += 100
-                elif term in full_path:
-                    score += 100
-                elif term in notes:
-                    score += 20
-                else:
-                    all_match = False
-                    break
-
-            if all_match:
-                results.append((score, event))
-
-        results.sort(key=lambda x: -x[0])
-        return [r[1] for r in results]
+        return search_entries(pool, query, fields_of)

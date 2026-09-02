@@ -69,9 +69,14 @@ class EventSearchPanel(BaseSearchPanel):
         sys_f = "" if sys_filter == "全部" else sys_filter
         env_f = "" if env_filter == "全部" else env_filter
 
-        results = self._data_loader.search(query, event_system=sys_f, availability=env_f)
+        results, error = self._data_loader.search(query, event_system=sys_f, availability=env_f)
+        if error:
+            # 布尔表达式语法错误：显示提示并清空列表
+            self._show_count(f"表达式语法错误：{error}", error=True)
+            self._list_widget.clear()
+            return
 
-        self._count_label.setText(f"找到 {len(results)} 个事件")
+        self._show_count(f"找到 {len(results)} 个事件")
 
         self._list_widget.clear()
         for event in results:

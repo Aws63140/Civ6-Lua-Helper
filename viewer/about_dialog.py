@@ -7,7 +7,7 @@ from PySide6.QtGui import QDesktopServices
 
 from .styles import ABOUT_DIALOG_STYLE
 
-__version__ = "v0.32.2"
+__version__ = "v0.33.0"
 
 _PROJECT_URL = "https://github.com/Aws63140/Civ6-Lua-Helper"
 _DATA_SOURCE_URL = "https://github.com/Sumcam-L"

@@ -127,7 +127,12 @@ class SearchPanel(BaseSearchPanel):
 
         # 获取层级筛选结果
         if query:
-            results = self._data_loader.search(query)
+            results, error = self._data_loader.search(query)
+            if error:
+                # 布尔表达式语法错误：显示提示并清空列表
+                self._show_count(f"表达式语法错误：{error}", error=True)
+                self._list_widget.clear()
+                return
             if root_f:
                 results = [e for e in results if e.get("table") == root_f]
                 if func_a_f:
@@ -140,7 +145,7 @@ class SearchPanel(BaseSearchPanel):
         # 按环境筛选（"全部" 不限制）
         results = self._apply_env_filter(results)
 
-        self._count_label.setText(f"找到 {len(results)} 个函数")
+        self._show_count(f"找到 {len(results)} 个函数")
 
         # 更新列表
         self._list_widget.clear()

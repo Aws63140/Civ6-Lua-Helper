@@ -6878,7 +6878,7 @@
       "eventSystem": "Events",
       "eventName": "EndWonderReveal",
       "eventType": "LocalMachineEvent",
-      "availability": "UI",
+      "availability": "Both",
       "category": "ARX / VR / Visual",
       "callbackParams": [],
       "callbackSignature": "OnEndWonderReveal()",
