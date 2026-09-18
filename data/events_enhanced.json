@@ -23,15 +23,15 @@
         {
           "name": "playerID",
           "type": ":number",
-          "description": "建造该建筑的玩家ID"
+          "description": "建造该建筑的玩家 ID"
         },
         {
           "name": "cityID",
           "type": ":number",
-          "description": "建造建筑的城市ID"
+          "description": "建造建筑的城市 ID"
         },
         {
-          "name": "buildingID",
+          "name": "buildingTypeIndex",
           "type": ":number",
           "description": "建筑类型索引，对应 GameInfo.Buildings 表中的行"
         },
@@ -43,21 +43,21 @@
         {
           "name": "isOriginalConstruction",
           "type": ":boolean",
-          "description": "是否为原始建造（非修复/重建）"
+          "description": "是否为原始建造"
         }
       ],
-      "callbackSignature": "OnBuildingConstructed(playerID: number, cityID: number, buildingID: number, plotID: number, isOriginalConstruction: boolean)",
-      "exampleCode": "function OnBuildingConstructed(iPlayerID: number, iCityID: number, eBuildingIndex: number, iPlotIndex: number, bOriginalConstruction: boolean)\n    local sBuildingType: string = GameInfo.Buildings[eBuildingIndex].BuildingType;\n    if sBuildingType ~= nil then\n        local pCity = CityManager.GetCity(iPlayerID, iCityID);\n        if pCity ~= nil then\n            print(string.format(\"Player %d built %s in city %d\", iPlayerID, sBuildingType, iCityID));\n        end\n    end\nend\nGameEvents.BuildingConstructed.Add(OnBuildingConstructed);",
+      "callbackSignature": "OnBuildingConstructed(playerID: number, cityID: number, buildingTypeIndex: number, plotID: number, isOriginalConstruction: boolean)",
+      "exampleCode": "function OnBuildingConstructed(playerID: number, cityID: number, buildingTypeIndex: number, plotID: number, isOriginalConstruction: boolean)\n    local sBuildingType: string = GameInfo.Buildings[buildingTypeIndex].BuildingType\n    if sBuildingType ~= nil then\n        local pCity = CityManager.GetCity(playerID, cityID)\n        if pCity ~= nil then\n            print(string.format(\"Player %d built %s in city %d\", playerID, sBuildingType, cityID))\n        end\n    end\nend\nGameEvents.BuildingConstructed.Add(OnBuildingConstructed)",
       "notes": [
-        "[作用] 任意建筑被建造（包括原始建造和修复）时触发，提供建筑类型、所在城市和单元格信息",
-        "buildingID 是 GameInfo.Buildings 表的行索引，不是唯一实例 ID，可通过 GameInfo.Buildings[buildingID].BuildingType 获取建筑类型字符串",
+        "[作用] 任意建筑被建造时触发，提供建筑类型、所在城市和单元格信息",
+        "buildingTypeIndex 是 GameInfo.Buildings 表的行索引，不是实例 ID，可通过 GameInfo.Buildings[buildingTypeIndex].BuildingType 获取建筑类型字符串",
         "plotID 可通过 Map.GetPlotByIndex(plotID) 获取 Plot 对象",
-        "isOriginalConstruction 为 false 表示建筑是被修复/重建的（如掠夺后修复）",
-        "实际使用中常将本事件与 BuildingPillageStateChanged 一并代理到统一处理函数，因为两者都需要响应建筑状态的变更"
+        "建筑被掠夺或被修复时不会触发此事件"
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 1
+      "enrichAnalysisCount": 1,
+      "humanChecked": true
     },
     {
       "id": "GE-BuildingPillageStateChanged",
@@ -68,36 +68,36 @@
       "category": "",
       "callbackParams": [
         {
-          "name": "iPlayerID",
+          "name": "playerID",
           "type": ":number",
           "description": "建筑所属玩家 ID"
         },
         {
-          "name": "iCityID",
+          "name": "cityID",
           "type": ":number",
           "description": "建筑所在城市 ID"
         },
         {
-          "name": "eBuildingIndex",
+          "name": "buildingTypeIndex",
           "type": ":number",
-          "description": "建筑索引（BuildingIndex）"
+          "description": "建筑类型索引"
         },
         {
           "name": "bPillageState",
           "type": ":boolean",
-          "description": "true=变为洗劫状态, false=被修复"
+          "description": "true=变为掠夺状态, false=被修复"
         }
       ],
-      "callbackSignature": "OnBuildingPillageStateChanged(iPlayerID: number, iCityID: number, eBuildingIndex: number, bPillageState: boolean)",
-      "exampleCode": "function OnBuildingPillageStateChanged(iPlayerID: number, iCityID: number, eBuildingIndex: number, bPillageState: boolean)\n    -- 示例：建筑洗劫状态变化时触发，重新计算建筑 modifier\n    OnBuildingChanged(iPlayerID, iCityID, eBuildingIndex);\nend\nGameEvents.BuildingPillageStateChanged.Add(OnBuildingPillageStateChanged);",
+      "callbackSignature": "OnBuildingPillageStateChanged(playerID: number, cityID: number, buildingTypeIndex: number, bPillageState: boolean)",
+      "exampleCode": "function OnBuildingPillageStateChanged(playerID: number, cityID: number, buildingTypeIndex: number, bPillageState: boolean)\n    print(\"OnBuildingPillageStateChanged\")\n    print(playerID, cityID, buildingTypeIndex, bPillageState)\n    if bPillageState then\n        print(\"建筑被掠夺！\")\n    else\n        print(\"建筑被修复！\")\n    end\nend\nGameEvents.BuildingPillageStateChanged.Add(OnBuildingPillageStateChanged)",
       "notes": [
-        "[作用] 当城市中某个建筑的洗劫状态变化时触发（被洗劫或被修复）",
-        "回调参数中的 bPillageState 表示当前状态是否为洗劫状态，而非变化方向",
-        "该事件在 Black Death 场景中被用作触发建筑 modifier 重算的信号，忽略 bPillageState 参数值"
+        "[作用] 当城市中某个建筑的掠夺状态变化时触发（被掠夺或被修复）",
+        "回调参数中的 bPillageState 表示当前状态是否为掠夺状态，而非变化方向"
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 1
+      "enrichAnalysisCount": 1,
+      "humanChecked": true
     },
     {
       "id": "GE-CanUseResolutions",
@@ -1351,9 +1351,9 @@
         }
       ],
       "callbackSignature": "OnScenarioCommand_DreadPirateActive(eOwner: number, iUnitID: number, parameters: table)",
-      "exampleCode": "local function OnScenarioCommand_DreadPirateActive(eOwner, iUnitID, parameters)\n    local pPlayer = Players[eOwner];\n    if (pPlayer == nil) then\n        return false;\n    end\n    local pUnit = pPlayer:GetUnits():FindID(iUnitID);\n    if (pUnit == nil) then\n        return false;\n    end\n    local targetPlot = Map.GetPlot(parameters[UnitCommandTypes.PARAM_X], parameters[UnitCommandTypes.PARAM_Y]);\n    if (targetPlot == nil) then\n        return false;\n    end\n    -- 在此处处理劫掠/攻击逻辑\n    return true;\nend\nGameEvents.ScenarioCommand_DreadPirateActive.Add(OnScenarioCommand_DreadPirateActive);",
+      "exampleCode": "local function OnScenarioCommand_DreadPirateActive(eOwner, iUnitID, parameters)\n    local pPlayer = Players[eOwner];\n    if (pPlayer == nil) then\n        return false;\n    end\n    local pUnit = pPlayer:GetUnits():FindID(iUnitID);\n    if (pUnit == nil) then\n        return false;\n    end\n    local targetPlot = Map.GetPlot(parameters[UnitCommandTypes.PARAM_X], parameters[UnitCommandTypes.PARAM_Y]);\n    if (targetPlot == nil) then\n        return false;\n    end\n    -- 在此处处理掠夺/攻击逻辑\n    return true;\nend\nGameEvents.ScenarioCommand_DreadPirateActive.Add(OnScenarioCommand_DreadPirateActive);",
       "notes": [
-        "[作用] 处理海盗场景中 Dread Pirate（恐怖海盗）单位能力激活命令，执行目标船只的劫掠/摧毁逻辑",
+        "[作用] 处理海盗场景中 Dread Pirate（恐怖海盗）单位能力激活命令，执行目标船只的掠夺/摧毁逻辑",
         "参数 parameters 表需包含目标坐标 PARAM_X 和 PARAM_Y（由 UnitCommandTypes 枚举定义）",
         "此事件仅在 PiratesScenario（海盗场景）DLC 中可用"
       ],
@@ -6363,7 +6363,7 @@
         {
           "name": "districtID",
           "type": ":number",
-          "description": "区域唯一 ID"
+          "description": "区域实例 ID"
         },
         {
           "name": "cityID",
@@ -6381,31 +6381,32 @@
           "description": "区域所在格 Y 坐标"
         },
         {
-          "name": "districtType",
+          "name": "districtTypeIndex",
           "type": ":number",
-          "description": "区域类型哈希值（如 DISTRICT_CAMPUS）"
+          "description": "区域类型索引值"
         },
         {
           "name": "percentComplete",
           "type": ":number",
-          "description": "区域建设/修复完成百分比（0-100）"
+          "description": "区域进度/修复完成百分比"
         },
         {
           "name": "isPillaged",
           "type": ":number",
-          "description": "是否被劫掠（1=被劫掠，0=已修复）"
+          "description": "是否被掠夺（1=被掠夺，0=已修复）"
         }
       ],
-      "callbackSignature": "OnDistrictPillaged(playerID: number, districtID: number, cityID: number, x: number, y: number, districtType: number, percentComplete: number, isPillaged: number)",
-      "exampleCode": "function OnDistrictPillaged(playerID, districtID, cityID, x, y, districtType, percentComplete, isPillaged)\n    if isPillaged == 1 then\n        AWLog(\"District \" .. tostring(districtID) .. \" pillaged!\");\n    else\n        AWLog(\"District \" .. tostring(districtID) .. \" repaired!\");\n    end\n    -- 更新区域 UI 横幅\n    local pPlayer = Players[playerID];\n    if pPlayer ~= nil then\n        local pDistrict = pPlayer:GetDistricts():FindID(districtID);\n        if pDistrict ~= nil then\n            local pCity = pDistrict:GetCity();\n            if pCity ~= nil then\n                local banner = GetCityBanner(playerID, pCity:GetID());\n                if banner ~= nil then\n                    banner:UpdateStats();\n                end\n            end\n        end\n    end\nend\nEvents.DistrictPillaged.Add(OnDistrictPillaged);",
+      "callbackSignature": "OnDistrictPillaged(playerID: number, districtID: number, cityID: number, x: number, y: number, districtTypeIndex: number, percentComplete: number, isPillaged: number)",
+      "exampleCode": "function OnDistrictPillaged(playerID, districtID, cityID, x, y, districtTypeIndex, percentComplete, isPillaged)\n    if isPillaged == 1 then\n        print(\"District \" .. tostring(districtID) .. \" pillaged!\")\n    else\n        print(\"District \" .. tostring(districtID) .. \" repaired!\")\n    end\nend\nEvents.DistrictPillaged.Add(OnDistrictPillaged)",
       "notes": [
-        "[作用] 当区域的劫掠状态发生变化（被劫掠或修复）时触发",
-        "isPillaged 在引擎中为 number 类型（1=被劫掠，0=已修复），需用 == 1 判断，不可直接当 boolean 使用",
-        "此事件在区域被劫掠和修复两个方向都会触发，cityID 可用于定位所属城市以更新相关 UI"
+        "[作用] 当区域的掠夺状态发生变化（被掠夺或修复）时触发",
+        "isPillaged 在引擎中为 number 类型（1=被掠夺，0=已修复），需用 == 1 判断，不可直接当 boolean 使用",
+        "此事件在区域被掠夺和修复两个方向都会触发"
       ],
       "enriched": true,
       "enrichComplete": true,
-      "enrichAnalysisCount": 4
+      "enrichAnalysisCount": 4,
+      "humanChecked": true
     },
     {
       "id": "E-DistrictRemovedFromMap",

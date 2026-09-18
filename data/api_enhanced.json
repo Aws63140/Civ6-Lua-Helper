@@ -1143,16 +1143,16 @@
           {
             "name": "isPillaged",
             "type": ":boolean",
-            "description": "true 为劫掠该建筑，false 为修复"
+            "description": "true 为掠夺该建筑，false 为修复"
           }
         ],
         "returns": [],
         "displayName": "City:GetBuildings():SetPillaged()",
         "exampleCode": "local pBuildings = pCity:GetBuildings()\nif pBuildings ~= nil then\n    pBuildings:SetPillaged(buildingIndex, true)\nend",
         "notes": [
-          "[作用] 设置城市中指定建筑的劫掠状态",
+          "[作用] 设置城市中指定建筑的掠夺状态",
           "buildingIndex 从 GameInfo.Buildings[row].Index 获取",
-          "传入 true 表示劫掠该建筑，传入 false 表示修复"
+          "传入 true 表示掠夺该建筑，传入 false 表示修复"
         ],
         "signature": "SetPillaged(buildingIndex: number, isPillaged: boolean)",
         "enriched": true,
@@ -5799,15 +5799,15 @@
           {
             "name": "isPillaged",
             "type": ":boolean",
-            "description": "true 设为被劫掠状态，false 修复区域"
+            "description": "true 设为被掠夺状态，false 修复区域"
           }
         ],
         "returns": [],
         "displayName": "City:GetDistricts():GetDistrict():SetPillaged()",
         "exampleCode": "local pDistrict = pCity:GetDistricts():GetDistrict(districtTypeIndex)\nif pDistrict ~= nil then\n    pDistrict:SetPillaged(false)\nend\n-- 也可使用 GetDistrictByIndex(sequentialIndex) 或 GetDistrictAtLocation(x, y) 获取区域对象",
         "notes": [
-          "[作用] 设置城市区域的被劫掠状态",
-          "参数为 true 时劫掠区域，为 false 时修复区域",
+          "[作用] 设置城市区域的被掠夺状态",
+          "参数为 true 时掠夺区域，为 false 时修复区域",
           "调用前建议通过 IsPillaged() 检查当前状态"
         ],
         "signature": "SetPillaged(isPillaged: boolean)",
@@ -67215,14 +67215,14 @@
           {
             "name": "isPillaged",
             "type": ":boolean",
-            "description": "是否设为被劫掠状态"
+            "description": "是否设为被掠夺状态"
           }
         ],
         "returns": [],
         "displayName": "WorldBuilder.MapManager():SetImprovementPillaged()",
         "exampleCode": "WorldBuilder.MapManager():SetImprovementPillaged(plot, true)",
         "notes": [
-          "[作用] 设置指定单元格上的改良设施是否处于被劫掠状态",
+          "[作用] 设置指定单元格上的改良设施是否处于被掠夺状态",
           "需要在成功设置改良设施类型后调用",
           "第一个参数可接受单元格对象或单元格索引"
         ],
