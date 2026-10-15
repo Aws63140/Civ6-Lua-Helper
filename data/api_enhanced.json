@@ -1395,9 +1395,9 @@
         "availability": "UI",
         "argsA": [
           {
-            "name": "buildingType",
-            "type": ":string",
-            "description": "建筑类型标识符（如 BUILDINGS_MONUMENT）"
+            "name": "buildingTypeIndex",
+            "type": ":number",
+            "description": "建筑类型索引，从 GameInfo.Buildings[name].Index 获取"
           },
           {
             "name": "yieldType",
@@ -1415,19 +1415,18 @@
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "查询并返回值",
         "displayName": "City:GetBuildingYield()",
-        "exampleCode": "local buildingTypes = pCityBuildings:GetBuildingsAtLocation(plotID)\nfor _, buildingType in ipairs(buildingTypes) do\n    for yieldRow in GameInfo.Yields() do\n        local yieldChange = pCity:GetBuildingYield(buildingType, yieldRow.YieldType)\n    end\nend",
+        "exampleCode": "local buildingTypeIndexs = pCityBuildings:GetBuildingsAtLocation(plotID)\nfor _, buildingTypeIndex in ipairs(buildingTypeIndexs) do\n    for yieldRow in GameInfo.Yields() do\n        local yieldChange = pCity:GetBuildingYield(buildingTypeIndex, yieldRow.YieldType)\n    end\nend",
         "notes": [
           "[作用] 获取指定建筑在城市中的产出加成",
-          "返回值为 number，0 表示该建筑不提供此类型产出",
-          "第一个参数 buildingType 来自 GameInfo.Buildings 或 GetBuildingsAtLocation",
-          "第二个参数 yieldType 来自 GameInfo.Yields().YieldType"
+          "返回值为 number，0 表示该建筑不提供此类型产出"
         ],
-        "signature": "GetBuildingYield(buildingType: string, yieldType: string) -> yieldChange: number",
+        "signature": "GetBuildingYield(buildingTypeIndex: number, yieldType: string) -> yieldChange: number",
         "functionB": "",
         "functionC": "",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 2
+        "enrichAnalysisCount": 2,
+        "humanChecked": true
       },
       "Q-CityGetBuildQueue": {
         "id": "Q-CityGetBuildQueue",
@@ -5623,16 +5622,17 @@
         ],
         "returns": [],
         "displayName": "City:GetDistricts():GetDistrict():SetDamage()",
-        "exampleCode": "local pCityDistricts = pCity:GetDistricts()\nif pCityDistricts ~= nil then\n    local pDistrict = pCityDistricts:GetDistrict(districtType)\n    if pDistrict ~= nil then\n        pDistrict:SetDamage(DefenseTypes.DISTRICT_OUTER, damage)\n    end\nend",
+        "exampleCode": "local pCityDistricts = pCity:GetDistricts()\nif pCityDistricts ~= nil then\n    local pDistrict = pCityDistricts:GetDistrict(districtTypeIndex)\n    if pDistrict ~= nil then\n        pDistrict:SetDamage(DefenseTypes.DISTRICT_OUTER, damage)\n    end\nend",
         "notes": [
           "[作用] 设置城市指定区域的防御伤害值",
-          "DefenseTypes 枚举值包括 DISTRICT_OUTER（外墙防御）和 DISTRICT_GARRISON（驻军防御）",
-          "damage 设为 0 可重置该防御层的伤害"
+          "DefenseTypes.DISTRICT_OUTER 代表城墙生命，DefenseTypes.DISTRICT_GARRISON 代表驻军生命（即区域本身的血量）",
+          "此函数可将市中心区域的驻军生命值（相当于城市的血量）变为 0，但无法使城市立刻叛变"
         ],
         "signature": "SetDamage(defenseType: number, damage: number)",
         "enriched": true,
         "enrichComplete": true,
-        "enrichAnalysisCount": 2
+        "enrichAnalysisCount": 2,
+        "humanChecked": true
       },
       "A-CityGetDistrictsGetDistrictChangeDamage": {
         "id": "A-CityGetDistrictsGetDistrictChangeDamage",
@@ -5647,7 +5647,7 @@
         "functionB": "GetDistrict",
         "argsB": [
           {
-            "name": "districtType",
+            "name": "districtTypeIndex",
             "type": ":number",
             "description": "区域类型索引（如 GameInfo.Districts[\"DISTRICT_HOLY_SITE\"].Index）"
           }
@@ -5665,25 +5665,22 @@
             "description": "伤害值（正数造成伤害，负数恢复生命）"
           }
         ],
-        "returns": [
-          {
-            "name": "none",
-            "type": ":void"
-          }
-        ],
+        "returns": [],
         "displayName": "City:GetDistricts():GetDistrict():ChangeDamage()",
-        "exampleCode": "local pDistricts = pCity:GetDistricts()\nif pDistricts ~= nil then\n    local pDistrict = pDistricts:GetDistrict(districtType)\n    if pDistrict ~= nil then\n        pDistrict:ChangeDamage(DefenseTypes.DISTRICT_OUTER, damage)\n    end\nend",
+        "exampleCode": "local pDistricts = pCity:GetDistricts()\nif pDistricts ~= nil then\n    local pDistrict = pDistricts:GetDistrict(districtTypeIndex)\n    if pDistrict ~= nil then\n        pDistrict:ChangeDamage(DefenseTypes.DISTRICT_OUTER, damage)\n    end\nend",
         "notes": [
-          "[作用] 对城市中指定类型的区域造成或恢复防御伤害",
+          "[作用] 对城市中指定类型的区域造成或恢复伤害",
           "ChangeDamage 需要同时指定防御类型和伤害值",
           "正数 amount 造成伤害，负数 amount 恢复生命",
-          "DefenseTypes.DISTRICT_OUTER 为外墙，DISTRICT_GARRISON 为驻军"
+          "DefenseTypes.DISTRICT_OUTER 代表城墙生命，DefenseTypes.DISTRICT_GARRISON 代表驻军生命（即区域本身的血量）",
+          "此函数可将市中心区域的驻军生命值（相当于城市的血量）变为 0，但无法使城市立刻叛变"
         ],
         "signature": "ChangeDamage(defenseType: number, amount: number)",
         "enriched": true,
         "enrichComplete": true,
         "enrichSource": "workshop",
-        "enrichAnalysisCount": 7
+        "enrichAnalysisCount": 7,
+        "humanChecked": true
       },
       "A-CityGetDistrictsGetDistrictSetProperty": {
         "id": "A-CityGetDistrictsGetDistrictSetProperty",
@@ -61915,18 +61912,18 @@
         "invokeNote": "通过实例调用：instance:Method()",
         "typeNote": "直接修改单位属性，无返回值",
         "displayName": "Unit:ChangeActionCharges()",
-        "exampleCode": "pUnit:ChangeActionCharges(-1)\nUnitManager.FinishMoves(pUnit)\nif pUnit:GetActionCharges() <= 0 then\n    UnitManager.Kill(pUnit)\nend",
+        "exampleCode": "pUnit:ChangeActionCharges(-1)\nUnitManager.FinishMoves(pUnit)",
         "notes": [
-          "[作用] 增减单位的可用行动次数（如建造者的使用次数）",
-          "amount 为负值时消耗次数，正值时恢复或增加次数",
-          "消耗次数后通常需要调用 UnitManager.FinishMoves 结束单位行动",
-          "可通过 GetActionCharges() 检查剩余次数，次数归零后通常需要销毁单位"
+          "[作用] 增减单位的特殊行动次数",
+          "amount 为负值时消耗次数，正值时增加次数",
+          "此函数不能增减建造者的劳动力"
         ],
         "signature": "ChangeActionCharges(amount: number)",
         "enriched": true,
         "enrichComplete": true,
         "enrichSource": "workshop",
-        "enrichAnalysisCount": 6
+        "enrichAnalysisCount": 6,
+        "humanChecked": true
       },
       "Q-UnitGetBarbarianTargetPlayer": {
         "id": "Q-UnitGetBarbarianTargetPlayer",
